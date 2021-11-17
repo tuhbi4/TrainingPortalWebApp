@@ -1,6 +1,6 @@
 # "Training Portal" Web application
 
-"Training Portal" is a system that allows you to study online.
+["Training Portal"🔽](#task-description) is a system that allows you to study online.
 
 ***
 
@@ -46,7 +46,7 @@
 
 ##
 
-[:arrow_up_small:](#tic-tac-toe)
+[🔼](#training-portal-web-application)
 
 ***
 
@@ -56,6 +56,6 @@
 
 ##
 
-[:arrow_up_small:](#tic-tac-toe)
+[🔼](#training-portal-web-application)
 
 ***
