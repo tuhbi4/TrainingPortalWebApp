@@ -16,7 +16,7 @@
             Material = material;
         }
 
-        public void UpdateTitle(string name)
+        public void UpdateName(string name)
         {
             Name = name;
         }

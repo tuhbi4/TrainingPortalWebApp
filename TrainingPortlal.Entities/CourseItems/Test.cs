@@ -16,7 +16,7 @@ namespace TrainingPortal.Entities
             QuestionsList = questionsList;
         }
 
-        public void UpdateTitle(string name)
+        public void UpdateName(string name)
         {
             Name = name;
         }
