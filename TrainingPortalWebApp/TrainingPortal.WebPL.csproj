@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TrainingPortal.BLL.Interfaces\TrainingPortal.BLL.Interfaces.csproj" />
+    <ProjectReference Include="..\TrainingPortlal.Entities\TrainingPortal.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
