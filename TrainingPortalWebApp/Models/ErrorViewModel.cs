@@ -1,6 +1,6 @@
 using System;
 
-namespace TrainingPortalWebApp.Models
+namespace TrainingPortal.WebPL.Models
 {
     public class ErrorViewModel
     {
