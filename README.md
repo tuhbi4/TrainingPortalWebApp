@@ -5,8 +5,8 @@
 ***
 
 ## Project status
-![](https://img.shields.io/badge/project%20completed-0%25-critical)
-![](https://img.shields.io/badge/build-none-critical)
+![](https://img.shields.io/badge/project%20completed-20%25-yellow)
+![](https://img.shields.io/badge/build-success-success)
 ![](https://img.shields.io/badge/manual%20testing-none-critical)
 ![](https://img.shields.io/badge/coverage%20-0%25-critical)
 ![](https://img.shields.io/badge/documentation-0%25-critical)
@@ -15,12 +15,12 @@
 
 ## Roadmap
 
-- [ ] Project architecture
-- [ ] Model layer
-  - [ ] Сourse
-  - [ ] User
-  - [ ] Role
-- [ ] View layer
+- [X] Project architecture
+- [X] Models
+  - [X] Category
+  - [X] Сourse
+  - [X] User
+- [ ] Services
   - [ ] Section navigation
   - [ ] Сourse search page by parameters
   - [ ] Viewing course information
@@ -30,10 +30,11 @@
   - [ ] Editing a profile
   - [ ] Site information management
   - [ ] User management
-- [ ] Controller layer
-
+- [ ] Views
+- [ ] Working with DB
 - [ ] Authentication / Authorization by cookies
 - [ ] Logging
+
 - [ ] NUnit and unit-tests
 - [ ] Deploy in Azure
 
