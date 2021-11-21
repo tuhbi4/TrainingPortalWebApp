@@ -6,13 +6,13 @@
 
         public string CourseName { get; private set; }
 
-        // UNDONE: certificate image - think over the type
-        public object Image { get; private set; }
+        public string Image { get; private set; }
 
         public string UserName { get; private set; }
 
-        public Certificate(string courseName, object image, string userName)
+        public Certificate(int id, string courseName, string image, string userName)
         {
+            Id = id;
             CourseName = courseName;
             Image = image;
             UserName = userName;
@@ -23,7 +23,7 @@
             CourseName = courseName;
         }
 
-        public void UpdateImage(object image)
+        public void UpdateImage(string image)
         {
             Image = image;
         }

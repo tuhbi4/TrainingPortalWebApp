@@ -6,7 +6,7 @@
 
         public string Name { get; private set; }
 
-        // UNDONE: Lesson material - think over the type
+        // UNDONE: Lesson material - think over the type (maby that will *.html files or something else)
         public object Material { get; private set; }
 
         public Lesson(int id, string name, object material)

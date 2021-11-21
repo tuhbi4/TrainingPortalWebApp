@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TrainingPortal.Enums;
 
 namespace TrainingPortal.Entities
 {
@@ -19,7 +18,20 @@ namespace TrainingPortal.Entities
 
         public Certificate Certificate { get; private set; }
 
-        public List<TargetAudiencies> TargetAudienciesList { get; private set; }
+        public List<TargetAudience> TargetAudienciesList { get; private set; }
+
+        public Course(int id, string name, string description, Category category, List<Lesson> lessonsList,
+                                                                            Test test, Certificate certificate, List<TargetAudience> targetAudienciesList)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            Category = category;
+            LessonsList = lessonsList;
+            Test = test;
+            Certificate = certificate;
+            TargetAudienciesList = targetAudienciesList;
+        }
 
         public void UpdateName(string name)
         {
@@ -51,7 +63,7 @@ namespace TrainingPortal.Entities
             Certificate = certificate;
         }
 
-        public void UpdateTargetAudienciesList(List<TargetAudiencies> targetAudienciesList)
+        public void UpdateTargetAudienciesList(List<TargetAudience> targetAudienciesList)
         {
             TargetAudienciesList = targetAudienciesList;
         }

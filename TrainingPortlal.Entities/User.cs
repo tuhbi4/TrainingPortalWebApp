@@ -1,6 +1,4 @@
-﻿using TrainingPortal.Enums;
-
-namespace TrainingPortal.Entities
+﻿namespace TrainingPortal.Entities
 {
     public class User
     {
@@ -12,7 +10,7 @@ namespace TrainingPortal.Entities
 
         public string Email { get; private set; }
 
-        public Roles Role { get; private set; }
+        public Role Role { get; private set; }
 
         public string Lastname { get; private set; }
 
@@ -20,7 +18,7 @@ namespace TrainingPortal.Entities
 
         public string Patronymic { get; private set; }
 
-        public User(int id, string login, string password, string email, Roles role, string lastname, string firstname, string patronymic)
+        public User(int id, string login, string password, string email, Role role, string lastname, string firstname, string patronymic)
         {
             Id = id;
             Login = login;
@@ -47,7 +45,7 @@ namespace TrainingPortal.Entities
             Email = email;
         }
 
-        public void UpdateRole(Roles role)
+        public void UpdateRole(Role role)
         {
             Role = role;
         }

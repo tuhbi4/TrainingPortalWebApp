@@ -10,8 +10,9 @@ namespace TrainingPortal.Entities
 
         public List<string> Answers { get; private set; }
 
-        public TestQuestion(string question, List<string> answers)
+        public TestQuestion(int id, string question, List<string> answers)
         {
+            Id = id;
             Question = question;
             Answers = answers;
         }
