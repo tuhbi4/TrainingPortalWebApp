@@ -21,7 +21,7 @@ namespace TrainingPortal.Entities
         public List<TargetAudience> TargetAudienciesList { get; private set; }
 
         public Course(int id, string name, string description, Category category, List<Lesson> lessonsList,
-                                                                            Test test, Certificate certificate, List<TargetAudience> targetAudienciesList)
+            Test test, Certificate certificate, List<TargetAudience> targetAudienciesList)
         {
             Id = id;
             Name = name;
@@ -31,6 +31,14 @@ namespace TrainingPortal.Entities
             Test = test;
             Certificate = certificate;
             TargetAudienciesList = targetAudienciesList;
+        }
+
+        //UNDONE: Delete this constructor with mocks
+        public Course(int id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
         }
 
         public void UpdateName(string name)

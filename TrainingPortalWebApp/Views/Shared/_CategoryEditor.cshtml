@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNetCore.Http
+@model TrainingPortal.Entities.Category
+
+@{
+    Exception exception = ViewBag.Exception;
+    IFormCollection collection = ViewBag.IFormCollection;
+}
+
+<div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    @if (exception != null && collection.TryGetValue("Name", out var name))
+    {
+        @if (name == string.Empty)
+        {
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger">@exception.Message</span>
+        }
+        else
+        {
+            <input asp-for="Name" class="form-control" value=@name />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        }
+    }
+    else
+    {
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+
+    }
+</div>
+
+@section Scripts {
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}
