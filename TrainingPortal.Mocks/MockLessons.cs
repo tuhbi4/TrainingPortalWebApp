@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using TrainingPortal.Entities;
 
-namespace TrainingPortal.DAL.Mocks
+namespace TrainingPortal.BLL.Mocks
 {
     public class MockLessons
     {
