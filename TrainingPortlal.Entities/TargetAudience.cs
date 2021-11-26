@@ -1,12 +1,12 @@
 ﻿namespace TrainingPortal.Entities
 {
-    public class Category
+    public class TargetAudience
     {
         public int Id { get; }
 
         public string Name { get; private set; }
 
-        public Category(int id, string name)
+        public TargetAudience(int id, string name)
         {
             Id = id;
             Name = name;
