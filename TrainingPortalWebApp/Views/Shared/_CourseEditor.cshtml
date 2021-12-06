@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
-@model TrainingPortal.Entities.Course
+@model TrainingPortal.WebPL.Models.CourseViewModel
 
 @{
     Exception exception = ViewBag.Exception;
@@ -7,48 +7,16 @@
 }
 
 <div class="form-group">
-    <label asp-for="Name" class="control-label"></label>
-    @if (exception != null && collection.TryGetValue("Name", out var name))
-    {
-        @if (name == string.Empty)
-        {
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger">@exception.Message</span>
-        }
-        else
-        {
-            <input asp-for="Name" class="form-control" value=@name />
-            <span asp-validation-for="Name" class="text-danger"></span>
-        }
-    }
-    else
-    {
+    <p>
+        <label asp-for="Name" class="control-label"></label>
         <input asp-for="Name" class="form-control" />
         <span asp-validation-for="Name" class="text-danger"></span>
-
-    }
-</div>
-<div class="form-group">
-    <label asp-for="Description" class="control-label"></label>
-    @if (exception != null && collection.TryGetValue("Description", out var description))
-    {
-        @if (description == string.Empty)
-        {
-            <input asp-for="Description" class="form-control" />
-            <span asp-validation-for="Description" class="text-danger">@exception.Message</span>
-        }
-        else
-        {
-            <input asp-for="Description" class="form-control" value=@description />
-            <span asp-validation-for="Description" class="text-danger"></span>
-        }
-    }
-    else
-    {
+    </p>
+    <p>
+        <label asp-for="Description" class="control-label"></label>
         <input asp-for="Description" class="form-control" />
         <span asp-validation-for="Description" class="text-danger"></span>
-
-    }
+    </p>
 </div>
 
 @section Scripts {

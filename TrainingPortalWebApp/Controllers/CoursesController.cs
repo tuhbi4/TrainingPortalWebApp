@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPortal.BLL.Interfaces;
-using TrainingPortal.Entities;
+using TrainingPortal.Entities.Models;
+using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
 {
@@ -23,77 +24,56 @@ namespace TrainingPortal.WebPL.Controllers
         // GET: CoursesController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return View(courseService.Read(id));
         }
 
         // GET: CoursesController/Create
         public ActionResult Create()
         {
-            return View();
+            CourseViewModel workingItem = new();
+
+            return View(workingItem);
         }
 
         // POST: CoursesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CourseViewModel workingItem)
         {
-            try
+            if (ModelState.IsValid
+                //&& courseService.Create(new(courseService.ReadAll().Count + 1, workingItem.Name, )) > 0
+                )
             {
-                if (IsContainEmptyValues(collection))
-                {
-                    throw new BadHttpRequestException("Field cannot be empty");
-                }
-                else
-                {
-                    collection.TryGetValue("Name", out var name);
-                    collection.TryGetValue("Description", out var description);
-                    courseService.Create(new(courseService.ReadAll().Count + 1, name.ToString(), description.ToString()));
-                }
-
                 return RedirectToAction(nameof(Index));
             }
-            catch (BadHttpRequestException exception)
-            {
-                ViewBag.Exception = exception;
-                ViewBag.IFormCollection = collection;
 
-                return View();
-            }
+            return View(workingItem);
         }
 
         // GET: CoursesController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(courseService.Read(id));
+            Course course = courseService.Read(id);
+            CourseViewModel workingItem = new() { Name = course.Name, Description = course.Description };
+
+            return View(workingItem);
         }
 
         // POST: CoursesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, CategoryViewModel workingItem)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (IsContainEmptyValues(collection))
-                {
-                    throw new BadHttpRequestException("Field cannot be empty");
-                }
-                else
-                {
-                    Course targetCourse = courseService.Read(id);
-                    UpdateProperties(collection, targetCourse);
-                    courseService.Update(id, targetCourse);
-                }
-
-                return RedirectToAction(nameof(Index));
+                return View(workingItem);
             }
-            catch (BadHttpRequestException exception)
-            {
-                ViewBag.Exception = exception;
-                ViewBag.IFormCollection = collection;
 
-                return View(courseService.Read(id));
-            }
+            Course targetItem = courseService.Read(id);
+            targetItem.UpdateName(workingItem.Name);
+            courseService.Update(id, targetItem);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CoursesController/Delete/5
@@ -107,43 +87,21 @@ namespace TrainingPortal.WebPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            if (courseService.Read(id) != null)
             {
-                if (courseService.Read(id) != null)
+                if (courseService.Delete(id) > 0)
                 {
-                    courseService.Delete(id);
                     return RedirectToAction(nameof(Index));
                 }
 
-                throw new BadHttpRequestException("Object not found");
-            }
-            catch (BadHttpRequestException exception)
-            {
-                ViewData["Exception"] = exception;
-                ViewBag.Exception = exception;
-                return View();
-            }
-        }
+                ViewData["Exception"] = "Category could not be deleted due to a reference to another item in the database";
 
-        private bool IsContainEmptyValues(IFormCollection collection)
-        {
-            foreach (var item in collection)
-            {
-                if (item.Value == string.Empty)
-                {
-                    return true;
-                }
+                return View(courseService.Read(id));
             }
 
-            return false;
-        }
+            ViewData["Exception"] = "Object not found";
 
-        private void UpdateProperties(IFormCollection collection, Course targetCourse)
-        {
-            collection.TryGetValue("Name", out var name);
-            targetCourse.UpdateName(name);
-            collection.TryGetValue("Description", out var description);
-            targetCourse.UpdateDescription(description);
+            return View(courseService.Read(id));
         }
     }
 }
