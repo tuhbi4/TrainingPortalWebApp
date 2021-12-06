@@ -1,4 +1,4 @@
-﻿namespace TrainingPortal.Entities
+﻿namespace TrainingPortal.Entities.Models
 {
     public class User
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using TrainingPortal.Entities.Models.CourseItems.TestItems.TestQuestionItems;
 
-namespace TrainingPortal.Entities
+namespace TrainingPortal.Entities.Models.CourseItems.TestItems
 {
     public class TestQuestion
     {
@@ -8,9 +9,9 @@ namespace TrainingPortal.Entities
 
         public string Question { get; private set; }
 
-        public List<string> Answers { get; private set; }
+        public List<Answer> Answers { get; private set; }
 
-        public TestQuestion(int id, string question, List<string> answers)
+        public TestQuestion(int id, string question, List<Answer> answers)
         {
             Id = id;
             Question = question;
@@ -22,9 +23,9 @@ namespace TrainingPortal.Entities
             Question = question;
         }
 
-        public void UpdateAnswers(List<string> answers)
+        public void UpdateAnswers(List<Answer> answersList)
         {
-            Answers = answers;
+            Answers = answersList;
         }
     }
 }

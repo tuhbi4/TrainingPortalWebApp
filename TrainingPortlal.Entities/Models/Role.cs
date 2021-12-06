@@ -1,12 +1,12 @@
-﻿namespace TrainingPortal.Entities
+﻿namespace TrainingPortal.Entities.Models
 {
-    public class Category
+    public class Role
     {
         public int Id { get; }
 
         public string Name { get; private set; }
 
-        public Category(int id, string name)
+        public Role(int id, string name)
         {
             Id = id;
             Name = name;

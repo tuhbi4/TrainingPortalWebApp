@@ -1,4 +1,4 @@
-﻿namespace TrainingPortal.Entities
+﻿namespace TrainingPortal.Entities.Models.CourseItems
 {
     public class Certificate
     {
@@ -6,7 +6,7 @@
 
         public string CourseName { get; private set; }
 
-        public string Image { get; private set; }
+        public string ImageLink { get; private set; }
 
         public string UserName { get; private set; }
 
@@ -14,8 +14,16 @@
         {
             Id = id;
             CourseName = courseName;
-            Image = image;
+            ImageLink = image;
             UserName = userName;
+        }
+
+        public Certificate(int id, string courseName, string image, User user) : this(id, courseName, image, $"{user.Lastname} {user.Firstname} {user.Patronymic}")
+        {
+        }
+
+        public Certificate(int id, string courseName, string image) : this(id, courseName, image, "Lastname Firstname Patronymic")
+        {
         }
 
         public void UpdateCourseName(string courseName)
@@ -25,7 +33,7 @@
 
         public void UpdateImage(string image)
         {
-            Image = image;
+            ImageLink = image;
         }
 
         public void UpdateUserName(string userName)
