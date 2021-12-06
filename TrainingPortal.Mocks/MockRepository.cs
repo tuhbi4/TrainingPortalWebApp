@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using TrainingPortal.DAL.Interfaces;
-using TrainingPortal.Entities;
+using TrainingPortal.Entities.Models;
 
 namespace TrainingPortal.DAL.Mocks
 {
-    public class MockRepository<T> : IRepository<T> where T : class
+    public class MockRepository<T> : IDboRepository<T> where T : class
     {
         public List<T> Items
         { get { return _list; } }
@@ -17,14 +17,10 @@ namespace TrainingPortal.DAL.Mocks
             _ => new List<T>(),
         };
 
-        public void Create(T dataInstance)
+        public int Create(T dataInstance)
         {
             _list.Add(dataInstance);
-        }
-
-        public void Delete(int id)
-        {
-            _list.RemoveAt(id - 1);
+            return _list.Count;
         }
 
         public T Read(int id)
@@ -37,9 +33,16 @@ namespace TrainingPortal.DAL.Mocks
             return _list;
         }
 
-        public void Update(int id, T dataInstance)
+        public int Update(int id, T dataInstance)
         {
             _list[id - 1] = dataInstance;
+            return _list.Count;
+        }
+
+        public int Delete(int id)
+        {
+            _list.RemoveAt(id - 1);
+            return _list.Count;
         }
     }
 }
