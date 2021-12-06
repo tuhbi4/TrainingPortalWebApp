@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPortal.BLL.Interfaces;
-using TrainingPortal.Entities;
+using TrainingPortal.Entities.Models;
+using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
 {
@@ -23,70 +24,48 @@ namespace TrainingPortal.WebPL.Controllers
         // GET: CategoryController/Create
         public ActionResult Create()
         {
-            return View();
+            CategoryViewModel workingItem = new();
+
+            return View(workingItem);
         }
 
         // POST: CategoryController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(CategoryViewModel workingItem)
         {
-            try
+            if (ModelState.IsValid
+                && categoryService.Create(new(categoryService.ReadAll().Count + 1, workingItem.Name)) > 0)
             {
-                if (IsContainEmptyValues(collection))
-                {
-                    throw new BadHttpRequestException("Field cannot be empty");
-                }
-                else
-                {
-                    collection.TryGetValue("Name", out var name);
-                    categoryService.Create(new(categoryService.ReadAll().Count + 1, name.ToString()));
-                }
-
                 return RedirectToAction(nameof(Index));
             }
-            catch (BadHttpRequestException exception)
-            {
-                ViewBag.Exception = exception;
-                ViewBag.IFormCollection = collection;
 
-                return View();
-            }
+            return View(workingItem);
         }
 
         // GET: CategoryController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View(categoryService.Read(id));
+            CategoryViewModel workingItem = new() { Name = categoryService.Read(id).Name };
+
+            return View(workingItem);
         }
 
         // POST: CategoryController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, CategoryViewModel workingItem)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (IsContainEmptyValues(collection))
-                {
-                    throw new BadHttpRequestException("Field cannot be empty");
-                }
-                else
-                {
-                    Category targetCategory = categoryService.Read(id);
-                    UpdateProperties(collection, targetCategory);
-                    categoryService.Update(id, targetCategory);
-                }
-
-                return RedirectToAction(nameof(Index));
+                return View(workingItem);
             }
-            catch (BadHttpRequestException exception)
-            {
-                ViewBag.Exception = exception;
-                ViewBag.IFormCollection = collection;
 
-                return View(categoryService.Read(id));
-            }
+            Category targetItem = categoryService.Read(id);
+            targetItem.UpdateName(workingItem.Name);
+            categoryService.Update(id, targetItem);
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: CategoryController/Delete/5
@@ -100,41 +79,21 @@ namespace TrainingPortal.WebPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
+            if (categoryService.Read(id) != null)
             {
-                if (categoryService.Read(id) != null)
+                if (categoryService.Delete(id) > 0)
                 {
-                    categoryService.Delete(id);
                     return RedirectToAction(nameof(Index));
                 }
 
-                throw new BadHttpRequestException("Object not found");
-            }
-            catch (BadHttpRequestException exception)
-            {
-                ViewData["Exception"] = exception;
-                ViewBag.Exception = exception;
-                return View();
-            }
-        }
+                ViewData["Exception"] = "Category could not be deleted due to a reference to another item in the database";
 
-        private bool IsContainEmptyValues(IFormCollection collection)
-        {
-            foreach (var item in collection)
-            {
-                if (item.Value == string.Empty)
-                {
-                    return true;
-                }
+                return View(categoryService.Read(id));
             }
 
-            return false;
-        }
+            ViewData["Exception"] = "Object not found";
 
-        private void UpdateProperties(IFormCollection collection, Category targetCategory)
-        {
-            collection.TryGetValue("Name", out var name);
-            targetCategory.UpdateName(name);
+            return View(categoryService.Read(id));
         }
     }
 }

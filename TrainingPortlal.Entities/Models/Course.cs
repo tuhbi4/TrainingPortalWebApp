@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using TrainingPortal.Entities.Models.CourseItems;
 
-namespace TrainingPortal.Entities
+namespace TrainingPortal.Entities.Models
 {
     public class Course
     {
@@ -31,14 +32,6 @@ namespace TrainingPortal.Entities
             Test = test;
             Certificate = certificate;
             TargetAudienciesList = targetAudienciesList;
-        }
-
-        //UNDONE: Delete this constructor with mocks
-        public Course(int id, string name, string description)
-        {
-            Id = id;
-            Name = name;
-            Description = description;
         }
 
         public void UpdateName(string name)

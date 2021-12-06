@@ -6,6 +6,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\TrainingPortal.BLL.Interfaces\TrainingPortal.BLL.Interfaces.csproj" />
+		<ProjectReference Include="..\TrainingPortal.DAL.Dbo\TrainingPortal.DAL.Dbo.csproj" />
 		<ProjectReference Include="..\TrainingPortal.DAL.Interfaces\TrainingPortal.DAL.Interfaces.csproj" />
 	</ItemGroup>
 

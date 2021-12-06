@@ -1,4 +1,4 @@
-﻿namespace TrainingPortal.Entities
+﻿namespace TrainingPortal.Entities.Models.CourseItems
 {
     public class Lesson
     {
@@ -6,10 +6,9 @@
 
         public string Name { get; private set; }
 
-        // UNDONE: Lesson material - think over the type (maby that will *.html files or something else)
-        public object Material { get; private set; }
+        public string Material { get; private set; }
 
-        public Lesson(int id, string name, object material)
+        public Lesson(int id, string name, string material)
         {
             Id = id;
             Name = name;
@@ -21,7 +20,7 @@
             Name = name;
         }
 
-        public void UpdateMaterial(object material)
+        public void UpdateMaterial(string material)
         {
             Material = material;
         }

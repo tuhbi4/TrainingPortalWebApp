@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using TrainingPortal.Entities.Models.CourseItems.TestItems;
 
-namespace TrainingPortal.Entities
+namespace TrainingPortal.Entities.Models.CourseItems
 {
     public class Test
     {

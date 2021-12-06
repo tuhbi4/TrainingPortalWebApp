@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using TrainingPortal.Entities;
+using TrainingPortal.Entities.Models.CourseItems;
 
 namespace TrainingPortal.DAL.Mocks
 {
