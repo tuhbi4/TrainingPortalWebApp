@@ -1,0 +1,24 @@
+﻿@model TrainingPortal.WebPL.Models.RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<h1>Create User</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <form asp-action="Create" asp-controller=Account method=post>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-4">
+                @{
+                    await Html.RenderPartialAsync("_RegisterUserViewModelPartial");
+                }
+                <div class="col-12btn-group" role="group" aria-label="Basic outlined example">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
