@@ -158,16 +158,15 @@ VALUES ('Engineering'),
 
 GO
 INSERT INTO [dbo].[Roles] ([Name])
-VALUES ('guest'),
-('user'),
+VALUES ('user'),
 ('editor'),
 ('admin')
 
 GO
 INSERT INTO [dbo].[Users] ([Login], [PasswordHash], [Email], [RoleId], [Lastname], [Firstname], [Patronymic])
-VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww==', 'admin@tp.com', 4, 'Adminlastname', 'Adminfirstname', 'Adminpatronymic'),
-('editor', 'Wu6dvSoYiDkQUHNXG+4bHw==', 'editor@tp.com', 3, 'Editorlastname', 'Editorfirstname', 'Editorpatronymic'),
-('user', '7hHLsZBS5AsHqsDKBgwj7g==', 'user@tp.com', 2, 'Userlastname', 'Userfirstname', 'Userpatronymic')
+VALUES ('admin', 'ISMvKXpXpadDiUoOSoAfww==', 'admin@tp.com', 3, 'Adminlastname', 'Adminfirstname', 'Adminpatronymic'),
+('editor', 'Wu6dvSoYiDkQUHNXG+4bHw==', 'editor@tp.com', 2, 'Editorlastname', 'Editorfirstname', 'Editorpatronymic'),
+('user', '7hHLsZBS5AsHqsDKBgwj7g==', 'user@tp.com', 1, 'Userlastname', 'Userfirstname', 'Userpatronymic')
 
 GO
 INSERT INTO [dbo].[Courses] ([Name], [Description], [CategoryId], [TestId], [CertificateId])

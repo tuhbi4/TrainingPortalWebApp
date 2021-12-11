@@ -29,14 +29,14 @@ namespace TrainingPortal.BLL.Services.Repositories
 
         public List<Category> ReadAll()
         {
-            List<Category> answerList = new();
-            List<CategoryDbo> answerDboList = _repository.ReadAll();
-            foreach (CategoryDbo answerDbo in answerDboList)
+            List<Category> categoryList = new();
+            List<CategoryDbo> categoryDboList = _repository.ReadAll();
+            foreach (CategoryDbo categoryDbo in categoryDboList)
             {
-                answerList.Add(_modelMapper.ConvertToDomainModel<CategoryDbo, Category>(answerDbo));
+                categoryList.Add(_modelMapper.ConvertToDomainModel<CategoryDbo, Category>(categoryDbo));
             }
 
-            return answerList;
+            return categoryList;
         }
 
         public int Update(int id, Category dataInstance)

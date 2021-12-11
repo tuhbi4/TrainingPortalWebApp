@@ -1,0 +1,61 @@
+﻿@model TrainingPortal.WebPL.Models.EditUserViewModel
+
+@{
+    ViewData["Title"] = "Account editor";
+    var roles = ViewBag.Roles;
+}
+
+<h1>Account editor</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <form asp-action="Edit" asp-controller=Account method=post>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-4">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 form-floating mb-3">
+                        <input asp-for="Login" class="form-control" placeholder="" />
+                        <label asp-for="Login" class="control-label col-md-6 col-lg-2 col-form-label ml-3"></label>
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 col-lg-4 form-floating mb-3">
+                        <input asp-for="Email" class="form-control" placeholder="" />
+                        <label asp-for="Email" class="control-label col-md-6 col-lg-2 col-form-label ml-3"></label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 col-lg-4 form-floating mb-3">
+                        <select asp-for="RoleId" id="disabledSelect" class="form-select">
+                            @{
+                                foreach (var role in roles)
+                                {
+                                    <option value="@role.Id">@role.Name</option>
+                                }
+                            }
+                        </select>
+                        <label asp-for="RoleId" class="control-label col-md-6 col-lg-2 col-form-label ml-3"></label>
+                        <span asp-validation-for="RoleId" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 col-lg-4 form-floating mb-3">
+                        <input asp-for="Lastname" class="form-control" placeholder="" />
+                        <label asp-for="Lastname" class="control-label col-md-6 col-lg-2 col-form-label ml-3"></label>
+
+                        <span asp-validation-for="Lastname" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 col-lg-4 form-floating mb-3">
+                        <input asp-for="Firstname" class="form-control" placeholder="" />
+                        <label asp-for="Firstname" class="control-label col-md-6 col-lg-2 col-form-label ml-3"></label>
+
+                        <span asp-validation-for="Firstname" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 col-lg-4 form-floating mb-3">
+                        <input asp-for="Patronymic" class="form-control" placeholder="" />
+                        <label asp-for="Patronymic" class="control-label col-md-6 col-lg-2 col-form-label ml-3"></label>
+                        <span asp-validation-for="Patronymic" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+        </form>
+    </div>
+</div>
