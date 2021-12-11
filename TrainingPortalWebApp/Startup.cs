@@ -1,9 +1,12 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TrainingPortal.Dependencies;
+using TrainingPortal.WebPL.Interfaces;
+using TrainingPortal.WebPL.Mapper;
 
 namespace TrainingPortal.WebPL
 {
@@ -22,6 +25,11 @@ namespace TrainingPortal.WebPL
             services.AddControllersWithViews();
             services.InjectDependencies();
             services.InjectDependencies(Configuration);
+            services.AddSingleton<IViewModelMapper, ViewModelMapper>();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //.AddCookie();
+            .AddCookie(options => Configuration.Bind("CookieSettings", options));
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +50,7 @@ namespace TrainingPortal.WebPL
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
