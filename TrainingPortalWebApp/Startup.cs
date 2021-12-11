@@ -27,9 +27,7 @@ namespace TrainingPortal.WebPL
             services.InjectDependencies(Configuration);
             services.AddSingleton<IViewModelMapper, ViewModelMapper>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //.AddCookie();
             .AddCookie(options => Configuration.Bind("CookieSettings", options));
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
