@@ -19,6 +19,7 @@ namespace TrainingPortal.Dependencies
     {
         public static void InjectDependencies(this IServiceCollection services)
         {
+            services.AddSingleton<IHashService, MD5HashService>();
             services.AddSingleton<IDboModelMapper, SqlDboModelMapper>();
             services.AddSingleton<IDbCommandPerformer, SqlDbCommandPerformer>();
             services.AddSingleton<IDboRepository<CategoryDbo>, CategoriesDboRepository>();
@@ -36,8 +37,8 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IModelMapper, ModelMapper>();
             services.AddSingleton<IRepositoryService<Category>, CategoriesRepositoryService>();
             services.AddSingleton<IRepositoryService<Course>, CourseRepositoryService>();
-            //services.AddSingleton<IRepositoryService<Role>, RepositoryService<Role>>();
-            //services.AddSingleton<IRepositoryService<User>, RepositoryService<User>>();
+            services.AddSingleton<IRepositoryService<User>, UserRepositoryService>();
+            services.AddSingleton<IRepositoryService<Role>, RoleRepositoryService>();
         }
 
         public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration)
