@@ -105,7 +105,7 @@ namespace TrainingPortal.BLL.Services
 
                 case nameof(User):
                     User user = sourceInstance as User;
-                    return new UserDbo(user.Id, user.Login, user.Password, user.Email, 0,
+                    return new UserDbo(user.Id, user.Login, user.Password, user.Email, user.Role.Id,
                         user.Lastname, user.Firstname, user.Patronymic) as TOut;
 
                 default:
