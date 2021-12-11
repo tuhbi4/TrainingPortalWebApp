@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using TrainingPortal.DAL.Interfaces;
@@ -64,7 +65,7 @@ namespace TrainingPortal.SqlDAL
 
                 foreach (var parameter in parameters)
                 {
-                    command.Parameters.Add(parameter);
+                    command.Parameters.AddWithValue(parameter.ParameterName, parameter.Value ?? DBNull.Value);
                 }
 
                 _connection.Open();
