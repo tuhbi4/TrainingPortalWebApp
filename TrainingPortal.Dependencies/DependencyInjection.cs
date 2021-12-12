@@ -47,6 +47,11 @@ namespace TrainingPortal.Dependencies
             {
                 ConnectionString = configuration.GetConnectionString("DefaultConnection"),
             });
+            services.AddSingleton(new AzureSettings
+            {
+                ConnectionString = configuration.GetSection("AzureSettings:ConnectionString").Value,
+                ImageContainerName = configuration.GetSection("AzureSettings:ImageContainerName").Value
+            });
         }
     }
 }

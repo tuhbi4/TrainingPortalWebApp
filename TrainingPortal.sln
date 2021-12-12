@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{5CCAA147
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BLL", "BLL", "{17A84D05-B08F-48C4-B630-8416BADC000A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingPortal.BLL.Tests", "TrainingPortal.BLL.Tests\TrainingPortal.BLL.Tests.csproj", "{C0A2E52C-2263-4E27-9DAC-7CCE2D03555A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrainingPortal.BLL.Tests", "TrainingPortal.BLL.Tests\TrainingPortal.BLL.Tests.csproj", "{C0A2E52C-2263-4E27-9DAC-7CCE2D03555A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
