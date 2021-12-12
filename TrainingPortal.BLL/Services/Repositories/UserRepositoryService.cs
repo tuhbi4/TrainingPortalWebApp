@@ -36,7 +36,8 @@ namespace TrainingPortal.BLL.Services.Repositories
             foreach (UserDbo userDbo in userDboList)
             {
                 User user = _modelMapper.ConvertToDomainModel<UserDbo, User>(userDbo);
-                user.UpdateRole(_modelMapper.ConvertToDomainModel<RoleDbo, Role>(_roleRepository.Read(userDbo.RoleId)));
+                RoleDbo roleDbo = _roleRepository.Read(userDbo.RoleId);
+                user.UpdateRole(_modelMapper.ConvertToDomainModel<RoleDbo, Role>(roleDbo));
                 userList.Add(user);
             }
 
