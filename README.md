@@ -30,7 +30,7 @@
 - [ ] Views
 - [X] Working with DB
 - [X] Authentication / Authorization by cookies
-- [ ] Logging
+- [X] Logging
 
 - [ ] NUnit and unit-tests
 - [ ] Deploy in Azure
