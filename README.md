@@ -33,7 +33,7 @@
 - [X] Logging
 
 - [X] NUnit and unit-tests
-- [ ] Deploy in Azure
+- [X] Deploy in Azure
 
 ##
 - [ ] Extra functionality:
