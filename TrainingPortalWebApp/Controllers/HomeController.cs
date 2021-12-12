@@ -31,6 +31,13 @@ namespace TrainingPortal.WebPL.Controllers
             return View();
         }
 
+        public IActionResult NotImplemented()
+        {
+            logger.Debug($"Requested page with not implemented feature: initiator = \"{User.Identity.Name}\"");
+
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

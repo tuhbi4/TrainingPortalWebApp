@@ -41,7 +41,7 @@ namespace TrainingPortal.BLL.Services.Repositories
 
         public int Update(int id, Category dataInstance)
         {
-            return _repository.Update(id, _modelMapper.ConvertToDomainModel<Category, CategoryDbo>(dataInstance));
+            return _repository.Update(id, _modelMapper.ConvertToDboModel<Category, CategoryDbo>(dataInstance));
         }
 
         public int Delete(int id)

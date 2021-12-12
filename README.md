@@ -5,10 +5,10 @@
 ***
 
 ## Project status
-![](https://img.shields.io/badge/project%20completed-50%25-yellow)
+![](https://img.shields.io/badge/project%20completed-60%25-yellow)
 ![](https://img.shields.io/badge/build-success-success)
-![](https://img.shields.io/badge/manual%20testing-none-critical)
-![](https://img.shields.io/badge/coverage%20-0%25-critical)
+![](https://img.shields.io/badge/manual%20testing-success-success)
+![](https://img.shields.io/badge/coverage%20-10%25-yellow)
 ![](https://img.shields.io/badge/documentation-0%25-critical)
 
 ***
@@ -18,21 +18,21 @@
 - [X] Project architecture
 - [X] Models
 - [ ] Services
-  - [ ] Section navigation
+  - [X] Section navigation
   - [ ] Сourse search page by parameters
-  - [ ] Viewing course information
+  - [X] Viewing course information
   - [ ] Passing the course
   - [ ] View the list of completed courses
   - [ ] Downloading the certificate
   - [X] Editing a profile
   - [ ] Site information management
   - [X] User management
-- [ ] Views
+- [X] Views
 - [X] Working with DB
 - [X] Authentication / Authorization by cookies
 - [X] Logging
 
-- [ ] NUnit and unit-tests
+- [X] NUnit and unit-tests
 - [ ] Deploy in Azure
 
 ##

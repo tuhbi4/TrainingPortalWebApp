@@ -2,12 +2,6 @@ USE [master]
 GO
 /****** Object:  Database [TrainingPortal]    Script Date: 10.12.2021 13:30:24 ******/
 CREATE DATABASE [TrainingPortal]
- CONTAINMENT = NONE
- ON  PRIMARY 
-( NAME = N'TrainingPortal', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TrainingPortal.mdf' , SIZE = 8192KB , MAXSIZE = UNLIMITED, FILEGROWTH = 65536KB )
- LOG ON 
-( NAME = N'TrainingPortal_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL15.SQLEXPRESS\MSSQL\DATA\TrainingPortal_log.ldf' , SIZE = 8192KB , MAXSIZE = 2048GB , FILEGROWTH = 65536KB )
- WITH CATALOG_COLLATION = DATABASE_DEFAULT
 GO
 ALTER DATABASE [TrainingPortal] SET COMPATIBILITY_LEVEL = 150
 GO

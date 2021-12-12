@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPortal.BLL.Interfaces;
 using TrainingPortal.Entities.Models;
@@ -6,6 +7,7 @@ using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
 {
+    [Authorize(Roles = "admin,  editor")]
     public class CategoriesController : Controller
     {
         private readonly IRepositoryService<Category> categoryService;
@@ -16,6 +18,7 @@ namespace TrainingPortal.WebPL.Controllers
         }
 
         // GET: CategoryController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(categoryService.ReadAll());

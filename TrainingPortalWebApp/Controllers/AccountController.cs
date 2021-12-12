@@ -217,7 +217,7 @@ namespace TrainingPortal.WebPL.Controllers
         public ActionResult Profile()
         {
             // UNDONE: Get course progress, download certificate, etc. - add implementation
-            return View();
+            return RedirectToAction("NotImplemented", "Home");
         }
 
         // GET: AuthController/Settings

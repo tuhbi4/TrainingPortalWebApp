@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPortal.BLL.Interfaces;
 using TrainingPortal.Entities.Models;
@@ -6,6 +7,7 @@ using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
 {
+    [Authorize(Roles = "admin,  editor")]
     public class CoursesController : Controller
     {
         private readonly IRepositoryService<Course> courseService;
@@ -16,12 +18,14 @@ namespace TrainingPortal.WebPL.Controllers
         }
 
         // GET: CoursesController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(courseService.ReadAll());
         }
 
         // GET: CoursesController/Details/5
+        [Authorize(Roles = "admin,  editor, user")]
         public ActionResult Details(int id)
         {
             return View(courseService.Read(id));
@@ -64,16 +68,7 @@ namespace TrainingPortal.WebPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, CategoryViewModel workingItem)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(workingItem);
-            }
-
-            Course targetItem = courseService.Read(id);
-            targetItem.UpdateName(workingItem.Name);
-            courseService.Update(id, targetItem);
-
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("NotImplemented", "Home");
         }
 
         // GET: CoursesController/Delete/5
