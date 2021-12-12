@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Serilog;
 using System.Diagnostics;
 using TrainingPortal.WebPL.Models;
 
@@ -7,11 +7,11 @@ namespace TrainingPortal.WebPL.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public IActionResult Index()
@@ -23,8 +23,11 @@ namespace TrainingPortal.WebPL.Controllers
         {
             return View();
         }
+
         public IActionResult AccessDenied()
         {
+            logger.Warning($"Access denied: initiator = \"{User.Identity.Name}\"");
+
             return View();
         }
 

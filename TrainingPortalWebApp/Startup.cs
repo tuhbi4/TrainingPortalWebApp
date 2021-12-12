@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 using TrainingPortal.Dependencies;
 using TrainingPortal.WebPL.Interfaces;
 using TrainingPortal.WebPL.Mapper;
@@ -22,14 +23,16 @@ namespace TrainingPortal.WebPL
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration, "Serilog")
+                .CreateLogger();
+            services.AddSingleton(Log.Logger);
             services.AddControllersWithViews();
             services.InjectDependencies();
             services.InjectDependencies(Configuration);
             services.AddSingleton<IViewModelMapper, ViewModelMapper>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-            //.AddCookie();
             .AddCookie(options => Configuration.Bind("CookieSettings", options));
-            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,8 +48,11 @@ namespace TrainingPortal.WebPL
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
 
