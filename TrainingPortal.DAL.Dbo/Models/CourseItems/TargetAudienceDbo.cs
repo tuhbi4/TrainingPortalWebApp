@@ -2,9 +2,12 @@
 {
     public class TargetAudienceDbo
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string Name { get; }
+        public string Name { get; set; }
+
+        public TargetAudienceDbo()
+        { }
 
         public TargetAudienceDbo(int id, string name)
         {

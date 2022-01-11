@@ -2,11 +2,14 @@
 {
     public class CertificateDbo
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string CourseName { get; }
+        public string CourseName { get; set; }
 
-        public string ImageLink { get; }
+        public string ImageLink { get; set; }
+
+        public CertificateDbo()
+        { }
 
         public CertificateDbo(int id, string courseName, string image)
         {

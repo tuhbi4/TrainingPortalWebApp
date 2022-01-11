@@ -2,27 +2,30 @@
 {
     public class UserDbo
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string Login { get; }
+        public string Login { get; set; }
 
-        public string PasswordHash { get; }
+        public string Password { get; set; }
 
-        public string Email { get; }
+        public string Email { get; set; }
 
-        public int RoleId { get; }
+        public int RoleId { get; set; }
 
-        public string Lastname { get; }
+        public string Lastname { get; set; }
 
-        public string Firstname { get; }
+        public string Firstname { get; set; }
 
-        public string Patronymic { get; }
+        public string Patronymic { get; set; }
+
+        public UserDbo()
+        { }
 
         public UserDbo(int id, string login, string passwordHash, string email, int roleId, string lastname, string firstname, string patronymic)
         {
             Id = id;
             Login = login;
-            PasswordHash = passwordHash;
+            Password = passwordHash;
             Email = email;
             RoleId = roleId;
             Lastname = lastname;

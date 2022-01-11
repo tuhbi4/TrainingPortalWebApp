@@ -6,6 +6,9 @@
 
         public string Name { get; }
 
+        public CategoryDbo()
+        { }
+
         public CategoryDbo(int id, string name)
         {
             Id = id;
