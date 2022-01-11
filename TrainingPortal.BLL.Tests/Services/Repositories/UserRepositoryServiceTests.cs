@@ -1,11 +1,11 @@
-﻿using Moq;
+﻿using AutoMapper;
+using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
-using TrainingPortal.BLL.Interfaces;
+using TrainingPortal.BLL.Models;
 using TrainingPortal.BLL.Services.Repositories;
 using TrainingPortal.DAL.Dbo.Models;
 using TrainingPortal.DAL.Interfaces;
-using TrainingPortal.Entities.Models;
 
 namespace TrainingPortal.BLL.Tests.Services.Repositories
 {
@@ -14,7 +14,7 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
     {
         private MockRepository mockRepository;
 
-        private Mock<IModelMapper> mockModelMapper;
+        private Mock<IMapper> mockmapper;
         private Mock<IDboRepository<UserDbo>> mockDboRepositoryUserDbo;
         private Mock<IDboRepository<RoleDbo>> mockDboRepositoryRoleDbo;
 
@@ -23,7 +23,7 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             mockRepository = new MockRepository(MockBehavior.Default);
 
-            mockModelMapper = mockRepository.Create<IModelMapper>();
+            mockmapper = mockRepository.Create<IMapper>();
             mockDboRepositoryUserDbo = mockRepository.Create<IDboRepository<UserDbo>>();
             mockDboRepositoryRoleDbo = mockRepository.Create<IDboRepository<RoleDbo>>();
         }
@@ -69,9 +69,11 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
             // Arrange
             var service = CreateService();
             UserDbo sourceInstance = new(id, null, null, null, 0, null, null, null);
-            User resultInstance = new(id, null, null, null, new Role(0, string.Empty), null, null, null);
+            User resultInstance = new();
+            resultInstance.Id = id;
+            resultInstance.Role = new Role { Id = 0, Name = string.Empty };
             mockDboRepositoryUserDbo.Setup(x => x.Read(id)).Returns(sourceInstance);
-            mockModelMapper.Setup(x => x.ConvertToDomainModel<UserDbo, User>(sourceInstance)).Returns(resultInstance);
+            mockmapper.Setup(x => x.Map<User>(sourceInstance)).Returns(resultInstance);
 
             // Act
             var actualResult = service.Read(
@@ -88,8 +90,8 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
             var service = CreateService();
             mockDboRepositoryUserDbo.Setup(x => x.ReadAll()).Returns(GetTestUserDboList());
             mockDboRepositoryRoleDbo.Setup(x => x.Read(It.IsAny<int>())).Returns<int>(id => GetTestRoleDboList()[id - 1]);
-            mockModelMapper.Setup(x => x.ConvertToDomainModel<UserDbo, User>(It.IsAny<UserDbo>())).Returns<UserDbo>(userDbo => GetTestUserList()[userDbo.Id - 1]);
-            mockModelMapper.Setup(x => x.ConvertToDomainModel<RoleDbo, Role>(It.IsAny<RoleDbo>())).Returns<RoleDbo>(roleDbo => GetTestRoleList()[roleDbo.Id - 1]);
+            mockmapper.Setup(x => x.Map<User>(It.IsAny<UserDbo>())).Returns<UserDbo>(userDbo => GetTestUserList()[userDbo.Id - 1]);
+            mockmapper.Setup(x => x.Map<Role>(It.IsAny<RoleDbo>())).Returns<RoleDbo>(roleDbo => GetTestRoleList()[roleDbo.Id - 1]);
 
             // Act
             var actualResult = service.ReadAll();
@@ -101,7 +103,7 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         private UserRepositoryService CreateService()
         {
             return new UserRepositoryService(
-                mockModelMapper.Object,
+                mockmapper.Object,
                 mockDboRepositoryUserDbo.Object,
                 mockDboRepositoryRoleDbo.Object);
         }
@@ -110,9 +112,12 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             var users = new List<User>
             {
-                new User(1, "user1", "login1", "email1", new Role(1, "user"), "lastname1","firstname1","patronymic1"),
-                new User(2, "user2", "login2", "email2", new Role(1, "user"), "lastname2","firstname2","patronymic2"),
-                new User(3, "user3", "login3", "email3", new Role(1, "user"), "lastname3","firstname3","patronymic3"),
+                new User { Id = 1, Login = "user1", Password = "password1", Email = "email1",
+                    Role = new Role { Id = 1, Name = "user" }, Lastname = "lastname1", Firstname = "firstname1", Patronymic = "patronymic1" },
+                new User { Id = 2, Login = "user2", Password = "password2", Email = "email2",
+                    Role = new Role { Id = 1, Name = "user" }, Lastname = "lastname2", Firstname = "firstname2", Patronymic = "patronymic2" },
+                new User { Id = 3, Login = "user3", Password = "password3", Email = "email3",
+                    Role = new Role { Id = 1, Name = "user" }, Lastname = "lastname3", Firstname = "firstname3", Patronymic = "patronymic3" },
             };
 
             return users;
@@ -122,9 +127,9 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             var users = new List<UserDbo>
             {
-                new UserDbo(1, "user1", "login1", "email1", 1, "lastname1","firstname1","patronymic1"),
-                new UserDbo(2, "user2", "login2", "email2", 2, "lastname2","firstname2","patronymic2"),
-                new UserDbo(3, "user3", "login3", "email3", 3, "lastname3","firstname3","patronymic3"),
+                new UserDbo(1, "user1", "password1", "email1", 1, "lastname1","firstname1","patronymic1"),
+                new UserDbo(2, "user2", "password2", "email2", 2, "lastname2","firstname2","patronymic2"),
+                new UserDbo(3, "user3", "password3", "email3", 3, "lastname3","firstname3","patronymic3"),
             };
 
             return users;
@@ -146,9 +151,9 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             var roles = new List<Role>
             {
-                new Role(1, "user"),
-                new Role(2, "manager"),
-                new Role(3, "admin"),
+                new Role{ Id = 1, Name = "user" },
+                new Role{ Id = 2, Name = "manager" },
+                new Role{ Id = 3, Name = "admin" },
             };
 
             return roles;
