@@ -1,144 +1,145 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using TrainingPortal.BLL.Interfaces;
+using TrainingPortal.BLL.Models;
+using TrainingPortal.BLL.Models.CourseItems;
+using TrainingPortal.BLL.Models.CourseItems.TestItems;
+using TrainingPortal.BLL.Models.CourseItems.TestItems.TestQuestionItems;
 using TrainingPortal.DAL.Dbo.CourseItems;
 using TrainingPortal.DAL.Dbo.CourseItems.TestItems;
 using TrainingPortal.DAL.Dbo.CourseItems.TestItems.TestQuestionItems;
 using TrainingPortal.DAL.Dbo.Models;
 using TrainingPortal.DAL.Interfaces;
-using TrainingPortal.Entities.Models;
-using TrainingPortal.Entities.Models.CourseItems;
-using TrainingPortal.Entities.Models.CourseItems.TestItems;
-using TrainingPortal.Entities.Models.CourseItems.TestItems.TestQuestionItems;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
     public class CourseRepositoryService : IRepositoryService<Course>
     {
-        private readonly IModelMapper _modelMapper;
-        private readonly IDboRepository<CategoryDbo> _categoryDboRepository;
-        private readonly IDboRepository<CertificateDbo> _certificateDboRepository;
-        private readonly IDboRepository<CourseDbo> _courseDboRepository;
-        private readonly IDboInnerRepository<AnswerDbo> _answerDboInnerRepository;
-        private readonly IDboInnerRepository<TestQuestionDbo> _testQuestionDboInnerRepository;
-        private readonly IDboRelationsRepository<CoursesLessonsDboRelation> _coursesLessonsDboRelationsRepository;
-        private readonly IDboRelationsRepository<CoursesTargetAudienciesDboRelation> _coursesTargetAudienciesDboRelationsRepository;
-        private readonly IDboRepository<LessonDbo> _lessonDboRepository;
-        private readonly IDboRepository<TargetAudienceDbo> _targetAudienceDboRepository;
-        private readonly IDboRepository<TestDbo> _testDboRepository;
+        private readonly IMapper mapper;
+        private readonly IDboRepository<CategoryDbo> categoryDboRepository;
+        private readonly IDboRepository<CertificateDbo> certificateDboRepository;
+        private readonly IDboRepository<CourseDbo> courseDboRepository;
+        private readonly IDboInnerRepository<AnswerDbo> answerDboInnerRepository;
+        private readonly IDboInnerRepository<TestQuestionDbo> testQuestionDboInnerRepository;
+        private readonly IDboRelationsRepository<CoursesLessonsDboRelation> coursesLessonsDboRelationsRepository;
+        private readonly IDboRelationsRepository<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboRelationsRepository;
+        private readonly IDboRepository<LessonDbo> lessonDboRepository;
+        private readonly IDboRepository<TargetAudienceDbo> targetAudienceDboRepository;
+        private readonly IDboRepository<TestDbo> testDboRepository;
 
-        public CourseRepositoryService(IModelMapper modelMapper, IDboRepository<CategoryDbo> categoryDboRepository,
+        public CourseRepositoryService(IMapper mapper, IDboRepository<CategoryDbo> categoryDboRepository,
             IDboRepository<CertificateDbo> certificateDboRepository, IDboRepository<CourseDbo> courseDboRepository,
             IDboInnerRepository<AnswerDbo> answerDboInnerRepository, IDboInnerRepository<TestQuestionDbo> testQuestionDboInnerRepository,
             IDboRelationsRepository<CoursesLessonsDboRelation> coursesLessonsDboRelationsRepository,
             IDboRelationsRepository<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboRelationsRepository,
             IDboRepository<LessonDbo> lessonDboRepository, IDboRepository<TargetAudienceDbo> targetAudienceDboRepository, IDboRepository<TestDbo> testDboRepository)
         {
-            _modelMapper = modelMapper;
-            _categoryDboRepository = categoryDboRepository;
-            _certificateDboRepository = certificateDboRepository;
-            _courseDboRepository = courseDboRepository;
-            _answerDboInnerRepository = answerDboInnerRepository;
-            _testQuestionDboInnerRepository = testQuestionDboInnerRepository;
-            _coursesLessonsDboRelationsRepository = coursesLessonsDboRelationsRepository;
-            _coursesTargetAudienciesDboRelationsRepository = coursesTargetAudienciesDboRelationsRepository;
-            _lessonDboRepository = lessonDboRepository;
-            _targetAudienceDboRepository = targetAudienceDboRepository;
-            _testDboRepository = testDboRepository;
+            this.mapper = mapper;
+            this.categoryDboRepository = categoryDboRepository;
+            this.certificateDboRepository = certificateDboRepository;
+            this.courseDboRepository = courseDboRepository;
+            this.answerDboInnerRepository = answerDboInnerRepository;
+            this.testQuestionDboInnerRepository = testQuestionDboInnerRepository;
+            this.coursesLessonsDboRelationsRepository = coursesLessonsDboRelationsRepository;
+            this.coursesTargetAudienciesDboRelationsRepository = coursesTargetAudienciesDboRelationsRepository;
+            this.lessonDboRepository = lessonDboRepository;
+            this.targetAudienceDboRepository = targetAudienceDboRepository;
+            this.testDboRepository = testDboRepository;
         }
 
         public int Create(Course dataInstance)
         {
-            CourseDbo courseDboInstance = _modelMapper.ConvertToDboModel<Course, CourseDbo>(dataInstance);
-            courseDboInstance.UpdateCategoryId(dataInstance.Category.Id);
-            courseDboInstance.UpdateTestId(dataInstance.Test.Id);
-            courseDboInstance.UpdateCertificateId(dataInstance.Certificate.Id);
-            _courseDboRepository.Create(courseDboInstance);
-            TestDbo testDboInstance = _modelMapper.ConvertToDboModel<Test, TestDbo>(dataInstance.Test);
-            _testDboRepository.Create(testDboInstance);
+            CourseDbo courseDboInstance = mapper.Map<CourseDbo>(dataInstance);
+            courseDboInstance.CategoryId = dataInstance.Category.Id;
+            courseDboInstance.TestId = dataInstance.Test.Id;
+            courseDboInstance.CertificateId = dataInstance.Certificate.Id;
+            courseDboRepository.Create(courseDboInstance);
+            TestDbo testDboInstance = mapper.Map<TestDbo>(dataInstance.Test);
+            testDboRepository.Create(testDboInstance);
 
             foreach (TargetAudience targetAudienceInstance in dataInstance.TargetAudienciesList)
             {
-                TargetAudienceDbo targetAudienceDboInstance = _modelMapper.ConvertToDboModel<TargetAudience, TargetAudienceDbo>(targetAudienceInstance);
-                _targetAudienceDboRepository.Create(targetAudienceDboInstance);
+                TargetAudienceDbo targetAudienceDboInstance = mapper.Map<TargetAudienceDbo>(targetAudienceInstance);
+                targetAudienceDboRepository.Create(targetAudienceDboInstance);
             }
 
             foreach (Lesson lessonInstance in dataInstance.LessonsList)
             {
-                LessonDbo lessonDboInstance = _modelMapper.ConvertToDboModel<Lesson, LessonDbo>(lessonInstance);
-                _lessonDboRepository.Create(lessonDboInstance);
+                LessonDbo lessonDboInstance = mapper.Map<LessonDbo>(lessonInstance);
+                lessonDboRepository.Create(lessonDboInstance);
             }
 
-            CertificateDbo certificateDboInstance = _modelMapper.ConvertToDboModel<Certificate, CertificateDbo>(dataInstance.Certificate);
-            _certificateDboRepository.Create(certificateDboInstance);
+            CertificateDbo certificateDboInstance = mapper.Map<CertificateDbo>(dataInstance.Certificate);
+            certificateDboRepository.Create(certificateDboInstance);
 
             foreach (TestQuestion testQuestionInstance in dataInstance.Test.QuestionsList)
             {
-                TestQuestionDbo testQuestionDboInstance = _modelMapper.ConvertToDboModel<TestQuestion, TestQuestionDbo>(testQuestionInstance);
-                _testQuestionDboInnerRepository.Create(testQuestionDboInstance);
+                TestQuestionDbo testQuestionDboInstance = mapper.Map<TestQuestionDbo>(testQuestionInstance);
+                testQuestionDboInnerRepository.Create(testQuestionDboInstance);
 
                 foreach (Answer answerInstance in testQuestionInstance.Answers)
                 {
-                    AnswerDbo answerDboInstance = _modelMapper.ConvertToDboModel<Answer, AnswerDbo>(answerInstance);
-                    _answerDboInnerRepository.Create(answerDboInstance);
+                    AnswerDbo answerDboInstance = mapper.Map<AnswerDbo>(answerInstance);
+                    answerDboInnerRepository.Create(answerDboInstance);
                 }
             }
 
-            return _courseDboRepository.Create(courseDboInstance);
+            return courseDboRepository.Create(courseDboInstance);
         }
 
         public Course Read(int id)
         {
             //return ReadAll().Find(x => x.Id == id);
-            CourseDbo courseDbo = _courseDboRepository.Read(id);
-            Course course = _modelMapper.ConvertToDomainModel<CourseDbo, Course>(courseDbo);
-            CategoryDbo categoryDbo = _categoryDboRepository.Read(courseDbo.CategoryId);
-            course.UpdateCategory(_modelMapper.ConvertToDomainModel<CategoryDbo, Category>(categoryDbo));
+            CourseDbo courseDbo = courseDboRepository.Read(id);
+            Course course = mapper.Map<Course>(courseDbo);
+            CategoryDbo categoryDbo = categoryDboRepository.Read(courseDbo.CategoryId);
+            course.Category = mapper.Map<Category>(categoryDbo);
             List<Lesson> lessonList = new();
-            List<CoursesLessonsDboRelation> coursesLessonsDboRelationList = _coursesLessonsDboRelationsRepository.Read(id);
+            List<CoursesLessonsDboRelation> coursesLessonsDboRelationList = coursesLessonsDboRelationsRepository.Read(id);
 
             foreach (CoursesLessonsDboRelation coursesLessonsDboRelation in coursesLessonsDboRelationList)
             {
-                LessonDbo lessonDbo = _lessonDboRepository.Read(coursesLessonsDboRelation.LessonId);
-                lessonList.Add(_modelMapper.ConvertToDomainModel<LessonDbo, Lesson>(lessonDbo));
+                LessonDbo lessonDbo = lessonDboRepository.Read(coursesLessonsDboRelation.LessonId);
+                lessonList.Add(mapper.Map<Lesson>(lessonDbo));
             }
 
-            course.UpdateLessonsList(lessonList);
+            course.LessonsList = lessonList;
 
-            TestDbo testDbo = _testDboRepository.Read(courseDbo.TestId);
-            Test test = _modelMapper.ConvertToDomainModel<TestDbo, Test>(testDbo);
+            TestDbo testDbo = testDboRepository.Read(courseDbo.TestId);
+            Test test = mapper.Map<Test>(testDbo);
             List<TestQuestion> questionsList = new();
-            List<TestQuestionDbo> testQuestionDboList = _testQuestionDboInnerRepository.ReadAllByParentId(test.Id);
+            List<TestQuestionDbo> testQuestionDboList = testQuestionDboInnerRepository.ReadAllByParentId(test.Id);
 
             foreach (TestQuestionDbo testQuestionDbo in testQuestionDboList)
             {
-                TestQuestion testQuestion = _modelMapper.ConvertToDomainModel<TestQuestionDbo, TestQuestion>(testQuestionDbo);
+                TestQuestion testQuestion = mapper.Map<TestQuestion>(testQuestionDbo);
                 List<Answer> answersList = new();
-                List<AnswerDbo> answerDboList = _answerDboInnerRepository.ReadAllByParentId(testQuestion.Id);
+                List<AnswerDbo> answerDboList = answerDboInnerRepository.ReadAllByParentId(testQuestion.Id);
 
                 foreach (AnswerDbo answerDbo in answerDboList)
                 {
-                    answersList.Add(_modelMapper.ConvertToDomainModel<AnswerDbo, Answer>(answerDbo));
+                    answersList.Add(mapper.Map<Answer>(answerDbo));
                 }
 
-                testQuestion.UpdateAnswers(answersList);
+                testQuestion.Answers = answersList;
                 questionsList.Add(testQuestion);
             }
 
-            test.UpdateQuestions(questionsList);
-            course.UpdateTest(test);
-            CertificateDbo certificateDbo = _certificateDboRepository.Read(courseDbo.CertificateId);
-            course.UpdateCertificate(_modelMapper.ConvertToDomainModel<CertificateDbo, Certificate>(certificateDbo));
+            test.QuestionsList = questionsList;
+            course.Test = test;
+            CertificateDbo certificateDbo = certificateDboRepository.Read(courseDbo.CertificateId);
+            course.Certificate = mapper.Map<Certificate>(certificateDbo);
 
             List<TargetAudience> targetAudienceList = new();
-            List<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboRelationList = _coursesTargetAudienciesDboRelationsRepository.Read(id);
+            List<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboRelationList = coursesTargetAudienciesDboRelationsRepository.Read(id);
 
             foreach (CoursesTargetAudienciesDboRelation coursesTargetAudienciesDboRelation in coursesTargetAudienciesDboRelationList)
             {
-                TargetAudienceDbo targetAudienceDbo = _targetAudienceDboRepository.Read(coursesTargetAudienciesDboRelation.TargetAudienceId);
-                targetAudienceList.Add(_modelMapper.ConvertToDomainModel<TargetAudienceDbo, TargetAudience>(targetAudienceDbo));
+                TargetAudienceDbo targetAudienceDbo = targetAudienceDboRepository.Read(coursesTargetAudienciesDboRelation.TargetAudienceId);
+                targetAudienceList.Add(mapper.Map<TargetAudience>(targetAudienceDbo));
             }
 
-            course.UpdateTargetAudienciesList(targetAudienceList);
+            course.TargetAudienciesList = targetAudienceList;
 
             return course;
         }
@@ -146,20 +147,20 @@ namespace TrainingPortal.BLL.Services.Repositories
         public List<Course> ReadAll()
         {
             List<Course> courseList = new();
-            List<AnswerDbo> answerDboList = _answerDboInnerRepository.ReadAll();
-            List<CategoryDbo> categoryDboList = _categoryDboRepository.ReadAll();
-            List<CertificateDbo> certificateDboList = _certificateDboRepository.ReadAll();
-            List<CourseDbo> courseDboList = _courseDboRepository.ReadAll();
-            List<CoursesLessonsDboRelation> coursesLessonsDboList = _coursesLessonsDboRelationsRepository.ReadAll();
-            List<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboList = _coursesTargetAudienciesDboRelationsRepository.ReadAll();
-            List<LessonDbo> lessonDboList = _lessonDboRepository.ReadAll();
-            List<TestQuestionDbo> testQuestionDboList = _testQuestionDboInnerRepository.ReadAll();
-            List<TargetAudienceDbo> targetAudienceDboList = _targetAudienceDboRepository.ReadAll();
-            List<TestDbo> testDboList = _testDboRepository.ReadAll();
+            List<AnswerDbo> answerDboList = answerDboInnerRepository.ReadAll();
+            List<CategoryDbo> categoryDboList = categoryDboRepository.ReadAll();
+            List<CertificateDbo> certificateDboList = certificateDboRepository.ReadAll();
+            List<CourseDbo> courseDboList = courseDboRepository.ReadAll();
+            List<CoursesLessonsDboRelation> coursesLessonsDboList = coursesLessonsDboRelationsRepository.ReadAll();
+            List<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboList = coursesTargetAudienciesDboRelationsRepository.ReadAll();
+            List<LessonDbo> lessonDboList = lessonDboRepository.ReadAll();
+            List<TestQuestionDbo> testQuestionDboList = testQuestionDboInnerRepository.ReadAll();
+            List<TargetAudienceDbo> targetAudienceDboList = targetAudienceDboRepository.ReadAll();
+            List<TestDbo> testDboList = testDboRepository.ReadAll();
 
             foreach (CourseDbo courseDbo in courseDboList)
             {
-                Course course = _modelMapper.ConvertToDomainModel<CourseDbo, Course>(courseDbo);
+                Course course = mapper.Map<Course>(courseDbo);
                 List<Lesson> lessonList = new();
 
                 foreach (CoursesLessonsDboRelation coursesLessonsDbo in coursesLessonsDboList)
@@ -167,34 +168,34 @@ namespace TrainingPortal.BLL.Services.Repositories
                     if (coursesLessonsDbo.CourseId == courseDbo.Id)
                     {
                         LessonDbo lessondbo = lessonDboList.Find(x => x.Id == coursesLessonsDbo.LessonId);
-                        lessonList.Add(_modelMapper.ConvertToDomainModel<LessonDbo, Lesson>(lessondbo));
+                        lessonList.Add(mapper.Map<Lesson>(lessondbo));
                     }
                 }
 
-                Test test = _modelMapper.ConvertToDomainModel<TestDbo, Test>(testDboList.Find(x => x.Id == courseDbo.TestId));
+                Test test = mapper.Map<Test>(testDboList.Find(x => x.Id == courseDbo.TestId));
                 List<TestQuestion> questionsList = new();
 
                 foreach (TestQuestionDbo testQuestionDbo in testQuestionDboList)
                 {
                     if (testQuestionDbo.TestId == test.Id)
                     {
-                        TestQuestion testQuestion = _modelMapper.ConvertToDomainModel<TestQuestionDbo, TestQuestion>(testQuestionDbo);
+                        TestQuestion testQuestion = mapper.Map<TestQuestion>(testQuestionDbo);
                         List<Answer> answersList = new();
 
                         foreach (AnswerDbo answerDbo in answerDboList)
                         {
                             if (answerDbo.QuestionId == testQuestion.Id)
                             {
-                                answersList.Add(_modelMapper.ConvertToDomainModel<AnswerDbo, Answer>(answerDbo));
+                                answersList.Add(mapper.Map<Answer>(answerDbo));
                             }
                         }
 
-                        testQuestion.UpdateAnswers(answersList);
+                        testQuestion.Answers = answersList;
                         questionsList.Add(testQuestion);
                     }
                 }
 
-                test.UpdateQuestions(questionsList);
+                test.QuestionsList = questionsList;
 
                 List<TargetAudience> targetAudienceList = new();
 
@@ -203,15 +204,15 @@ namespace TrainingPortal.BLL.Services.Repositories
                     if (coursesTargetAudienciesDbo.CourseId == courseDbo.Id)
                     {
                         TargetAudienceDbo targetAudienceDbo = targetAudienceDboList.Find(x => x.Id == coursesTargetAudienciesDbo.TargetAudienceId);
-                        targetAudienceList.Add(_modelMapper.ConvertToDomainModel<TargetAudienceDbo, TargetAudience>(targetAudienceDbo));
+                        targetAudienceList.Add(mapper.Map<TargetAudience>(targetAudienceDbo));
                     }
                 }
 
-                course.UpdateCategory(_modelMapper.ConvertToDomainModel<CategoryDbo, Category>(categoryDboList.Find(x => x.Id == courseDbo.CategoryId)));
-                course.UpdateLessonsList(lessonList);
-                course.UpdateTest(test);
-                course.UpdateCertificate(_modelMapper.ConvertToDomainModel<CertificateDbo, Certificate>(certificateDboList.Find(x => x.Id == courseDbo.CertificateId)));
-                course.UpdateTargetAudienciesList(targetAudienceList);
+                course.Category = mapper.Map<Category>(categoryDboList.Find(x => x.Id == courseDbo.CategoryId));
+                course.LessonsList = lessonList;
+                course.Test = test;
+                course.Certificate = mapper.Map<Certificate>(certificateDboList.Find(x => x.Id == courseDbo.CertificateId));
+                course.TargetAudienciesList = targetAudienceList;
                 courseList.Add(course);
             }
 
@@ -225,7 +226,7 @@ namespace TrainingPortal.BLL.Services.Repositories
 
         public int Delete(int id)
         {
-            return _courseDboRepository.Delete(id);
+            return courseDboRepository.Delete(id);
         }
     }
 }

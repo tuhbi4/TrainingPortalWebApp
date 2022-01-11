@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPortal.BLL.Interfaces;
-using TrainingPortal.Entities.Models;
+using TrainingPortal.BLL.Models;
 using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
@@ -38,7 +38,7 @@ namespace TrainingPortal.WebPL.Controllers
         public ActionResult Create(CategoryViewModel workingItem)
         {
             if (ModelState.IsValid
-                && categoryService.Create(new(categoryService.ReadAll().Count + 1, workingItem.Name)) > 0)
+                && categoryService.Create(new Category { Id = categoryService.ReadAll().Count + 1, Name = workingItem.Name }) > 0)
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -65,7 +65,7 @@ namespace TrainingPortal.WebPL.Controllers
             }
 
             Category targetItem = categoryService.Read(id);
-            targetItem.UpdateName(workingItem.Name);
+            targetItem.Name = workingItem.Name;
             categoryService.Update(id, targetItem);
 
             return RedirectToAction(nameof(Index));

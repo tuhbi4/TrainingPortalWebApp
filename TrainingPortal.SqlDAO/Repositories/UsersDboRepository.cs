@@ -24,7 +24,7 @@ namespace TrainingPortal.SqlDAL.Repositories
             var parameters = new List<SqlParameter>()
             {
                 new("Login", DbType.String) { Value = dataInstance.Login },
-                new("PasswordHash", DbType.String) { Value = dataInstance.PasswordHash},
+                new("PasswordHash", DbType.String) { Value = dataInstance.Password},
                 new("Email", DbType.String) { Value = dataInstance.Email },
                 new("RoleId", DbType.Int32) { Value = dataInstance.RoleId },
                 new("Lastname", DbType.String) { Value = dataInstance.Lastname},
@@ -62,7 +62,7 @@ namespace TrainingPortal.SqlDAL.Repositories
             {
                 new("Id", DbType.Int32) { Value = id },
                 new("Login", DbType.String) { Value = dataInstance.Login },
-                new("PasswordHash", DbType.String) { Value = dataInstance.PasswordHash},
+                new("PasswordHash", DbType.String) { Value = dataInstance.Password},
                 new("Email", DbType.String) { Value = dataInstance.Email },
                 new("RoleId", DbType.Int32) { Value = dataInstance.RoleId },
                 new("Lastname", DbType.String) { Value = dataInstance.Lastname},

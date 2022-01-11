@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TrainingPortal.BLL.Interfaces;
-using TrainingPortal.Entities.Models;
+using TrainingPortal.BLL.Models;
 using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
