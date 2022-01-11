@@ -12,7 +12,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\TrainingPortal.BLL.Interfaces\TrainingPortal.BLL.Interfaces.csproj" />
 		<ProjectReference Include="..\TrainingPortal.BLL\TrainingPortal.BLL.csproj" />
-		<ProjectReference Include="..\TrainingPortal.Mocks\TrainingPortal.DAL.Mocks.csproj" />
 		<ProjectReference Include="..\TrainingPortal.SqlDAO\TrainingPortal.SqlDAL.csproj" />
 	</ItemGroup>
 
