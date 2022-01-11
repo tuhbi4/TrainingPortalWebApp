@@ -9,24 +9,24 @@ namespace TrainingPortal.SqlDAL
 {
     public class SqlDbCommandPerformer : IDbCommandPerformer
     {
-        private readonly IDboModelMapper _modelMapper;
-        private readonly ConnectionSettings _connectionStringProvider;
-        private SqlConnection _connection;
+        private readonly IDboModelMapper mapper;
+        private readonly ConnectionSettings connectionStringProvider;
+        private SqlConnection connection;
 
-        public SqlDbCommandPerformer(ConnectionSettings connectionStringProvider, IDboModelMapper modelMapper)
+        public SqlDbCommandPerformer(ConnectionSettings connectionStringProvider, IDboModelMapper mapper)
         {
-            _connectionStringProvider = connectionStringProvider;
-            _modelMapper = modelMapper;
+            this.connectionStringProvider = connectionStringProvider;
+            this.mapper = mapper;
         }
 
         public List<T> PerformStoredProcedure<T>(string storedProcedureName, List<SqlParameter> parameters) where T : class
         {
-            _connection = new SqlConnection(_connectionStringProvider.ConnectionString);
+            connection = new SqlConnection(connectionStringProvider.ConnectionString);
 
             List<T> items = null;
-            using (_connection)
+            using (connection)
             {
-                var command = new SqlCommand(storedProcedureName, _connection)
+                var command = new SqlCommand(storedProcedureName, connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -39,12 +39,12 @@ namespace TrainingPortal.SqlDAL
 
         public List<T> PerformQuery<T>(string query, List<SqlParameter> parameters) where T : class
         {
-            _connection = new SqlConnection(_connectionStringProvider.ConnectionString);
+            connection = new SqlConnection(connectionStringProvider.ConnectionString);
 
             List<T> items = null;
-            using (_connection)
+            using (connection)
             {
-                var command = new SqlCommand(query, _connection);
+                var command = new SqlCommand(query, connection);
                 items = GetModels<T>(parameters, command);
             }
 
@@ -53,12 +53,12 @@ namespace TrainingPortal.SqlDAL
 
         public int PerformNonQuery(string storedProcedureName, List<SqlParameter> parameters)
         {
-            _connection = new SqlConnection(_connectionStringProvider.ConnectionString);
+            connection = new SqlConnection(connectionStringProvider.ConnectionString);
 
             int result = 0;
-            using (_connection)
+            using (connection)
             {
-                var command = new SqlCommand(storedProcedureName, _connection)
+                var command = new SqlCommand(storedProcedureName, connection)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
@@ -68,7 +68,7 @@ namespace TrainingPortal.SqlDAL
                     command.Parameters.AddWithValue(parameter.ParameterName, parameter.Value ?? DBNull.Value);
                 }
 
-                _connection.Open();
+                connection.Open();
                 result = command.ExecuteNonQuery();
             }
 
@@ -84,7 +84,7 @@ namespace TrainingPortal.SqlDAL
                 command.Parameters.Add(parameter);
             }
 
-            _connection.Open();
+            connection.Open();
 
             using (var reader = command.ExecuteReader())
             {
@@ -92,7 +92,7 @@ namespace TrainingPortal.SqlDAL
                 {
                     while (reader.Read())
                     {
-                        items.Add(_modelMapper.CreateInstance<T>(reader));
+                        items.Add(mapper.CreateInstance<T>(reader));
                     }
                 }
             }

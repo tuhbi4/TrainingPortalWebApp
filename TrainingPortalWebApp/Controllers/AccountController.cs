@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using TrainingPortal.BLL.Interfaces;
-using TrainingPortal.Entities.Models;
-using TrainingPortal.WebPL.Interfaces;
+using TrainingPortal.BLL.Models;
 using TrainingPortal.WebPL.Models;
 
 namespace TrainingPortal.WebPL.Controllers
@@ -22,16 +22,16 @@ namespace TrainingPortal.WebPL.Controllers
         private readonly IRepositoryService<User> userService;
         private readonly IRepositoryService<Role> roleService;
         private readonly IHashService md5Hash;
-        private readonly IViewModelMapper viewModelMapper;
+        private readonly IMapper mapper;
         private readonly ILogger logger;
 
         public AccountController(IRepositoryService<User> userService, IRepositoryService<Role> roleService,
-            IHashService md5Hash, IViewModelMapper viewModelMapper, ILogger logger)
+            IHashService md5Hash, IMapper mapper, ILogger logger)
         {
             this.userService = userService;
             this.roleService = roleService;
             this.md5Hash = md5Hash;
-            this.viewModelMapper = viewModelMapper;
+            this.mapper = mapper;
             this.logger = logger;
         }
 
@@ -41,7 +41,7 @@ namespace TrainingPortal.WebPL.Controllers
         {
             logger.Information($"User list was requested: initiator = \"{User.Identity.Name}\"");
 
-            return View(userService.ReadAll().Select(x => viewModelMapper.ConvertToViewModel<User, EditUserViewModel>(x)));
+            return View(userService.ReadAll().Select(x => mapper.Map<EditUserViewModel>(x)));
         }
 
         // GET: AuthController/Login
@@ -136,7 +136,9 @@ namespace TrainingPortal.WebPL.Controllers
                         return View(model);
                     }
 
-                    User user = viewModelMapper.ConvertToDomainModel<RegisterUserViewModel, User>(model);
+                    User user = mapper.Map<User>(model);
+                    user.Password = md5Hash.GetHash(model.Password);
+                    user.Role = new Role { Id = 1, Name = "user" };
 
                     if (userService.Create(user) > 0)
                     {
@@ -193,7 +195,9 @@ namespace TrainingPortal.WebPL.Controllers
                         return View(model);
                     }
 
-                    User user = viewModelMapper.ConvertToDomainModel<RegisterUserViewModel, User>(model);
+                    User user = mapper.Map<User>(model);
+                    user.Password = md5Hash.GetHash(model.Password);
+                    user.Role = new Role { Id = 1, Name = "user" };
 
                     if (userService.Create(user) > 0)
                     {
@@ -224,7 +228,7 @@ namespace TrainingPortal.WebPL.Controllers
         public ActionResult Settings()
         {
             User user = userService.ReadAll().FirstOrDefault(x => x.Email == User.FindFirst(ClaimTypes.Email)?.Value);
-            SettingsUserViewModel model = viewModelMapper.ConvertToViewModel<User, SettingsUserViewModel>(user);
+            SettingsUserViewModel model = mapper.Map<SettingsUserViewModel>(user);
             logger.Information($"User settings was requested: user id = \"{user.Id}\"");
 
             return View(model);
@@ -258,18 +262,18 @@ namespace TrainingPortal.WebPL.Controllers
                     }
 
                     User targetUser = userService.ReadAll().FirstOrDefault(x => x.Email == User.FindFirst(ClaimTypes.Email)?.Value);
-                    User updatedUser = viewModelMapper.ConvertToDomainModel<SettingsUserViewModel, User>(model);
+                    User updatedUser = mapper.Map<User>(model);
 
                     if (updatedUser.Password is null)
                     {
-                        updatedUser.UpdatePassword(targetUser.Password);
+                        updatedUser.Password = targetUser.Password;
                     }
                     else
                     {
-                        updatedUser.UpdatePassword(md5Hash.GetHash(targetUser.Password));
+                        updatedUser.Password = md5Hash.GetHash(targetUser.Password);
                     }
 
-                    updatedUser.UpdateRole(targetUser.Role);
+                    updatedUser.Role = targetUser.Role;
 
                     if (userService.Update(targetUser.Id, updatedUser) > 0)
                     {
@@ -299,7 +303,7 @@ namespace TrainingPortal.WebPL.Controllers
             logger.Information($"User editing was requested: Initiator = \"{User.Identity.Name}\"");
 
             return View(userService.ReadAll()
-                .Select(x => viewModelMapper.ConvertToViewModel<User, EditUserViewModel>(x))
+                .Select(x => mapper.Map<EditUserViewModel>(x))
                     .FirstOrDefault(x => x.Id == id));
         }
 
@@ -314,9 +318,9 @@ namespace TrainingPortal.WebPL.Controllers
                 if (ModelState.IsValid)
                 {
                     User targetUser = userService.Read(model.Id);
-                    User updatedUser = viewModelMapper.ConvertToDomainModel<EditUserViewModel, User>(model);
-                    updatedUser.UpdatePassword(targetUser.Password);
-                    updatedUser.UpdateRole(roleService.Read(model.RoleId));
+                    User updatedUser = mapper.Map<User>(model);
+                    updatedUser.Password = targetUser.Password;
+                    updatedUser.Role = roleService.Read(model.RoleId);
 
                     if (userService.Update(targetUser.Id, updatedUser) > 0)
                     {

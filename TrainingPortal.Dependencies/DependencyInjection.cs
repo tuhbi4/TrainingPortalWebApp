@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TrainingPortal.BLL.Interfaces;
+using TrainingPortal.BLL.Models;
 using TrainingPortal.BLL.Services;
 using TrainingPortal.BLL.Services.Repositories;
 using TrainingPortal.DAL.Dbo.CourseItems;
@@ -9,7 +10,6 @@ using TrainingPortal.DAL.Dbo.CourseItems.TestItems.TestQuestionItems;
 using TrainingPortal.DAL.Dbo.Models;
 using TrainingPortal.DAL.Interfaces;
 using TrainingPortal.Entities;
-using TrainingPortal.Entities.Models;
 using TrainingPortal.SqlDAL;
 using TrainingPortal.SqlDAL.Repositories;
 
@@ -34,7 +34,6 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IDboInnerRepository<TestQuestionDbo>, QuestionsDboInnerRepository>();
             services.AddSingleton<IDboRelationsRepository<CoursesLessonsDboRelation>, CoursesLessonsDboRelationsRepository>();
             services.AddSingleton<IDboRelationsRepository<CoursesTargetAudienciesDboRelation>, CoursesTargetAudienciesDboRelationsRepository>();
-            services.AddSingleton<IModelMapper, ModelMapper>();
             services.AddSingleton<IRepositoryService<Category>, CategoriesRepositoryService>();
             services.AddSingleton<IRepositoryService<Course>, CourseRepositoryService>();
             services.AddSingleton<IRepositoryService<User>, UserRepositoryService>();

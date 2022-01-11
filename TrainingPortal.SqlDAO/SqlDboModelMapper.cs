@@ -28,7 +28,7 @@ namespace TrainingPortal.SqlDAL
                 nameof(TestDbo) => new TestDbo((int)reader.GetValue(0), reader.GetValue(1).ToString()) as T,
                 nameof(UserDbo) => new UserDbo((int)reader.GetValue(0), reader.GetValue(1).ToString(), reader.GetValue(2).ToString(), reader.GetValue(3).ToString(),
                     (int)reader.GetValue(4), reader.GetValue(5).ToString(), reader.GetValue(6).ToString(), reader.GetValue(7).ToString()) as T,
-                _ => throw new ArgumentException("The argument type is not in the allowed list.", typeof(T).Name),
+                _ => throw new ArgumentException("The argument type is not in the allowed list.", typeof(T).Name), // TODO: replace throwing exception
             };
         }
     }

@@ -2,9 +2,12 @@
 {
     public class CoursesTargetAudienciesDboRelation
     {
-        public int CourseId { get; }
+        public int CourseId { get; set; }
 
-        public int TargetAudienceId { get; }
+        public int TargetAudienceId { get; set; }
+
+        public CoursesTargetAudienciesDboRelation()
+        { }
 
         public CoursesTargetAudienciesDboRelation(int courseId, int targetAudienceId)
         {

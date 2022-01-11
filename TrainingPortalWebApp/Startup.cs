@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -8,7 +9,6 @@ using Serilog;
 using TrainingPortal.Dependencies;
 using TrainingPortal.Entities;
 using TrainingPortal.WebPL.Interfaces;
-using TrainingPortal.WebPL.Mapper;
 using TrainingPortal.WebPL.Services;
 
 namespace TrainingPortal.WebPL
@@ -30,9 +30,15 @@ namespace TrainingPortal.WebPL
                 .CreateLogger();
             services.AddSingleton(Log.Logger);
             services.AddControllersWithViews();
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
             services.InjectDependencies();
             services.InjectDependencies(Configuration);
-            services.AddSingleton<IViewModelMapper, ViewModelMapper>();
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options => Configuration.Bind("CookieSettings", options));
             services.Configure<AzureSettings>(Configuration.GetSection("AzureSettings"));
