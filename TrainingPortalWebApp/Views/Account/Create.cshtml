@@ -1,4 +1,4 @@
-﻿@model TrainingPortal.WebPL.Models.RegisterUserViewModel
+﻿@model RegisterUserViewModel
 
 @{
     ViewData["Title"] = "Create User";
@@ -14,7 +14,7 @@
                 @{
                     await Html.RenderPartialAsync("_RegisterUserViewModelPartial");
                 }
-                <div class="col-12btn-group" role="group" aria-label="Basic outlined example">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
                     <input type="submit" value="Save" class="btn btn-success" />
                     <a asp-action="Index" class="btn btn-secondary">Back to List</a>
                 </div>
