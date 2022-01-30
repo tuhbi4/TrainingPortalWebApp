@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TrainingPortal.WebPL.Models
+namespace TrainingPortal.WebPL.Models.User
 {
     public class LoginUserViewModel
     {

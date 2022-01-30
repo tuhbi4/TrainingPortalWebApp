@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TrainingPortal.WebPL.Models
+namespace TrainingPortal.WebPL.Models.User
 {
-    public class SettingsUserViewModel
+    public class EditUserViewModel
     {
+        public int Id { get; set; }
+
         [Required]
         public string Login { get; set; }
 
@@ -12,13 +14,9 @@ namespace TrainingPortal.WebPL.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare(nameof(Password), ErrorMessage = "Password mismatch")]
-        public string ConfirmPassword { get; set; }
+        [Required]
+        [Display(Name = "Role")]
+        public int RoleId { get; set; }
 
         [DataType(DataType.Text)]
         public string Lastname { get; set; }
