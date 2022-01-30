@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrainingPortal.BLL.Models.Category>
+﻿@model IEnumerable<Category>
 
 @{
     ViewData["Title"] = "Categories";
@@ -8,7 +8,7 @@
 @if (User.IsInRole("editor") || User.IsInRole("admin"))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create" type="button" class="btn btn-outline-info">Create New</a>
     </p>
 }
 <table class="table">
@@ -30,8 +30,10 @@
                 @if (User.IsInRole("editor") || User.IsInRole("admin"))
                 {
                     <td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                        <div class="btn-group" role="group" aria-label="Basic outlined example">
+                            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class="btn btn-outline-warning" })
+                            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class="btn btn-outline-danger" })
+                        </div>
                     </td>
                 }
             </tr>
