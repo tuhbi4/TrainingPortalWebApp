@@ -32,7 +32,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Patronymic", DbType.String) { Value = dataInstance.Patronymic }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public UserDbo Read(int id)
@@ -70,7 +70,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Patronymic", DbType.String) { Value = dataInstance.Patronymic }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
@@ -83,7 +83,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

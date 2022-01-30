@@ -24,10 +24,11 @@ namespace TrainingPortal.SqlDAL.Repositories
             var parameters = new List<SqlParameter>()
             {
                 new("QuestionId", DbType.Int32) { Value = dataInstance.QuestionId },
-                new("Answer", DbType.String) { Value = dataInstance.Text }
+                new("Answer", DbType.String) { Value = dataInstance.Text },
+                new("IsRightAnswer", DbType.Boolean) { Value = dataInstance.IsRightAnswer }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public AnswerDbo Read(int id)
@@ -69,10 +70,11 @@ namespace TrainingPortal.SqlDAL.Repositories
             {
                 new("Id", DbType.Int32) { Value = id },
                 new("QuestionId", DbType.Int32) { Value = dataInstance.QuestionId },
-                new("Answer", DbType.String) { Value = dataInstance.Text }
+                new("Answer", DbType.String) { Value = dataInstance.Text },
+                new("IsRightAnswer", DbType.Boolean) { Value = dataInstance.IsRightAnswer }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
@@ -85,7 +87,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {
@@ -103,7 +105,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

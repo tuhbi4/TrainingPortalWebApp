@@ -27,7 +27,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("@ImageLink", DbType.String) { Value = dataInstance.ImageLink }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public CertificateDbo Read(int id)
@@ -60,7 +60,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("@ImageLink", DbType.String) { Value = dataInstance.ImageLink }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
@@ -73,7 +73,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

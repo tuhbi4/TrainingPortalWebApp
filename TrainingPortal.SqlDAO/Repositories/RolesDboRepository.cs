@@ -26,7 +26,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Name", DbType.String) { Value = dataInstance.Name }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public RoleDbo Read(int id)
@@ -58,7 +58,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Name", DbType.String) { Value = dataInstance.Name }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
@@ -71,7 +71,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {
