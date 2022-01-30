@@ -7,13 +7,13 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
-    public class UserRepositoryService : IRepositoryService<User>
+    public class UserService : IRepositoryService<User>
     {
         private readonly IMapper mapper;
         private readonly IDboRepository<UserDbo> userRepository;
         private readonly IDboRepository<RoleDbo> roleRepository;
 
-        public UserRepositoryService(IMapper mapper, IDboRepository<UserDbo> userRepository, IDboRepository<RoleDbo> roleRepository)
+        public UserService(IMapper mapper, IDboRepository<UserDbo> userRepository, IDboRepository<RoleDbo> roleRepository)
         {
             this.mapper = mapper;
             this.userRepository = userRepository;

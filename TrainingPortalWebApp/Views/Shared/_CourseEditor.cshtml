@@ -1,26 +1,231 @@
-﻿@using Microsoft.AspNetCore.Http
-@model TrainingPortal.WebPL.Models.CourseViewModel
+﻿@model CourseViewModel
 
 @{
-    Exception exception = ViewBag.Exception;
     IFormCollection collection = ViewBag.IFormCollection;
+    SelectList availableCategories = ViewBag.AvailableCategories;
+    List<TargetAudience> availableTargetAudiencies = ViewBag.AvailableTargetAudiencies;
+    bool isEmptyModel = ViewBag.IsEmptyModel;
 }
 
 <div class="form-group">
-    <p>
-        <label asp-for="Name" class="control-label"></label>
-        <input asp-for="Name" class="form-control" />
+    <div class="form-floating mb-3">
+        <input asp-for="Name" class="form-control" placeholder="" />
+        <label asp-for="Name" class="ml-3"></label>
         <span asp-validation-for="Name" class="text-danger"></span>
-    </p>
-    <p>
-        <label asp-for="Description" class="control-label"></label>
-        <input asp-for="Description" class="form-control" />
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Description" class="form-control" placeholder="" />
+        <label asp-for="Description" class="ml-3"></label>
         <span asp-validation-for="Description" class="text-danger"></span>
-    </p>
+    </div>
+    <div class="form-floating mb-3">
+        <select id="Category" name="Category" asp-items="availableCategories" class="form-select" aria-label="Category select">
+        </select>
+        <label asp-for="Category" class="ml-3"></label>
+    </div>
+    <div class="form-floating form-control mb-3" id="lessonsListEditor">
+        <div class="d-flex">
+            <span class="ml-3 floating-label">Lessons</span>
+            <div class="d-flex ms-auto">
+                <button type="button" class="btn-add" aria-label="Close" data-bs-toggle="tooltip" title="Add new lesson" onclick="addLessonItemToAccordion(lessonsAccordionPanel)"></button>
+            </div>
+        </div>
+        <div class="accordion" id="lessonsAccordionPanel">
+            @{
+                string lessonName = string.Empty;
+                string lessonMaterial = string.Empty;
+                int lessonsCount = 1;
+
+                if (!isEmptyModel)
+                {
+                    lessonsCount = Model.LessonsList.Count;
+                }
+
+                for (int itemNumber = 1; itemNumber <= lessonsCount; itemNumber++)
+                {
+                    string lessonsAccordionItemId = "lessonsAccordionItemId" + itemNumber.ToString();
+                    string lessonsAccordionItemHeader = "lessonsAccordionItemHeader" + itemNumber.ToString();
+                    string lessonsAccordionItemCollapse = "lessonsAccordionItemCollapse" + itemNumber.ToString();
+                    string lessonsInputId = "Lesson" + itemNumber.ToString();
+                    string lessonsTextareaName = "lessonsTextareaName" + itemNumber.ToString();
+
+                    if (!isEmptyModel)
+                    {
+                        lessonName = @Model.LessonsList[itemNumber - 1].Name;
+                        lessonMaterial = @Model.LessonsList[itemNumber - 1].Material;
+                    }
+                    <div class="accordion-item" id="@lessonsAccordionItemId">
+                        <div class="accordion-item-header d-flex justify-content-around" id="@lessonsAccordionItemHeader">
+                            <div class="form-floating flex-fill">
+                                <input type="text" class="form-control" id="@lessonsInputId" name="Lesson" value="@lessonName" placeholder="">
+                                <label for="@lessonsInputId" class="ml-3">Lesson @itemNumber name</label>
+                            </div>
+                            <div class="d-flex flex-fill justify-content-around">
+                                <div class="d-flex">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#@lessonsAccordionItemCollapse" aria-expanded="true" aria-controls="@lessonsAccordionItemCollapse">
+                                    </button>
+                                </div>
+                                <div class="d-flex align-self-center">
+                                    <button type="button" class="btn-close btn-delete" aria-label="Close" onclick="deleteElementById(@lessonsAccordionItemId)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="@lessonsAccordionItemCollapse" class="accordion-collapse collapse" aria-labelledby="@lessonsAccordionItemHeader">
+                            <div class="accordion-body">
+                                <div class="form-floating">
+                                    <textarea class="form-control" name="@lessonsTextareaName" placeholder="Enter material here" id="floatingTextarea" style="height: 100px">@lessonMaterial</textarea>
+                                    <label for="floatingTextarea">Material</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="form-floating form-control mb-3" id="testEditor">
+        <div class="d-flex">
+            <span class="ml-3 floating-label">Test</span>
+            <div class="d-flex ms-auto">
+                <button type="button" class="btn-add" aria-label="Close" data-bs-toggle="tooltip" title="Add new question" onclick="addQuestionItemToAccordion(testQestionsAccordionPanel)"></button>
+            </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input asp-for="Test.Name" class="form-control" placeholder="" />
+            <label asp-for="Test.Name" class="ml-3">Test name</label>
+            <span asp-validation-for="Test.Name" class="text-danger"></span>
+        </div>
+        <div class="accordion" id="testQestionsAccordionPanel">
+            @{
+
+                string questionName = string.Empty;
+                int questionsCount = 1;
+
+
+                if (!isEmptyModel)
+                {
+                    questionsCount = Model.Test.QuestionsList.Count;
+                }
+
+                for (int questionNumber = 1; questionNumber <= questionsCount; questionNumber++)
+                {
+                    string questionsAccordionItemId = "questionsAccordionItemId" + questionNumber.ToString();
+                    string questionsAccordionItemHeader = "questionsAccordionItemHeader" + questionNumber.ToString();
+                    string questionsAccordionItemCollapse = "questionsAccordionItemCollapse" + questionNumber.ToString();
+                    string questionsInputId = "Question" + questionNumber.ToString();
+                    string answersListId = "answersList" + questionNumber.ToString();
+
+                    if (!isEmptyModel)
+                    {
+                        questionName = @Model.Test.QuestionsList[questionNumber - 1].Question;
+                    }
+
+                    <div class="accordion-item" id="@questionsAccordionItemId">
+                        <div class="accordion-item-header d-flex justify-content-around" id="@questionsAccordionItemHeader">
+                            <div class="form-floating flex-fill">
+                                <input type="text" class="form-control" id="@questionsInputId" name="QuestionNames" value="@questionName" placeholder="">
+                                <label for="@questionsInputId" class="ml-3">Question @questionNumber</label>
+                            </div>
+                            <div class="d-flex flex-fill justify-content-around">
+                                <div class="d-flex">
+                                    <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#@questionsAccordionItemCollapse" aria-expanded="true" aria-controls="@questionsAccordionItemCollapse"></button>
+                                    <button type="button" class="btn-add m-auto" aria-label="Add" data-bs-toggle="tooltip" title="Add new answer" onclick="addAnswerItemToList(@answersListId)"></button>
+                                </div>
+                                <div class="d-flex align-self-center">
+                                    <button type="button" class="btn-close btn-delete" aria-label="Close" onclick="deleteElementById(@questionsAccordionItemId)"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="@questionsAccordionItemCollapse" class="accordion-collapse collapse" aria-labelledby="@questionsAccordionItemHeader">
+                            <div class="accordion-body">
+                                <ul class="list-group" id="@answersListId">
+                                    @{
+                                        string answerText = string.Empty;
+                                        int answersCount = 1;
+
+                                        if (!isEmptyModel)
+                                        {
+                                            answersCount = Model.Test.QuestionsList[questionNumber - 1].Answers.Count;
+                                        }
+
+                                        for (int answerNumber = 1; answerNumber <= answersCount; answerNumber++)
+                                        {
+                                            string answerInputId = "Answer" + answerNumber.ToString() + "Question" + questionNumber.ToString();
+                                            string answerInputName = "AnswersForQuestion" + questionNumber.ToString();
+                                            string answerCheckboxId = "isRight" + answerInputId;
+                                            string listItemId = "Item" + answerNumber.ToString() + "List" + questionNumber.ToString();
+                                            string rightAnswersCheckboxName = "RightAnswersForQuestion" + questionNumber.ToString();
+
+                                            if (!isEmptyModel)
+                                            {
+                                                answerText = @Model.Test.QuestionsList[questionNumber - 1].Answers[answerNumber - 1].Text;
+                                            }
+
+                                            <li class="d-flex" id="@listItemId">
+                                                <div class="form-check m-auto">
+                                                    @{
+                                                        if (!isEmptyModel && @Model.Test.QuestionsList[questionNumber - 1].Answers[answerNumber - 1].IsRightAnswer)
+                                                        {
+                                                            <input class="form-check-input" type="checkbox" id="@answerCheckboxId" name="@rightAnswersCheckboxName" data-bs-toggle="tooltip" title="Check the box if this is the correct answer" value="@answerNumber" checked="checked">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input class="form-check-input" type="checkbox" id="@answerCheckboxId" name="@rightAnswersCheckboxName" data-bs-toggle="tooltip" title="Check the box if this is the correct answer" value="@answerNumber">
+                                                        }
+                                                    }
+                                                </div>
+                                                <div class="form-floating flex-fill">
+                                                    <input type="text" class="form-control" id="@answerInputId" name="@answerInputName" value="@answerText" placeholder="">
+                                                    <label for="@answerInputId" class="ml-3">Answer @answerNumber</label>
+                                                </div>
+                                                <div class="d-flex mb-auto ml-3">
+                                                    <button type="button" class="btn-close btn-delete" aria-label="Close" onclick="deleteElementById(@listItemId)"></button>
+                                                </div>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="form-floating mb-3">
+        <input asp-for="Certificate.ImageLink" class="form-control" placeholder="" />
+        <label asp-for="Certificate.ImageLink" class="ml-3">Certificate image URL</label>
+        <span asp-validation-for="Certificate.ImageLink" class="text-danger"></span>
+    </div>
+    <div class="form-floating form-control mb-3" id="checkBoxArea">
+        <span class="ml-3 floating-label">Target audiencies</span>
+        <div class="">
+            @{
+                foreach (var targetAudience in availableTargetAudiencies)
+                {
+                    <div class="form-check form-check-inline">
+                        @{
+                            var elementId = "inlineCheckbox" + @targetAudience.Id;
+
+                            if (!isEmptyModel && Model.TargetAudienciesList.Exists(x => x.Id == targetAudience.Id))
+                            {
+                                <input class="form-check-input" type="checkbox" name="targetAudienciesCheckboxList" id="@elementId" value="@targetAudience.Id" checked="checked">
+                            }
+                            else
+                            {
+                                <input class="form-check-input" type="checkbox" name="targetAudienciesCheckboxList" id="@elementId" value="@targetAudience.Id">
+                            }
+                        }
+                        <label class="form-check-label" for="@elementId">@targetAudience.Name</label>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-    @{
+                    @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-}
-}
+                }
+                }

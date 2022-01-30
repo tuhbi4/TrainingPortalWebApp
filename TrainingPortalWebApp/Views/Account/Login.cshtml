@@ -1,4 +1,4 @@
-﻿@model TrainingPortal.WebPL.Models.LoginUserViewModel
+﻿@model LoginUserViewModel
 
 @{
     ViewData["Title"] = "Sign In";
@@ -13,12 +13,12 @@
             <div class="form-group col-sm-6 mb-4">
                 <div class="col-lg-8 form-floating mb-3">
                     <input asp-for="Login" class="form-control" placeholder="" />
-                    <label asp-for="Login" class="control-label col-form-label"></label>
+                    <label asp-for="Login" class="ml-3"></label>
                     <span asp-validation-for="Login" class="text-danger"></span>
                 </div>
                 <div class="col-lg-8 form-floating mb-3">
                     <input asp-for="Password" class="form-control" placeholder="" />
-                    <label asp-for="Password" class="control-label col-form-label"></label>
+                    <label asp-for="Password" class="ml-3"></label>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
             </div>

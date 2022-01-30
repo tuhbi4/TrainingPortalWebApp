@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Course Editor";
-    ViewData["Header"] = "Course";
+    ViewData["Header"] = "Edit course";
     ViewData["Editor"] = "~/Views/Shared/_CourseEditor.cshtml";
-    Layout = "~/Views/_ViewEdit.cshtml";
+    ViewData["ActionName"] = "Edit";
+    ViewData["SubmitButtonText"] = "Edit";
+    Layout = "~/Views/_ViewEditor.cshtml";
 }

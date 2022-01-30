@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<h1>@ViewData["Header"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <form asp-action="@ViewData["ActionName"]">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <partial name=@ViewData["Editor"] />
+            @RenderBody()
+            <div class="btn-group" role="group" aria-label="BtnGroup">
+                <input type="submit" value="@ViewData["SubmitButtonText"]" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)

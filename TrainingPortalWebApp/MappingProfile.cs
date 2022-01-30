@@ -7,7 +7,8 @@ using TrainingPortal.DAL.Dbo.CourseItems;
 using TrainingPortal.DAL.Dbo.CourseItems.TestItems;
 using TrainingPortal.DAL.Dbo.CourseItems.TestItems.TestQuestionItems;
 using TrainingPortal.DAL.Dbo.Models;
-using TrainingPortal.WebPL.Models;
+using TrainingPortal.WebPL.Models.Course;
+using TrainingPortal.WebPL.Models.User;
 
 namespace TrainingPortal.WebPL
 {
@@ -42,6 +43,8 @@ namespace TrainingPortal.WebPL
             CreateMap<SettingsUserViewModel, User>();
             CreateMap<User, EditUserViewModel>();
             CreateMap<EditUserViewModel, User>();
+            CreateMap<Course, CourseViewModel>();
+            CreateMap<CourseViewModel, Course>();
         }
     }
 }

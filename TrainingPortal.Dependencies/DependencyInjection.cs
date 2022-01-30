@@ -2,8 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using TrainingPortal.BLL.Interfaces;
 using TrainingPortal.BLL.Models;
+using TrainingPortal.BLL.Models.CourseItems;
 using TrainingPortal.BLL.Services;
 using TrainingPortal.BLL.Services.Repositories;
+using TrainingPortal.BLL.Services.Repositories.CourseParts;
 using TrainingPortal.DAL.Dbo.CourseItems;
 using TrainingPortal.DAL.Dbo.CourseItems.TestItems;
 using TrainingPortal.DAL.Dbo.CourseItems.TestItems.TestQuestionItems;
@@ -34,10 +36,11 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IDboInnerRepository<TestQuestionDbo>, QuestionsDboInnerRepository>();
             services.AddSingleton<IDboRelationsRepository<CoursesLessonsDboRelation>, CoursesLessonsDboRelationsRepository>();
             services.AddSingleton<IDboRelationsRepository<CoursesTargetAudienciesDboRelation>, CoursesTargetAudienciesDboRelationsRepository>();
-            services.AddSingleton<IRepositoryService<Category>, CategoriesRepositoryService>();
-            services.AddSingleton<IRepositoryService<Course>, CourseRepositoryService>();
-            services.AddSingleton<IRepositoryService<User>, UserRepositoryService>();
-            services.AddSingleton<IRepositoryService<Role>, RoleRepositoryService>();
+            services.AddSingleton<IRepositoryService<Category>, CategoryService>();
+            services.AddSingleton<IRepositoryService<Course>, CourseService>();
+            services.AddSingleton<IRepositoryService<User>, UserService>();
+            services.AddSingleton<IRepositoryService<Role>, RoleService>();
+            services.AddSingleton<IRepositoryService<TargetAudience>, TargetAudienceService>();
         }
 
         public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration)

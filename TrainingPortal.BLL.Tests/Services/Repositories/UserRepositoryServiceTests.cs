@@ -100,9 +100,9 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
             Assert.AreEqual(GetTestUserList().Count, actualResult.Count);
         }
 
-        private UserRepositoryService CreateService()
+        private UserService CreateService()
         {
-            return new UserRepositoryService(
+            return new UserService(
                 mockmapper.Object,
                 mockDboRepositoryUserDbo.Object,
                 mockDboRepositoryRoleDbo.Object);

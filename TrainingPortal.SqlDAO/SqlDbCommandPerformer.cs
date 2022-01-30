@@ -51,7 +51,7 @@ namespace TrainingPortal.SqlDAL
             return items;
         }
 
-        public int PerformNonQuery(string storedProcedureName, List<SqlParameter> parameters)
+        public int PerformScalar(string storedProcedureName, List<SqlParameter> parameters)
         {
             connection = new SqlConnection(connectionStringProvider.ConnectionString);
 
@@ -69,7 +69,7 @@ namespace TrainingPortal.SqlDAL
                 }
 
                 connection.Open();
-                result = command.ExecuteNonQuery();
+                result = Convert.ToInt32(command.ExecuteScalar());
             }
 
             return result;

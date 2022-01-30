@@ -27,7 +27,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("LessonId", DbType.Int32) { Value = dataInstance.LessonId }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         CoursesLessonsDboRelation IDboRepository<CoursesLessonsDboRelation>.Read(int id)
@@ -64,7 +64,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("LessonId", DbType.Int32) { Value = dataInstance.LessonId }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
@@ -77,7 +77,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {
@@ -96,7 +96,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

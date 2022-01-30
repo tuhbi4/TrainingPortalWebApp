@@ -14,7 +14,7 @@ namespace TrainingPortal.SqlDAL
         {
             return typeof(T).Name switch
             {
-                nameof(AnswerDbo) => new AnswerDbo((int)reader.GetValue(0), (int)reader.GetValue(1), reader.GetValue(2).ToString()) as T,
+                nameof(AnswerDbo) => new AnswerDbo((int)reader.GetValue(0), (int)reader.GetValue(1), reader.GetValue(2).ToString(), (bool)reader.GetValue(3)) as T,
                 nameof(CategoryDbo) => new CategoryDbo((int)reader.GetValue(0), reader.GetValue(1).ToString()) as T,
                 nameof(CertificateDbo) => new CertificateDbo((int)reader.GetValue(0), reader.GetValue(1).ToString(), reader.GetValue(2).ToString()) as T,
                 nameof(CourseDbo) => new CourseDbo((int)reader.GetValue(0), reader.GetValue(1).ToString(), reader.GetValue(2).ToString(), (int)reader.GetValue(3),

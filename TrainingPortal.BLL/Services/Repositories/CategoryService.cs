@@ -7,12 +7,12 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
-    public class CategoriesRepositoryService : IRepositoryService<Category>
+    public class CategoryService : IRepositoryService<Category>
     {
         private readonly IDboRepository<CategoryDbo> repository;
         private readonly IMapper mapper;
 
-        public CategoriesRepositoryService(IDboRepository<CategoryDbo> repository, IMapper mapper)
+        public CategoryService(IDboRepository<CategoryDbo> repository, IMapper mapper)
         {
             this.repository = repository;
             this.mapper = mapper;

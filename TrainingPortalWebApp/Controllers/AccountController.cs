@@ -12,7 +12,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using TrainingPortal.BLL.Interfaces;
 using TrainingPortal.BLL.Models;
-using TrainingPortal.WebPL.Models;
+using TrainingPortal.WebPL.Models.User;
 
 namespace TrainingPortal.WebPL.Controllers
 {
@@ -35,7 +35,7 @@ namespace TrainingPortal.WebPL.Controllers
             this.logger = logger;
         }
 
-        // GET: AuthController/Index
+        // GET: Account/Index
         [Authorize(Roles = "admin")]
         public ActionResult Index()
         {
@@ -44,14 +44,14 @@ namespace TrainingPortal.WebPL.Controllers
             return View(userService.ReadAll().Select(x => mapper.Map<EditUserViewModel>(x)));
         }
 
-        // GET: AuthController/Login
+        // GET: Account/Login
         [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
 
-        // POST: AuthController/Login
+        // POST: Account/Login
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -91,7 +91,7 @@ namespace TrainingPortal.WebPL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: AuthController/Logout
+        // GET: Account/Logout
 
         public async Task<ActionResult> Logout()
         {
@@ -101,14 +101,14 @@ namespace TrainingPortal.WebPL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: AuthController/Register
+        // GET: Account/Register
         [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
-        // POST: AuthController/Register
+        // POST: Account/Register
         [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -160,14 +160,14 @@ namespace TrainingPortal.WebPL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: AuthController/Create
+        // GET: Account/Create
         [Authorize(Roles = "admin")]
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AuthController/Create
+        // POST: Account/Create
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -217,14 +217,14 @@ namespace TrainingPortal.WebPL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: AuthController/Profile
+        // GET: Account/Profile
         public ActionResult Profile()
         {
             // UNDONE: Get course progress, download certificate, etc. - add implementation
             return RedirectToAction("NotImplemented", "Home");
         }
 
-        // GET: AuthController/Settings
+        // GET: Account/Settings
         public ActionResult Settings()
         {
             User user = userService.ReadAll().FirstOrDefault(x => x.Email == User.FindFirst(ClaimTypes.Email)?.Value);
@@ -234,7 +234,7 @@ namespace TrainingPortal.WebPL.Controllers
             return View(model);
         }
 
-        // POST: AuthController/Settings
+        // POST: Account/Settings
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Settings(SettingsUserViewModel model)
@@ -295,7 +295,7 @@ namespace TrainingPortal.WebPL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: AuthController/Edit/5
+        // GET: Account/Edit/5
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
@@ -307,7 +307,7 @@ namespace TrainingPortal.WebPL.Controllers
                     .FirstOrDefault(x => x.Id == id));
         }
 
-        // POST: AuthController/Edit/5
+        // POST: Account/Edit/5
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -339,7 +339,7 @@ namespace TrainingPortal.WebPL.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        // GET: AuthController/Delete/5
+        // GET: Account/Delete/5
         [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
@@ -347,7 +347,7 @@ namespace TrainingPortal.WebPL.Controllers
             return View(userService.Read(id));
         }
 
-        // POST: AuthController/Delete/5
+        // POST: Account/Delete/5
         [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]

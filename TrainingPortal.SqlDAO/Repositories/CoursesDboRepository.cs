@@ -30,7 +30,7 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("CertificateId", DbType.Int32) { Value = dataInstance.CertificateId }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public CourseDbo Read(int id)
@@ -66,12 +66,12 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("CertificateId", DbType.Int32) { Value = dataInstance.CertificateId }
             };
 
-            return _dBService.PerformNonQuery(storedProcedureName, parameters);
+            return _dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteCourseById]";
+            var storedProcedureName = "[dbo].[DeleteCourseWithChildsById]";
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -79,7 +79,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformNonQuery(storedProcedureName, parameters);
+                return _dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

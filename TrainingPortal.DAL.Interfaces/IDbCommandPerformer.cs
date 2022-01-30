@@ -9,6 +9,6 @@ namespace TrainingPortal.DAL.Interfaces
 
         public List<T> PerformQuery<T>(string query, List<SqlParameter> parameters) where T : class;
 
-        public int PerformNonQuery(string storedProcedureName, List<SqlParameter> parameters);
+        public int PerformScalar(string storedProcedureName, List<SqlParameter> parameters);
     }
 }
