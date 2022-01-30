@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Course Editor";
-    ViewData["Header"] = "Course";
+    ViewData["Header"] = "Create course";
     ViewData["Editor"] = "~/Views/Shared/_CourseEditor.cshtml";
-    Layout = "~/Views/_ViewCreate.cshtml";
+    ViewData["ActionName"] = "Create";
+    ViewData["SubmitButtonText"] = "Save";
+    Layout = "~/Views/_ViewEditor.cshtml";
 }
