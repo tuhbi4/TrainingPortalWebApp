@@ -13,7 +13,7 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
-    public class CourseRepositoryService : IRepositoryService<Course>
+    public class CourseService : IRepositoryService<Course>
     {
         private readonly IMapper mapper;
         private readonly IDboRepository<CategoryDbo> categoryDboRepository;
@@ -27,7 +27,7 @@ namespace TrainingPortal.BLL.Services.Repositories
         private readonly IDboRepository<TargetAudienceDbo> targetAudienceDboRepository;
         private readonly IDboRepository<TestDbo> testDboRepository;
 
-        public CourseRepositoryService(IMapper mapper, IDboRepository<CategoryDbo> categoryDboRepository,
+        public CourseService(IMapper mapper, IDboRepository<CategoryDbo> categoryDboRepository,
             IDboRepository<CertificateDbo> certificateDboRepository, IDboRepository<CourseDbo> courseDboRepository,
             IDboInnerRepository<AnswerDbo> answerDboInnerRepository, IDboInnerRepository<TestQuestionDbo> testQuestionDboInnerRepository,
             IDboRelationsRepository<CoursesLessonsDboRelation> coursesLessonsDboRelationsRepository,
@@ -49,47 +49,45 @@ namespace TrainingPortal.BLL.Services.Repositories
 
         public int Create(Course dataInstance)
         {
-            CourseDbo courseDboInstance = mapper.Map<CourseDbo>(dataInstance);
-            courseDboInstance.CategoryId = dataInstance.Category.Id;
-            courseDboInstance.TestId = dataInstance.Test.Id;
-            courseDboInstance.CertificateId = dataInstance.Certificate.Id;
-            courseDboRepository.Create(courseDboInstance);
+            CourseDbo courseDbo = mapper.Map<CourseDbo>(dataInstance);
+            courseDbo.CategoryId = dataInstance.Category.Id;
             TestDbo testDboInstance = mapper.Map<TestDbo>(dataInstance.Test);
-            testDboRepository.Create(testDboInstance);
-
-            foreach (TargetAudience targetAudienceInstance in dataInstance.TargetAudienciesList)
-            {
-                TargetAudienceDbo targetAudienceDboInstance = mapper.Map<TargetAudienceDbo>(targetAudienceInstance);
-                targetAudienceDboRepository.Create(targetAudienceDboInstance);
-            }
-
-            foreach (Lesson lessonInstance in dataInstance.LessonsList)
-            {
-                LessonDbo lessonDboInstance = mapper.Map<LessonDbo>(lessonInstance);
-                lessonDboRepository.Create(lessonDboInstance);
-            }
-
+            courseDbo.TestId = testDboRepository.Create(testDboInstance);
             CertificateDbo certificateDboInstance = mapper.Map<CertificateDbo>(dataInstance.Certificate);
-            certificateDboRepository.Create(certificateDboInstance);
+            courseDbo.CertificateId = certificateDboRepository.Create(certificateDboInstance);
+            courseDbo.Id = courseDboRepository.Create(courseDbo);
 
-            foreach (TestQuestion testQuestionInstance in dataInstance.Test.QuestionsList)
+            foreach (Lesson lesson in dataInstance.LessonsList)
             {
-                TestQuestionDbo testQuestionDboInstance = mapper.Map<TestQuestionDbo>(testQuestionInstance);
-                testQuestionDboInnerRepository.Create(testQuestionDboInstance);
+                LessonDbo lessonDbo = mapper.Map<LessonDbo>(lesson);
+                var newLessonId = lessonDboRepository.Create(lessonDbo);
+                coursesLessonsDboRelationsRepository.Create(new CoursesLessonsDboRelation(courseDbo.Id, newLessonId));
+            }
 
-                foreach (Answer answerInstance in testQuestionInstance.Answers)
+            foreach (TestQuestion testQuestion in dataInstance.Test.QuestionsList)
+            {
+                TestQuestionDbo testQuestionDbo = mapper.Map<TestQuestionDbo>(testQuestion);
+                testQuestionDbo.TestId = courseDbo.TestId;
+                int newQuestionId = testQuestionDboInnerRepository.Create(testQuestionDbo);
+
+                foreach (Answer answer in testQuestion.Answers)
                 {
-                    AnswerDbo answerDboInstance = mapper.Map<AnswerDbo>(answerInstance);
-                    answerDboInnerRepository.Create(answerDboInstance);
+                    AnswerDbo answerDbo = mapper.Map<AnswerDbo>(answer);
+                    answerDbo.QuestionId = newQuestionId;
+                    answerDboInnerRepository.Create(answerDbo);
                 }
             }
 
-            return courseDboRepository.Create(courseDboInstance);
+            foreach (TargetAudience targetAudience in dataInstance.TargetAudienciesList)
+            {
+                coursesTargetAudienciesDboRelationsRepository.Create(new CoursesTargetAudienciesDboRelation(courseDbo.Id, targetAudience.Id));
+            }
+
+            return courseDbo.Id;
         }
 
         public Course Read(int id)
         {
-            //return ReadAll().Find(x => x.Id == id);
             CourseDbo courseDbo = courseDboRepository.Read(id);
             Course course = mapper.Map<Course>(courseDbo);
             CategoryDbo categoryDbo = categoryDboRepository.Read(courseDbo.CategoryId);
@@ -221,7 +219,54 @@ namespace TrainingPortal.BLL.Services.Repositories
 
         public int Update(int id, Course dataInstance)
         {
-            throw new System.NotSupportedException();
+            List<CoursesLessonsDboRelation> coursesLessonsDboRelationList = coursesLessonsDboRelationsRepository.Read(id);
+            coursesLessonsDboRelationsRepository.Delete(id);
+
+            foreach (CoursesLessonsDboRelation coursesLessonsDboRelation in coursesLessonsDboRelationList)
+            {
+                lessonDboRepository.Delete(coursesLessonsDboRelation.LessonId);
+            }
+
+            foreach (Lesson lesson in dataInstance.LessonsList)
+            {
+                var newLessonId = lessonDboRepository.Create(mapper.Map<LessonDbo>(lesson));
+                coursesLessonsDboRelationsRepository.Create(new CoursesLessonsDboRelation(id, newLessonId));
+            }
+
+            Course targetCourse = Read(id);
+            testDboRepository.Update(targetCourse.Test.Id, mapper.Map<TestDbo>(dataInstance.Test));
+
+            foreach (TestQuestion testQuestion in targetCourse.Test.QuestionsList)
+            {
+                answerDboInnerRepository.DeleteAllByParentId(testQuestion.Id);
+            }
+
+            testQuestionDboInnerRepository.DeleteAllByParentId(targetCourse.Test.Id);
+
+            foreach (TestQuestion testQuestion in dataInstance.Test.QuestionsList)
+            {
+                TestQuestionDbo testQuestionDbo = mapper.Map<TestQuestionDbo>(testQuestion);
+                testQuestionDbo.TestId = targetCourse.Test.Id;
+                int questionId = testQuestionDboInnerRepository.Create(testQuestionDbo);
+
+                foreach (Answer answer in testQuestion.Answers)
+                {
+                    AnswerDbo answerDbo = mapper.Map<AnswerDbo>(answer);
+                    answerDbo.QuestionId = questionId;
+                    answerDboInnerRepository.Create(answerDbo);
+                }
+            }
+
+            certificateDboRepository.Update(dataInstance.Certificate.Id, mapper.Map<CertificateDbo>(dataInstance.Certificate));
+
+            coursesTargetAudienciesDboRelationsRepository.Delete(id);
+
+            foreach (TargetAudience targetAudience in dataInstance.TargetAudienciesList)
+            {
+                coursesTargetAudienciesDboRelationsRepository.Create(new CoursesTargetAudienciesDboRelation(id, targetAudience.Id));
+            }
+
+            return courseDboRepository.Update(id, mapper.Map<CourseDbo>(dataInstance));
         }
 
         public int Delete(int id)
