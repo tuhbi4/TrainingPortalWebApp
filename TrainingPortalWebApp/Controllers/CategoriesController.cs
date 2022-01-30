@@ -89,12 +89,12 @@ namespace TrainingPortal.WebPL.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                ViewData["Exception"] = "Category could not be deleted due to a reference to another item in the database";
+                ViewBag.Exception = "Category could not be deleted due to a reference to another item in the database";
 
                 return View(categoryService.Read(id));
             }
 
-            ViewData["Exception"] = "Object not found";
+            ViewBag.Exception = "Object not found";
 
             return View(categoryService.Read(id));
         }
