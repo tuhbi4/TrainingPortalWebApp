@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrainingPortal.BLL.Models.Course>
+﻿@model IEnumerable<Course>
 
 @{
     ViewData["Title"] = "Courses";
@@ -7,14 +7,13 @@
 @{
     int i;
     string commaSeparator = ", ";
-    string separator = " | ";
 }
 
 <h1>Courses</h1>
 @if (User.IsInRole("editor") || User.IsInRole("admin"))
 {
     <p>
-        <a asp-action="Create">Create New</a>
+        <a asp-action="Create" type="button" class="btn btn-outline-info">Create New</a>
     </p>
 }
 <table class="table">
@@ -27,7 +26,7 @@
                 @Html.DisplayNameFor(model => model.Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TargetAudienciesList)
+                Target audiencies
             </th>
             <th></th>
         </tr>
@@ -55,20 +54,22 @@
                     }
                 </td>
                 <td>
-                    @if (User.IsInRole("editor") || User.IsInRole("admin"))
-                    {
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Id })
-                        @separator
-                    }
-                    @if (User.IsInRole("editor") || User.IsInRole("admin") || User.IsInRole("user"))
-                    {
-                        @Html.ActionLink("Details", "Details", new { id=item.Id })
-                    }
-                    @if (User.IsInRole("editor") || User.IsInRole("admin"))
-                    {
-                        @separator
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                    }
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        @if (User.IsInRole("editor") || User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class="btn btn-outline-warning" })
+                        }
+                        @if (User.IsInRole("editor") || User.IsInRole("admin") || User.IsInRole("user"))
+                        {
+                            @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class="btn btn-outline-secondary" })
+                        }
+                        @if (User.IsInRole("editor") || User.IsInRole("admin"))
+                        {
+                            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class="btn btn-outline-danger" })
+                        }
+                    </div>
+                </td>
+                <td>
                 </td>
             </tr>
         }
