@@ -8,12 +8,12 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
-    public class RoleRepositoryService : IRepositoryService<Role>
+    public class RoleService : IRepositoryService<Role>
     {
         private readonly IMapper mapper;
         private readonly IDboRepository<RoleDbo> roleDboRepository;
 
-        public RoleRepositoryService(IMapper mapper, IDboRepository<RoleDbo> roleRepository)
+        public RoleService(IMapper mapper, IDboRepository<RoleDbo> roleRepository)
         {
             this.mapper = mapper;
             roleDboRepository = roleRepository;
