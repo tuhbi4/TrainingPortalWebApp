@@ -83,6 +83,7 @@ CREATE TABLE [dbo].[Answers](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[QuestionId] [int] NOT NULL,
 	[Answer] [nvarchar](1000) NOT NULL,
+	[IsRightAnswer] [bit] NOT NULL,
  CONSTRAINT [PK_Answers] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -305,11 +306,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[CreateAnswer]
 	@QuestionId int,
-	@Answer nvarchar(1000)
+	@Answer nvarchar(1000),
+	@IsRightAnswer bit
 AS
 BEGIN
-	INSERT INTO [dbo].[Answers] ([QuestionId], [Answer])
-	VALUES (@QuestionId, @Answer)
+	INSERT INTO [dbo].[Answers] ([QuestionId], [Answer], [IsRightAnswer] )
+	OUTPUT Inserted.Id
+	VALUES (@QuestionId, @Answer, @IsRightAnswer )
 END
 GO
 /****** Object:  StoredProcedure [dbo].[CreateCategory]    Script Date: 10.12.2021 13:30:24 ******/
@@ -322,6 +325,7 @@ CREATE PROCEDURE [dbo].[CreateCategory]
 AS
 BEGIN
 	INSERT INTO [dbo].[Categories] ([Name])
+	OUTPUT Inserted.Id
 	VALUES (@Name)
 END
 GO
@@ -336,6 +340,7 @@ CREATE PROCEDURE [dbo].[CreateCertificate]
 AS
 BEGIN
 	INSERT INTO [dbo].[Certificates] ([CourseName], [ImageLink])
+	OUTPUT Inserted.Id
 	VALUES (@CourseName, @ImageLink)
 END
 GO
@@ -353,6 +358,7 @@ CREATE PROCEDURE [dbo].[CreateCourse]
 AS
 BEGIN
 	INSERT INTO [dbo].[Courses] ([Name], [Description], [CategoryId], [TestId], [CertificateId])
+	OUTPUT Inserted.Id
 	VALUES (@Name, @Description, @CategoryId, @TestId, @CertificateId)
 END
 GO
@@ -395,6 +401,7 @@ CREATE PROCEDURE [dbo].[CreateLesson]
 AS
 BEGIN
 	INSERT INTO [dbo].[Lessons] ([Name], [Material])
+	OUTPUT Inserted.Id
 	VALUES (@Name, @Material)
 END
 GO
@@ -409,6 +416,7 @@ CREATE PROCEDURE [dbo].[CreateQuestion]
 AS
 BEGIN
 	INSERT INTO [dbo].[Questions] ([TestId], [Question])
+	OUTPUT Inserted.Id
 	VALUES (@TestId, @Question)
 END
 GO
@@ -422,6 +430,7 @@ CREATE PROCEDURE [dbo].[CreateRole]
 AS
 BEGIN
 	INSERT INTO [dbo].[Roles] ([Name])
+	OUTPUT Inserted.Id
 	VALUES (@Name)
 END
 GO
@@ -435,6 +444,7 @@ CREATE PROCEDURE [dbo].[CreateTargetAudience]
 AS
 BEGIN
 	INSERT INTO [dbo].[TargetAudiencies] ([Name])
+	OUTPUT Inserted.Id
 	VALUES (@Name)
 END
 GO
@@ -448,6 +458,7 @@ CREATE PROCEDURE [dbo].[CreateTest]
 AS
 BEGIN
 	INSERT INTO [dbo].[Tests] ([Name])
+	OUTPUT Inserted.Id
 	VALUES (@Name)
 END
 GO
@@ -467,6 +478,7 @@ CREATE PROCEDURE [dbo].[CreateUser]
 AS
 BEGIN
 	INSERT INTO [dbo].[Users] ([Login], [PasswordHash], [Email], [RoleId], [Lastname], [Firstname], [Patronymic])
+	OUTPUT Inserted.Id
 	VALUES (@Login, @PasswordHash, @Email, @RoleId, @Lastname, @Firstname, @Patronymic)
 END
 GO
@@ -479,8 +491,9 @@ CREATE PROCEDURE [dbo].[DeleteAnswerById]
 	@Id int
 AS
 BEGIN
-	DELETE
+	DELETE	
 	FROM [dbo].[Answers]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -495,6 +508,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Answers]
+	OUTPUT Deleted.Id
 	WHERE [QuestionId] = @QuestionId
 END
 GO
@@ -509,6 +523,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Categories]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -524,6 +539,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Certificates]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -533,7 +549,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[DeleteCourseById]
+CREATE PROCEDURE [dbo].[DeleteCourseWithChildsById]
 	@Id int
 AS
 BEGIN
@@ -560,7 +576,7 @@ SELECT @TargetAudienceId = [TargetAudienceId] FROM [dbo].[Courses_TargetAudienci
 DELETE FROM [dbo].[Courses_TargetAudiencies] WHERE [CourseId] = @Id AND [TargetAudienceId] = @TargetAudienceId;
 END;
 
-DELETE FROM [dbo].[Courses] WHERE [Id] = @Id;
+DELETE FROM [dbo].[Courses] OUTPUT Deleted.Id WHERE [Id] = @Id;
 DELETE FROM [dbo].[Certificates] WHERE [Id] = @CertificateId;
 
 WHILE (SELECT COUNT(*) FROM [Questions] WHERE [TestId] = @TestId) > 0
@@ -653,6 +669,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Lessons]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -668,6 +685,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Questions]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -683,6 +701,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Questions]
+	OUTPUT Deleted.Id
 	WHERE [TestId] = @TestId
 END
 GO
@@ -698,6 +717,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Roles]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -713,6 +733,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[TargetAudiencies]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -728,6 +749,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Tests]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -743,6 +765,7 @@ AS
 BEGIN
 	DELETE
 	FROM [dbo].[Users]
+	OUTPUT Deleted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -976,11 +999,14 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[UpdateAnswerById]
 	@Id int,
-	@Answer nvarchar(1000)
+	@Answer nvarchar(1000),
+	@IsRightAnswer bit
 AS
 BEGIN
 	UPDATE [dbo].[Answers]
-	SET [Answer] = @Answer
+	SET [Answer] = @Answer,
+	[IsRightAnswer] = @IsRightAnswer
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -996,6 +1022,7 @@ AS
 BEGIN
 	UPDATE [dbo].[Categories]
 	SET [Name] = @Name
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1014,6 +1041,7 @@ BEGIN
 	UPDATE [dbo].[Certificates]
 	SET [CourseName] = @CourseName,
 	[ImageLink] = @ImageLink
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1039,6 +1067,7 @@ BEGIN
 	[CategoryId] = @CategoryId,
 	[TestId] = @TestId,
 	[CertificateId] = @CertificateId
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1099,6 +1128,7 @@ BEGIN
 	UPDATE [dbo].[Lessons]
 	SET [Name] = @Name,
 	[Material] = @Material
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1117,6 +1147,7 @@ BEGIN
 	UPDATE [dbo].[Questions]
 	SET [Question] = @Question,
 	[TestId] = @TestId
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1133,6 +1164,7 @@ AS
 BEGIN
 	UPDATE [dbo].[Roles]
 	SET [Name] = @Name
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1149,6 +1181,7 @@ AS
 BEGIN
 	UPDATE [dbo].[TargetAudiencies]
 	SET [Name] = @Name
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1165,6 +1198,7 @@ AS
 BEGIN
 	UPDATE [dbo].[Tests]
 	SET [Name] = @Name
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
@@ -1194,6 +1228,7 @@ BEGIN
 	[Lastname] = @Lastname,
 	[Firstname] = @Firstname,
 	[Patronymic] = @Patronymic
+	OUTPUT Inserted.Id
 	WHERE [Id] = @Id
 END
 GO
