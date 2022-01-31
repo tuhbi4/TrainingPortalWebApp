@@ -137,3 +137,14 @@ body {
         box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
         opacity: 1
     }
+
+.scrollspy {
+    position: relative;
+    height: 65vh;
+    margin-top: .5rem;
+    overflow: auto;
+}
+
+.align-items-start {
+    align-items: start;
+}
