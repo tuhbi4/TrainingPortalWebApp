@@ -16,7 +16,7 @@ using TrainingPortal.WebPL.Models.Course;
 
 namespace TrainingPortal.WebPL.Controllers
 {
-    [Authorize(Roles = "admin,  editor")]
+
     public class CoursesController : Controller
     {
         private readonly IRepositoryService<Course> courseService;
@@ -42,14 +42,15 @@ namespace TrainingPortal.WebPL.Controllers
             return View(courseService.ReadAll());
         }
 
-        // GET: Courses/Details/5
-        [Authorize(Roles = "admin,  editor, user")]
-        public ActionResult Details(int id)
+        // GET: Courses/Pass/5
+        [Authorize(Roles = "admin, editor, user")]
+        public ActionResult Pass(int id)
         {
             return View(courseService.Read(id));
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "admin, editor")]
         public ActionResult Create()
         {
             ViewBag.AvailableCategories = new SelectList(categoryService.ReadAll(), nameof(Category.Id), nameof(Category.Name));
@@ -62,6 +63,7 @@ namespace TrainingPortal.WebPL.Controllers
         // POST: Courses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin, editor")]
         public ActionResult Create(CourseViewModel viewModel, IFormCollection collection)
         {
             if (User.Identity.IsAuthenticated)
@@ -100,6 +102,7 @@ namespace TrainingPortal.WebPL.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "admin, editor")]
         public ActionResult Edit(int id)
         {
             logger.Information($"Course editing was requested: id = \"{id}\", initiator = \"{User.Identity.Name}\"");
@@ -112,9 +115,10 @@ namespace TrainingPortal.WebPL.Controllers
             return View(model);
         }
 
-        // POST: Courses/Edit/5
+        // POST: Courses/Edit/5        
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin, editor")]
         public ActionResult Edit(int id, CourseViewModel viewModel, IFormCollection collection)
         {
             if (User.Identity.IsAuthenticated)
@@ -155,6 +159,7 @@ namespace TrainingPortal.WebPL.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "admin, editor")]
         public ActionResult Delete(int id)
         {
             return View(courseService.Read(id));
@@ -163,6 +168,7 @@ namespace TrainingPortal.WebPL.Controllers
         // POST: Courses/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "admin, editor")]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             if (courseService.Read(id) != null)
