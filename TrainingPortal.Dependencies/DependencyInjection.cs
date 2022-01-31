@@ -41,6 +41,7 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IRepositoryService<User>, UserService>();
             services.AddSingleton<IRepositoryService<Role>, RoleService>();
             services.AddSingleton<IRepositoryService<TargetAudience>, TargetAudienceService>();
+            services.AddSingleton<IRepositoryService<Test>, TestService>();
         }
 
         public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration)
