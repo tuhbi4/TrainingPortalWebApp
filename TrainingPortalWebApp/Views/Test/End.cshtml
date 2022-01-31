@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "End test";
+    string message = ViewBag.Message;
+    string additionalMessage = ViewBag.AdditionalMessage;
+}
+
+<div class="col-8 mx-auto text-center mt-5">
+    <div class="d-flex flex-column align-items-center">
+        <h1 class="text-info mt-5 mb-4">@message</h1>
+        <hr class="border border-1 border-secondary w-100" />
+        <h3 class="text-secondary mt-2 mb-5">@additionalMessage</h3>
+        <a asp-controller="Courses" asp-action="Index" class="btn btn-primary btn-lg">Try another course</a>
+    </div>
+</div>

@@ -6,7 +6,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Training Portal</title>
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
     <link rel="stylesheet" href="~/libs/vendor.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -44,9 +43,9 @@
                     else
                     {
                         <div class="btn-group">
-                            <button type="button" class="btn btn-secondary">
+                            <a class="btn btn-secondary" asp-area="" asp-controller="Account" asp-action="Profile">
                                 <img class="image is-28x28 is-rounded" alt="" data-profile-property="avatarUrl" src="https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_960_720.png">
-                            </button>
+                            </a>
                             <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenuButton" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
                                 <span class="visually-hidden"></span>
                             </button>
@@ -89,13 +88,7 @@
             &copy; 2021 - Training Portal - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>*@
-    @*<script src="~/libs/jquery/jquery.min.js"></script>*@
-    @*<script src="~/libs/popper/umd/popper.min.js"></script>*@
-    @*<script src="~/libs/bootstrap/js/bootstrap.min.js"></script>*@
-    @*<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>*@
     <script src="~/libs/vendor.min.js"></script>
-    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>*@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
