@@ -169,3 +169,7 @@ body {
 .callout-danger {
     border-left-color: #dc3545;
 }
+
+.btn-search::after {
+    content: "\E721";
+}

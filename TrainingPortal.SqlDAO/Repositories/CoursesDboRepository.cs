@@ -6,7 +6,7 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.SqlDAL.Repositories
 {
-    public class CoursesDboRepository : IDboRepository<CourseDbo>
+    public class CoursesDboRepository : IDboRepository<CourseDbo>, ISearchableDboRepository<CourseDbo>
     {
         public List<CourseDbo> Items { get; set; }
 
@@ -85,6 +85,20 @@ namespace TrainingPortal.SqlDAL.Repositories
             {
                 return 0;
             }
+        }
+
+        public List<CourseDbo> Search(string courseName, string categoryName, string targetAudiencyName)
+        {
+            var storedProcedureName = "[dbo].[SearchCourse]";
+            var parameters = new List<SqlParameter>()
+            {
+                new("Course", DbType.String) { Value = courseName },
+                new("Category", DbType.String) { Value = categoryName },
+                new("TargetAudience", DbType.String) { Value = targetAudiencyName }
+            };
+            Items = _dBService.PerformStoredProcedure<CourseDbo>(storedProcedureName, parameters);
+
+            return Items;
         }
     }
 }

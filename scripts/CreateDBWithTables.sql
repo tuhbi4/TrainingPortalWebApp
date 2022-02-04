@@ -985,11 +985,13 @@ CREATE PROCEDURE [dbo].[SearchCourse]
 	@TargetAudience nvarchar(500)
 AS
 BEGIN
-	SELECT *
+	Select Course.[Id], Course.[Name], Course.[Description], Course.[CategoryId], Course.[TestId], Course.[CertificateId]
 	FROM [dbo].[Courses] Course
 	FULL JOIN [dbo].[Categories] Category ON Course.CategoryId = Category.Id
-	FULL JOIN [dbo].[TargetAudiencies] TargetAudiency ON Course.CategoryId = Category.Id
-	WHERE Course.Name LIKE '%'+@Course+'%' AND Category.Name LIKE '%'+@Category+'%' AND TargetAudiency.Name LIKE '%'+@TargetAudience+'%'
+	FULL JOIN [dbo].[Courses_TargetAudiencies] CoursesAudiencies ON Course.Id = CoursesAudiencies.CourseId
+	FULL JOIN [dbo].[TargetAudiencies] Audiency ON CoursesAudiencies.TargetAudienceId = Audiency.Id
+	WHERE Course.Name LIKE '%'+@Course+'%' AND Category.Name LIKE '%'+@Category+'%' AND Audiency.Name LIKE '%'+@TargetAudience+'%'
+	GROUP BY Course.[Id], Course.[Name], Course.[Description], Course.[CategoryId], Course.[TestId], Course.[CertificateId]
 END
 GO
 /****** Object:  StoredProcedure [dbo].[UpdateAnswerById]    Script Date: 10.12.2021 13:30:24 ******/

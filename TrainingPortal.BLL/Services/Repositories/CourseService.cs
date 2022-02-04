@@ -13,7 +13,7 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
-    public class CourseService : IRepositoryService<Course>
+    public class CourseService : IRepositoryService<Course>, ISearchableRepositoryService<Course>
     {
         private readonly IMapper mapper;
         private readonly IDboRepository<CategoryDbo> categoryDboRepository;
@@ -272,6 +272,19 @@ namespace TrainingPortal.BLL.Services.Repositories
         public int Delete(int id)
         {
             return courseDboRepository.Delete(id);
+        }
+
+        public List<Course> Search(string courseName, string categoryName, string targetAudiencyName)
+        {
+            ISearchableDboRepository<CourseDbo> searchebleCourseDboRepository = courseDboRepository as ISearchableDboRepository<CourseDbo>;
+            List<Course> resultList = new();
+
+            foreach (CourseDbo courseDbo in searchebleCourseDboRepository.Search(courseName, categoryName, targetAudiencyName))
+            {
+                resultList.Add(Read(courseDbo.Id));
+            }
+
+            return resultList;
         }
     }
 }

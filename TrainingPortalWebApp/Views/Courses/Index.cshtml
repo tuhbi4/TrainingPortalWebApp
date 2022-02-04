@@ -4,9 +4,34 @@
     ViewData["Title"] = "Courses";
     int i;
     string commaSeparator = ", ";
+    string searchedCourseName = ViewBag.CourseName ?? string.Empty;
+    string searchedCategoryName = ViewBag.CategoryName ?? string.Empty;
+    string searchedTargetAudiencyName = ViewBag.TargetAudienceName ?? string.Empty;
 }
 
-<h1>Courses</h1>
+<h1 class="navbar-expand-sm">
+    <span>Courses</span>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#search-panel" aria-controls="search-panel" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="btn-search"></span>
+    </button>
+</h1>
+<form asp-action="Index" id="search-panel" class="collapse d-sm-inline-flex">
+    <div class="input-group row-cols-sm-4" role="group" aria-label="BtnGroup">
+        <div class="form-floating flex-fill">
+            <input type="text" class="form-control" id="SearchInput1" name="courseName" value="@searchedCourseName" placeholder="">
+            <label for="SearchInput1" class="ml-3">By course:</label>
+        </div>
+        <div class="form-floating flex-fill">
+            <input type="text" class="form-control" id="SearchInput2" name="categoryName" value="@searchedCategoryName" placeholder="">
+            <label for="SearchInput2" class="ml-3">By category:</label>
+        </div>
+        <div class="form-floating flex-fill">
+            <input type="text" class="form-control" id="SearchInput3" name="targetAudiencyName" value="@searchedTargetAudiencyName" placeholder="">
+            <label for="SearchInput3" class="ml-3">By target audiency:</label>
+        </div>
+        <button type="submit" value="" class="btn btn-secondary btn-outline-info btn-search w-auto"></button>
+    </div>
+</form>
 <hr />
 
 @if (User.IsInRole("editor") || User.IsInRole("admin"))
