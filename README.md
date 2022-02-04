@@ -5,7 +5,7 @@
 ***
 
 ## Project status
-![](https://img.shields.io/badge/project%20completed-60%25-yellow)
+![](https://img.shields.io/badge/project%20completed-90%25-success)
 ![](https://img.shields.io/badge/build-success-success)
 ![](https://img.shields.io/badge/manual%20testing-success-success)
 ![](https://img.shields.io/badge/coverage%20-10%25-yellow)
