@@ -42,6 +42,21 @@ namespace TrainingPortal.WebPL.Controllers
             return View(courseService.ReadAll());
         }
 
+        // POST: Courses/Index/
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(string courseName, string categoryName, string targetAudiencyName)
+        {
+            ISearchableRepositoryService<Course> searchebleCourseService = courseService as ISearchableRepositoryService<Course>;
+            List<Course> courses = searchebleCourseService.Search(courseName ?? string.Empty, categoryName ?? string.Empty, targetAudiencyName ?? string.Empty);
+            ViewBag.CourseName = courseName;
+            ViewBag.CategoryName = categoryName;
+            ViewBag.TargetAudienceName = targetAudiencyName;
+
+            return View(courses);
+        }
+
         // GET: Courses/Pass/5
         [Authorize(Roles = "admin, editor, user")]
         public ActionResult Pass(int id)
