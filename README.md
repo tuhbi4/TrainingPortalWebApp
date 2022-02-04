@@ -19,13 +19,13 @@
 - [X] Models
 - [ ] Services
   - [X] Section navigation
-  - [ ] Сourse search page by parameters
+  - [X] Сourse search page by parameters
   - [X] Viewing course information
-  - [ ] Passing the course
+  - [X] Passing the course
   - [ ] View the list of completed courses
   - [ ] Downloading the certificate
   - [X] Editing a profile
-  - [ ] Site information management
+  - [X] Site information management
   - [X] User management
 - [X] Views
 - [X] Working with DB
