@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Training Portal</title>
+    <style>
+        #certificate-container, #container-background, #container-foreground {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #certificate-container {
+            margin: auto;
+            margin-top: 3rem;
+        }
+
+        #container-background {
+            opacity: 0.5;
+        }
+
+        #container-foreground {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+            #container-foreground > p {
+                text-shadow: 2px 2px 3px gray;
+            }
+
+        #certificate-inner-container {
+            position: relative;
+            box-shadow: 0 5px 15px 0 rgba(61,61,85,0.15), inset 0px 0px 10px 1px rgb(0, 0, 0, 0.1);
+        }
+
+        #certificate-header {
+            font-family: Copperplate Gothic Light, 'Carrois Gothic SC', sans-serif;
+            font-size: xx-large;
+            font-variant-caps: all-petite-caps;
+        }
+
+        #certificate-subheader {
+            font-variant: small-caps;
+        }
+
+        #certificate-user-name {
+            font-family: 'Caveat', cursive;
+            font-style: italic;
+            font-weight: bold;
+            font-size: x-large;
+        }
+
+        #certificate-course-name {
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .certificate-subtitle {
+        }
+    </style>
+</head>
+<body>
+    @RenderBody()
+</body>
+</html>
