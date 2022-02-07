@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Test";
-    int testId = ViewBag.TestId;
+    int courseId = ViewBag.CourseId;
     int questionNumber = ViewBag.QuestionNumber;
     int nextQuestionNumber = questionNumber + 1;
     int chancesLeft = ViewBag.СhancesLeft;
@@ -33,7 +33,7 @@
             Chanses left: <span class="@calloutSpanClass"><strong>@chancesLeft</strong></span>
         </div>
     </div>
-    <form asp-action="NextQuestion" asp-route-testId="@testId" asp-route-questionNumber="@nextQuestionNumber" asp-route-chancesLeft="@chancesLeft">
+    <form asp-action="NextQuestion" asp-route-courseId="@courseId" asp-route-questionNumber="@nextQuestionNumber" asp-route-chancesLeft="@chancesLeft">
         <div class="d-flex flex-column align-items-center">
             <h3>Question @questionNumber:</h3>
             <h1>@Model.Question</h1>

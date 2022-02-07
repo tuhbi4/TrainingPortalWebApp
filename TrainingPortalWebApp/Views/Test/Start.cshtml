@@ -3,10 +3,11 @@
 @{
     ViewData["Title"] = "Start test";
     int chancesLeft = ViewBag.СhancesLeft;
+    int courseId = ViewBag.CourseId;
 }
 
 <div>
-    <form asp-action="NextQuestion" asp-route-testId="@Model.Id" asp-route-questionNumber="1" asp-route-chancesLeft="@chancesLeft">
+    <form asp-action="NextQuestion" asp-route-courseId="@courseId" asp-route-questionNumber="1" asp-route-chancesLeft="@chancesLeft">
         <div class="d-flex flex-column align-items-center mt-5">
             <h3>You are about to start taking the test</h3>
             <h1>@Model.Name</h1>
