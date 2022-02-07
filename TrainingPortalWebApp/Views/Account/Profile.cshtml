@@ -1,0 +1,62 @@
+﻿@using TrainingPortal.WebPL.Models.User
+@model ProfileUserViewModel
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<h1>Profile</h1>
+<hr />
+<div class="accordion row" id="profile-accordion">
+    <aside class="col-sm-3">
+        <ul class="list-group list-group-flush border-end">
+            <li class="list-group-item accordion-item align-text-end text-larger accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#completed-courses" aria-expanded="true" aria-controls="completed-courses">
+                <span>Completed courses</span>
+            </li>
+            <li class="list-group-item accordion-item align-text-end text-larger accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#some-feature-one" aria-expanded="false" aria-controls="some-feature-one">
+                <span>Some feature</span>
+            </li>
+            <li class="list-group-item accordion-item align-text-end text-larger accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#some-feature-two" aria-expanded="false" aria-controls="some-feature-two">
+                <span>Some feature</span>
+            </li>
+        </ul>
+    </aside>
+    <section class="col-sm-9">
+        <div id="completed-courses" class="accordion-collapse collapse show" data-bs-parent="#profile-accordion">
+            @{
+                if (Model.PassedCoursesList != null && Model.PassedCoursesList.Count != 0)
+                {
+                    <form method=post>
+                        <ul class="list-group list-group-flush">
+                            @foreach (var item in Model.PassedCoursesList)
+                            {
+                                <li class="list-group-item d-flex justify-content-between mx-5 mt-2">
+                                    <span class="align-self-center">@item.CourseName</span>
+                                    <input type="submit" value="" class="btn btn-download" asp-controller="Certificate" asp-action="Download" asp-route-userId="@item.UserId" asp-route-courseId="@item.CourseId" aria-label="download-certificate" data-bs-toggle="tooltip" title="Click to download this certificate" />
+                                </li>
+                            }
+                        </ul>
+                    </form>
+                }
+                else
+                {
+                    <div class="">
+                        <div class="shadow callout callout-info">
+                            <span class="text-info">You have not completed any course yet.</span>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+        <div id="some-feature-one" class="accordion-collapse collapse" data-bs-parent="#profile-accordion">
+            <div class="shadow callout callout-warning">
+                <span class="text-warning">This feature will be added in the future.</span>
+            </div>
+        </div>
+        <div id="some-feature-two" class="accordion-collapse collapse" data-bs-parent="#profile-accordion">
+            <div class="shadow callout callout-warning">
+                <span class="text-warning">This feature will be added in the future.</span>
+            </div>
+        </div>
+    </section>
+</div>

@@ -36,6 +36,8 @@ namespace TrainingPortal.WebPL
             CreateMap<TestQuestionDbo, TestQuestion>();
             CreateMap<Answer, AnswerDbo>();
             CreateMap<AnswerDbo, Answer>();
+            CreateMap<UserPassedCourse, UserPassedCourseDboRelation>();
+            CreateMap<UserPassedCourseDboRelation, UserPassedCourse>();
 
             CreateMap<User, EditUserViewModel>();
             CreateMap<RegisterUserViewModel, User>();

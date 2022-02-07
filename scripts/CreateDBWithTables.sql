@@ -90,7 +90,7 @@ CREATE TABLE [dbo].[Answers](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Categories]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Categories]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -104,7 +104,7 @@ CREATE TABLE [dbo].[Categories](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Certificates]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Certificates]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -119,7 +119,7 @@ CREATE TABLE [dbo].[Certificates](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Courses]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -137,7 +137,7 @@ CREATE TABLE [dbo].[Courses](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses_Lessons]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Courses_Lessons]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -147,7 +147,7 @@ CREATE TABLE [dbo].[Courses_Lessons](
 	[LessonId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Courses_TargetAudiencies]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Courses_TargetAudiencies]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -157,7 +157,7 @@ CREATE TABLE [dbo].[Courses_TargetAudiencies](
 	[TargetAudienceId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Lessons]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Lessons]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -172,7 +172,7 @@ CREATE TABLE [dbo].[Lessons](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Questions]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Questions]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -187,7 +187,7 @@ CREATE TABLE [dbo].[Questions](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Roles]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Roles]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -201,7 +201,7 @@ CREATE TABLE [dbo].[Roles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TargetAudiencies]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[TargetAudiencies]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -215,7 +215,7 @@ CREATE TABLE [dbo].[TargetAudiencies](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Tests]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Tests]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -229,7 +229,7 @@ CREATE TABLE [dbo].[Tests](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Users]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -247,6 +247,16 @@ CREATE TABLE [dbo].[Users](
 (
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Users_PassedCourses]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Users_PassedCourses](
+	[UserId] [int] NOT NULL,
+	[CourseId] [int] NOT NULL
 ) ON [PRIMARY]
 GO
 ALTER TABLE [dbo].[Answers]  WITH CHECK ADD  CONSTRAINT [FK_Answers_Questions] FOREIGN KEY([QuestionId])
@@ -299,7 +309,17 @@ REFERENCES [dbo].[Roles] ([Id])
 GO
 ALTER TABLE [dbo].[Users] CHECK CONSTRAINT [FK_Users_Roles]
 GO
-/****** Object:  StoredProcedure [dbo].[CreateAnswer]    Script Date: 10.12.2021 13:30:24 ******/
+ALTER TABLE [dbo].[Users_PassedCourses]  WITH CHECK ADD  CONSTRAINT [FK_Users_PassedCourses_Courses] FOREIGN KEY([CourseId])
+REFERENCES [dbo].[Courses] ([Id])
+GO
+ALTER TABLE [dbo].[Users_PassedCourses] CHECK CONSTRAINT [FK_Users_PassedCourses_Courses]
+GO
+ALTER TABLE [dbo].[Users_PassedCourses]  WITH CHECK ADD  CONSTRAINT [FK_Users_PassedCourses_Users] FOREIGN KEY([UserId])
+REFERENCES [dbo].[Users] ([Id])
+GO
+ALTER TABLE [dbo].[Users_PassedCourses] CHECK CONSTRAINT [FK_Users_PassedCourses_Users]
+GO
+/****** Object:  StoredProcedure [dbo].[CreateAnswer]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -315,7 +335,7 @@ BEGIN
 	VALUES (@QuestionId, @Answer, @IsRightAnswer )
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateCategory]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateCategory]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -329,7 +349,7 @@ BEGIN
 	VALUES (@Name)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateCertificate]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateCertificate]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -344,7 +364,7 @@ BEGIN
 	VALUES (@CourseName, @ImageLink)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateCourse]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateCourse]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -362,7 +382,7 @@ BEGIN
 	VALUES (@Name, @Description, @CategoryId, @TestId, @CertificateId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateCoursesLessons]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateCoursesLessons]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -376,7 +396,7 @@ BEGIN
 	VALUES (@CourseId, @LessonId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateCoursesTargetAudiencies]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateCoursesTargetAudiencies]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -390,7 +410,7 @@ BEGIN
 	VALUES (@CourseId, @TargetAudienceId)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateLesson]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateLesson]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -405,7 +425,7 @@ BEGIN
 	VALUES (@Name, @Material)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateQuestion]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateQuestion]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -420,7 +440,7 @@ BEGIN
 	VALUES (@TestId, @Question)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateRole]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateRole]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -434,7 +454,7 @@ BEGIN
 	VALUES (@Name)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateTargetAudience]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateTargetAudience]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -448,7 +468,7 @@ BEGIN
 	VALUES (@Name)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateTest]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateTest]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -462,7 +482,7 @@ BEGIN
 	VALUES (@Name)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateUser]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -482,7 +502,22 @@ BEGIN
 	VALUES (@Login, @PasswordHash, @Email, @RoleId, @Lastname, @Firstname, @Patronymic)
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteAnswerById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[CreateUserPassedCourse]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[CreateUserPassedCourse]
+	@UserId int,
+	@CourseId int
+AS
+BEGIN
+	INSERT INTO [dbo].[Users_PassedCourses] ([UserId], [CourseId])
+	VALUES (@UserId, @CourseId)
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteAnswerById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -497,7 +532,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteAnswersByQuestionId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteAnswersByQuestionId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -512,7 +547,7 @@ BEGIN
 	WHERE [QuestionId] = @QuestionId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteCategoryById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteCategoryById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -527,7 +562,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteCertificateById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteCertificateById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -543,7 +578,69 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteCourseById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteCoursesLessonsByCourseId]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[DeleteCoursesLessonsByCourseId]
+	@CourseId int
+AS
+BEGIN
+	DELETE
+	FROM [dbo].[Courses_Lessons]
+	WHERE [CourseId] = @CourseId
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteCoursesLessonsByCourseIdAndLessonId]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[DeleteCoursesLessonsByCourseIdAndLessonId]
+	@CourseId int,
+	@LessonId int
+AS
+BEGIN
+	DELETE
+	FROM [dbo].[Courses_Lessons]
+	WHERE [CourseId] = @CourseId AND [LessonId] = @LessonId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteCoursesTargetAudienciesByCourseId]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[DeleteCoursesTargetAudienciesByCourseId]
+	@CourseId int
+AS
+BEGIN
+	DELETE
+	FROM [dbo].[Courses_TargetAudiencies]
+	WHERE [CourseId] = @CourseId
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteCoursesTargetAudienciesByCourseIdAndTargetAudienceId]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[DeleteCoursesTargetAudienciesByCourseIdAndTargetAudienceId]
+	@CourseId int,
+	@TargetAudienceId int
+AS
+BEGIN
+	DELETE
+	FROM [dbo].[Courses_TargetAudiencies]
+	WHERE [CourseId] = @CourseId AND [TargetAudienceId] = @TargetAudienceId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[DeleteCourseWithChildsById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -595,69 +692,7 @@ END;
 DELETE FROM [dbo].[Tests] WHERE [Id] = @TestId;
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteCoursesLessonsByCourseId]    Script Date: 10.12.2021 13:30:24 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [dbo].[DeleteCoursesLessonsByCourseId]
-	@CourseId int
-AS
-BEGIN
-	DELETE
-	FROM [dbo].[Courses_Lessons]
-	WHERE [CourseId] = @CourseId
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[DeleteCoursesLessonsByCourseIdAndLessonId]    Script Date: 10.12.2021 13:30:24 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[DeleteCoursesLessonsByCourseIdAndLessonId]
-	@CourseId int,
-	@LessonId int
-AS
-BEGIN
-	DELETE
-	FROM [dbo].[Courses_Lessons]
-	WHERE [CourseId] = @CourseId AND [LessonId] = @LessonId
-END
-GO
-/****** Object:  StoredProcedure [dbo].[DeleteCoursesTargetAudienciesByCourseId]    Script Date: 10.12.2021 13:30:24 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-CREATE PROCEDURE [dbo].[DeleteCoursesTargetAudienciesByCourseId]
-	@CourseId int
-AS
-BEGIN
-	DELETE
-	FROM [dbo].[Courses_TargetAudiencies]
-	WHERE [CourseId] = @CourseId
-END
-
-GO
-/****** Object:  StoredProcedure [dbo].[DeleteCoursesTargetAudienciesByCourseIdAndTargetAudienceId]    Script Date: 10.12.2021 13:30:24 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE PROCEDURE [dbo].[DeleteCoursesTargetAudienciesByCourseIdAndTargetAudienceId]
-	@CourseId int,
-	@TargetAudienceId int
-AS
-BEGIN
-	DELETE
-	FROM [dbo].[Courses_TargetAudiencies]
-	WHERE [CourseId] = @CourseId AND [TargetAudienceId] = @TargetAudienceId
-END
-GO
-/****** Object:  StoredProcedure [dbo].[DeleteLessonById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteLessonById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -673,7 +708,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteQuestionById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteQuestionById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -689,7 +724,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteQuestionsByTestId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteQuestionsByTestId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -705,7 +740,7 @@ BEGIN
 	WHERE [TestId] = @TestId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteRoleById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteRoleById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -721,7 +756,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteTargetAudienceById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteTargetAudienceById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -737,7 +772,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteTestById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteTestById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -753,7 +788,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[DeleteUserById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteUserById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -769,7 +804,22 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetAnswerById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[DeleteUserPassedCoursesByUserId]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[DeleteUserPassedCoursesByUserId]
+	@UserId int
+AS
+BEGIN
+	DELETE
+	FROM [dbo].[Users_PassedCourses]
+	WHERE [UserId] = @UserId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[GetAnswerById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -783,7 +833,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetAnswersByQuestionId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetAnswersByQuestionId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -797,7 +847,7 @@ BEGIN
 	WHERE [QuestionId] = @QuestionId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetCategoryById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetCategoryById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -811,7 +861,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetCertificateById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetCertificateById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -826,7 +876,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetCourseById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetCourseById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -841,7 +891,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetCoursesLessonsByCourseId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetCoursesLessonsByCourseId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -855,7 +905,7 @@ BEGIN
 	WHERE [CourseId] = @CourseId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetCoursesTargetAudienciesByCourseId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetCoursesTargetAudienciesByCourseId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -869,7 +919,7 @@ BEGIN
 	WHERE [CourseId] = @CourseId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetLessonById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetLessonById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -884,7 +934,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetQuestionById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetQuestionById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -899,7 +949,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetQuestionsByTestId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetQuestionsByTestId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -914,7 +964,7 @@ BEGIN
 	WHERE [TestId] = @TestId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetRoleById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetRoleById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -929,7 +979,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetTargetAudienceById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetTargetAudienceById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -944,7 +994,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetTestById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetTestById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -959,7 +1009,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[GetUserById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetUserById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -974,7 +1024,22 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[SearchCourse]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[GetUserPassedCoursesByUserId]    Script Date: 04.02.2022 15:41:29 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[GetUserPassedCoursesByUserId]
+	@UserId int
+AS
+BEGIN
+	SELECT *
+	FROM [dbo].[Users_PassedCourses]
+	WHERE [UserId] = @UserId
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SearchCourse]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -994,7 +1059,7 @@ BEGIN
 	GROUP BY Course.[Id], Course.[Name], Course.[Description], Course.[CategoryId], Course.[TestId], Course.[CertificateId]
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateAnswerById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateAnswerById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1012,7 +1077,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateCategoryById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCategoryById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1028,7 +1093,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateCertificateById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCertificateById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1047,7 +1112,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateCourseById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCourseById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1073,7 +1138,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateCoursesLessonsByCourseId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCoursesLessonsByCourseId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1094,7 +1159,7 @@ BEGIN
 	WHERE [CourseId] = @CourseId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateCoursesTargetAudienciesByCourseId]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateCoursesTargetAudienciesByCourseId]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1115,7 +1180,7 @@ BEGIN
 	WHERE [CourseId] = @CourseId
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateLessonById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateLessonById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1134,7 +1199,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateQuestionById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateQuestionById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1153,7 +1218,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateRoleById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateRoleById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1170,7 +1235,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateTargetAudienceById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateTargetAudienceById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1187,7 +1252,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateTestById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateTestById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1204,7 +1269,7 @@ BEGIN
 	WHERE [Id] = @Id
 END
 GO
-/****** Object:  StoredProcedure [dbo].[UpdateUserById]    Script Date: 10.12.2021 13:30:24 ******/
+/****** Object:  StoredProcedure [dbo].[UpdateUserById]    Script Date: 04.02.2022 15:41:29 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

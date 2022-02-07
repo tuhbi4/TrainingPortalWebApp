@@ -1,0 +1,38 @@
+﻿@model Certificate
+
+@{
+    ViewData["Title"] = "Download certificate";
+    Layout = "~/Views/Shared/_PuppeteerLayout.cshtml";
+}
+
+<div id="certificate-container">
+    <div id="certificate-inner-container">
+        <div id="container-background">
+            <img src="@Model.ImageLink" />
+        </div>
+        <div id="container-foreground">
+            <p id="certificate-header">
+                Certificate of completition
+            </p>
+            <p id="certificate-subheader">
+                Presented to
+            </p>
+            <p id="certificate-user-name">
+                @Model.UserName
+            </p>
+            <p class="certificate-subtitle">
+                For completing the course
+            </p>
+            <p id="certificate-course-name">
+                @Model.CourseName
+            </p>
+            <p class="certificate-subtitle">
+                in Training Portal
+            </p>
+            <p class="certificate-subtitle">
+                on @DateTime.Today.ToShortDateString()
+            </p>
+            <div />
+        </div>
+    </div>
+</div>

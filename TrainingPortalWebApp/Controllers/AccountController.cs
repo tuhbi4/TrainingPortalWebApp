@@ -21,15 +21,17 @@ namespace TrainingPortal.WebPL.Controllers
     {
         private readonly IRepositoryService<User> userService;
         private readonly IRepositoryService<Role> roleService;
+        private readonly IRepositoryService<UserPassedCourse> userPassedCourseService;
         private readonly IHashService md5Hash;
         private readonly IMapper mapper;
         private readonly ILogger logger;
 
-        public AccountController(IRepositoryService<User> userService, IRepositoryService<Role> roleService,
+        public AccountController(IRepositoryService<User> userService, IRepositoryService<Role> roleService, IRepositoryService<UserPassedCourse> userPassedCourseService,
             IHashService md5Hash, IMapper mapper, ILogger logger)
         {
             this.userService = userService;
             this.roleService = roleService;
+            this.userPassedCourseService = userPassedCourseService;
             this.md5Hash = md5Hash;
             this.mapper = mapper;
             this.logger = logger;
@@ -220,8 +222,10 @@ namespace TrainingPortal.WebPL.Controllers
         // GET: Account/Profile
         public ActionResult Profile()
         {
-            // UNDONE: Get course progress, download certificate, etc. - add implementation
-            return RedirectToAction("NotImplemented", "Home");
+            ProfileUserViewModel model = new();
+            model.PassedCoursesList = userPassedCourseService.ReadAll().FindAll(x => x.UserId == int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value));
+
+            return View(model);
         }
 
         // GET: Account/Settings
@@ -366,6 +370,7 @@ namespace TrainingPortal.WebPL.Controllers
         {
             var claims = new List<Claim>()
                     {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                         new Claim(ClaimTypes.Name, user.Login),
                         new Claim(ClaimTypes.Email, user.Email),
                         new Claim(ClaimTypes.Role, user.Role.Name)
