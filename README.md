@@ -5,7 +5,7 @@
 ***
 
 ## Project status
-![](https://img.shields.io/badge/project%20completed-90%25-success)
+![](https://img.shields.io/badge/project%20completed-99%25-success)
 ![](https://img.shields.io/badge/build-success-success)
 ![](https://img.shields.io/badge/manual%20testing-success-success)
 ![](https://img.shields.io/badge/coverage%20-10%25-yellow)
@@ -17,13 +17,13 @@
 
 - [X] Project architecture
 - [X] Models
-- [ ] Services
+- [X] Services
   - [X] Section navigation
   - [X] Сourse search page by parameters
   - [X] Viewing course information
   - [X] Passing the course
-  - [ ] View the list of completed courses
-  - [ ] Downloading the certificate
+  - [X] View the list of completed courses
+  - [X] Downloading the certificate
   - [X] Editing a profile
   - [X] Site information management
   - [X] User management
