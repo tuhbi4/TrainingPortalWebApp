@@ -32,16 +32,20 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IDboRepository<LessonDbo>, LessonsDboRepository>();
             services.AddSingleton<IDboRepository<TargetAudienceDbo>, TargetAudienciesDboRepository>();
             services.AddSingleton<IDboRepository<TestDbo>, TestsDboRepository>();
+            services.AddSingleton<IDboRepository<TestDbo>, TestsDboRepository>();
             services.AddSingleton<IDboInnerRepository<AnswerDbo>, AnswersDboInnerRepository>();
             services.AddSingleton<IDboInnerRepository<TestQuestionDbo>, QuestionsDboInnerRepository>();
             services.AddSingleton<IDboRelationsRepository<CoursesLessonsDboRelation>, CoursesLessonsDboRelationsRepository>();
             services.AddSingleton<IDboRelationsRepository<CoursesTargetAudienciesDboRelation>, CoursesTargetAudienciesDboRelationsRepository>();
+            services.AddSingleton<IDboRelationsRepository<UserPassedCourseDboRelation>, UserPassedCourseDboRelationRepository>();
+
             services.AddSingleton<IRepositoryService<Category>, CategoryService>();
             services.AddSingleton<IRepositoryService<Course>, CourseService>();
             services.AddSingleton<IRepositoryService<User>, UserService>();
             services.AddSingleton<IRepositoryService<Role>, RoleService>();
             services.AddSingleton<IRepositoryService<TargetAudience>, TargetAudienceService>();
             services.AddSingleton<IRepositoryService<Test>, TestService>();
+            services.AddSingleton<IRepositoryService<UserPassedCourse>, UserPassedCourseService>();
         }
 
         public static void InjectDependencies(this IServiceCollection services, IConfiguration configuration)
