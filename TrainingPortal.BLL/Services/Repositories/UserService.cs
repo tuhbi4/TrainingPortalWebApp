@@ -23,6 +23,7 @@ namespace TrainingPortal.BLL.Services.Repositories
         public int Create(User dataInstance)
         {
             UserDbo mappedInstance = mapper.Map<UserDbo>(dataInstance);
+
             return userRepository.Create(mappedInstance);
         }
 
@@ -35,6 +36,7 @@ namespace TrainingPortal.BLL.Services.Repositories
         {
             List<User> userList = new();
             List<UserDbo> userDboList = userRepository.ReadAll();
+
             foreach (UserDbo userDbo in userDboList)
             {
                 User user = mapper.Map<User>(userDbo);

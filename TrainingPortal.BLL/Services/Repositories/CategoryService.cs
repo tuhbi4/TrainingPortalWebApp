@@ -32,6 +32,7 @@ namespace TrainingPortal.BLL.Services.Repositories
         {
             List<Category> categoryList = new();
             List<CategoryDbo> categoryDboList = repository.ReadAll();
+
             foreach (CategoryDbo categoryDbo in categoryDboList)
             {
                 categoryList.Add(mapper.Map<Category>(categoryDbo));

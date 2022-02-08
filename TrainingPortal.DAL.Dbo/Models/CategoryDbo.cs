@@ -2,17 +2,8 @@
 {
     public class CategoryDbo
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string Name { get; }
-
-        public CategoryDbo()
-        { }
-
-        public CategoryDbo(int id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
+        public string Name { get; set; }
     }
 }

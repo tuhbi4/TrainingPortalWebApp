@@ -10,49 +10,55 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<CertificateDbo> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateCertificate]";
+        private const string ReadStoredProcedureName = "[dbo].[GetCertificateById]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Certificates]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateCertificateById]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteCertificateById]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public CertificatesDboRepository(IDbCommandPerformer dBService)
         {
             Items = new List<CertificateDbo>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(CertificateDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateCertificate]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("@CourseName", DbType.String) { Value = dataInstance.CourseName },
                 new("@ImageLink", DbType.String) { Value = dataInstance.ImageLink }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public CertificateDbo Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetCertificateById]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<CertificateDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<CertificateDbo>(storedProcedureName, parameters);
 
             return Items[0];
         }
 
         public List<CertificateDbo> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Certificates]";
-            Items = _dBService.PerformQuery<CertificateDbo>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<CertificateDbo>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, CertificateDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateCertificateById]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id },
@@ -60,12 +66,12 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("@ImageLink", DbType.String) { Value = dataInstance.ImageLink }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteCertificateById]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -73,7 +79,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

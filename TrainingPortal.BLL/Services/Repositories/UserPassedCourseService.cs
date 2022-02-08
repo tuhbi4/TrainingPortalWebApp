@@ -11,10 +11,10 @@ namespace TrainingPortal.BLL.Services.Repositories
     public class UserPassedCourseService : IRepositoryService<UserPassedCourse>
     {
         private readonly IMapper mapper;
-        private readonly IDboRepository<CourseDbo> courseDboRepository;
+        private readonly ISearchableDboRepository<CourseDbo> courseDboRepository;
         private readonly IDboRelationsRepository<UserPassedCourseDboRelation> userPassedCourseDboRelationsRepository;
 
-        public UserPassedCourseService(IMapper mapper, IDboRepository<CourseDbo> courseDboRepository, IDboRelationsRepository<UserPassedCourseDboRelation> userPassedCourseDboRelationsRepository)
+        public UserPassedCourseService(IMapper mapper, ISearchableDboRepository<CourseDbo> courseDboRepository, IDboRelationsRepository<UserPassedCourseDboRelation> userPassedCourseDboRelationsRepository)
         {
             this.mapper = mapper;
             this.courseDboRepository = courseDboRepository;
@@ -24,6 +24,7 @@ namespace TrainingPortal.BLL.Services.Repositories
         public int Create(UserPassedCourse dataInstance)
         {
             UserPassedCourseDboRelation mappedInstance = mapper.Map<UserPassedCourseDboRelation>(dataInstance);
+
             return userPassedCourseDboRelationsRepository.Create(mappedInstance);
         }
 

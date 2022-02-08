@@ -10,24 +10,31 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<CoursesTargetAudienciesDboRelation> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateCoursesTargetAudiencies]";
+        private const string ReadStoredProcedureName = "[dbo].[GetCoursesTargetAudienciesByCourseId]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Courses_TargetAudiencies]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateCoursesTargetAudienciesByCourseId]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteCoursesTargetAudienciesByCourseId]";
+        private const string DeleteByIdStoredProcedureName = "[dbo].[DeleteCoursesTargetAudienciesByCourseIdAndTargetAudienceId]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public CoursesTargetAudienciesDboRelationsRepository(IDbCommandPerformer dBService)
         {
             Items = new List<CoursesTargetAudienciesDboRelation>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(CoursesTargetAudienciesDboRelation dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateCoursesTargetAudiencies]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("CourseId", DbType.Int32) { Value = dataInstance.CourseId },
                 new("TargetAudienceId", DbType.Int32) { Value = dataInstance.TargetAudienceId }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         CoursesTargetAudienciesDboRelation IDboRepository<CoursesTargetAudienciesDboRelation>.Read(int id)
@@ -37,39 +44,39 @@ namespace TrainingPortal.SqlDAL.Repositories
 
         public List<CoursesTargetAudienciesDboRelation> Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetCoursesTargetAudienciesByCourseId]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("CourseId", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<CoursesTargetAudienciesDboRelation>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<CoursesTargetAudienciesDboRelation>(storedProcedureName, parameters);
 
             return Items;
         }
 
         public List<CoursesTargetAudienciesDboRelation> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Courses_TargetAudiencies]";
-            Items = _dBService.PerformQuery<CoursesTargetAudienciesDboRelation>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<CoursesTargetAudienciesDboRelation>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, CoursesTargetAudienciesDboRelation dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateCoursesTargetAudienciesByCourseId]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("CourseId", DbType.Int32) { Value = dataInstance.CourseId },
                 new("TargetAudienceId", DbType.Int32) { Value = dataInstance.TargetAudienceId }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteCoursesTargetAudienciesByCourseId]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("CourseId", DbType.Int32) { Value = id }
@@ -77,7 +84,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {
@@ -87,7 +94,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
         public int Delete(CoursesTargetAudienciesDboRelation dataInstance)
         {
-            var storedProcedureName = "[dbo].[DeleteCoursesTargetAudienciesByCourseIdAndTargetAudienceId]";
+            var storedProcedureName = DeleteByIdStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("CourseId", DbType.Int32) { Value = dataInstance.CourseId },
@@ -96,7 +103,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

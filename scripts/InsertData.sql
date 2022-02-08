@@ -37,7 +37,7 @@ VALUES (1, 'First Layout question'),
 (5, 'Fourth PHP question')
 
 GO
-INSERT INTO [dbo].[Answers] ([QuestionId], [Answer], [IsRightAnswer]) 
+INSERT INTO [dbo].[Answers] ([QuestionId], [Text], [IsRightAnswer]) 
 VALUES (1, 'First answer for First Layout question (right)', 1),
 (1, 'Second answer for First Layout question', 0),
 (1, 'Third answer for First Layout question', 0),

@@ -10,60 +10,66 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<TestDbo> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateTest]";
+        private const string ReadStoredProcedureName = "[dbo].[GetTestById]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Tests]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateTestById]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteTestById]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public TestsDboRepository(IDbCommandPerformer dBService)
         {
             Items = new List<TestDbo>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(TestDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateTest]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Name", DbType.String) { Value = dataInstance.Name }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public TestDbo Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetTestById]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<TestDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<TestDbo>(storedProcedureName, parameters);
 
             return Items[0];
         }
 
         public List<TestDbo> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Tests]";
-            Items = _dBService.PerformQuery<TestDbo>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<TestDbo>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, TestDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateTestById]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id },
                 new("Name", DbType.String) { Value = dataInstance.Name }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteTestById]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -71,7 +77,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

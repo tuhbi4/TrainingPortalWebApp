@@ -10,76 +10,84 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<AnswerDbo> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateAnswer]";
+        private const string ReadStoredProcedureName = "[dbo].[GetAnswerById]";
+        private const string ReadAllByParentIdStoredProcedureName = "[dbo].[GetAnswersByQuestionId]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Answers]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateAnswerById]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteAnswerById]";
+        private const string DeleteAllByParentIdStoredProcedureName = "[dbo].[DeleteAnswersByQuestionId]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public AnswersDboInnerRepository(IDbCommandPerformer dBService)
         {
             Items = new List<AnswerDbo>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(AnswerDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateAnswer]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("QuestionId", DbType.Int32) { Value = dataInstance.QuestionId },
-                new("Answer", DbType.String) { Value = dataInstance.Text },
+                new("Text", DbType.String) { Value = dataInstance.Text },
                 new("IsRightAnswer", DbType.Boolean) { Value = dataInstance.IsRightAnswer }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public AnswerDbo Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetAnswerById]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<AnswerDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<AnswerDbo>(storedProcedureName, parameters);
 
             return Items[0];
         }
 
         public List<AnswerDbo> ReadAllByParentId(int id)
         {
-            var storedProcedureName = "[dbo].[GetAnswersByQuestionId]";
+            var storedProcedureName = ReadAllByParentIdStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("QuestionId", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<AnswerDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<AnswerDbo>(storedProcedureName, parameters);
 
             return Items;
         }
 
         public List<AnswerDbo> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Answers]";
-            Items = _dBService.PerformQuery<AnswerDbo>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<AnswerDbo>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, AnswerDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateAnswerById]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id },
                 new("QuestionId", DbType.Int32) { Value = dataInstance.QuestionId },
-                new("Answer", DbType.String) { Value = dataInstance.Text },
+                new("Text", DbType.String) { Value = dataInstance.Text },
                 new("IsRightAnswer", DbType.Boolean) { Value = dataInstance.IsRightAnswer }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteAnswerById]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -87,7 +95,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {
@@ -97,7 +105,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
         public int DeleteAllByParentId(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteAnswersByQuestionId]";
+            var storedProcedureName = DeleteAllByParentIdStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("QuestionId", DbType.Int32) { Value = id }
@@ -105,7 +113,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

@@ -10,21 +10,31 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<UserDbo> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateUser]";
+        private const string ReadStoredProcedureName = "[dbo].[GetUserById]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Users]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateUserById]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteUserById]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public UsersDboRepository(IDbCommandPerformer dBService)
         {
             Items = new List<UserDbo>();
-            _dBService = dBService;
+            this.dBService = dBService;
+        }
+
+        public UsersDboRepository()
+        {
         }
 
         public int Create(UserDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateUser]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Login", DbType.String) { Value = dataInstance.Login },
-                new("PasswordHash", DbType.String) { Value = dataInstance.Password},
+                new("PasswordHash", DbType.String) { Value = dataInstance.PasswordHash},
                 new("Email", DbType.String) { Value = dataInstance.Email },
                 new("RoleId", DbType.Int32) { Value = dataInstance.RoleId },
                 new("Lastname", DbType.String) { Value = dataInstance.Lastname},
@@ -32,37 +42,37 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Patronymic", DbType.String) { Value = dataInstance.Patronymic }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public UserDbo Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetUserById]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<UserDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<UserDbo>(storedProcedureName, parameters);
 
             return Items[0];
         }
 
         public List<UserDbo> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Users]";
-            Items = _dBService.PerformQuery<UserDbo>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<UserDbo>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, UserDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateUserById]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id },
                 new("Login", DbType.String) { Value = dataInstance.Login },
-                new("PasswordHash", DbType.String) { Value = dataInstance.Password},
+                new("PasswordHash", DbType.String) { Value = dataInstance.PasswordHash},
                 new("Email", DbType.String) { Value = dataInstance.Email },
                 new("RoleId", DbType.Int32) { Value = dataInstance.RoleId },
                 new("Lastname", DbType.String) { Value = dataInstance.Lastname},
@@ -70,12 +80,12 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Patronymic", DbType.String) { Value = dataInstance.Patronymic }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteUserById]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -83,7 +93,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

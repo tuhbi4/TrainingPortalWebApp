@@ -11,10 +11,10 @@ namespace TrainingPortal.WebPL.Controllers
     [Authorize(Roles = "admin, editor, user")]
     public class CertificateController : Controller
     {
-        private readonly IRepositoryService<Course> courseService;
+        private readonly ISearchableRepositoryService<Course> courseService;
         private readonly IRepositoryService<User> userService;
 
-        public CertificateController(IRepositoryService<Course> courseService, IRepositoryService<User> userService)
+        public CertificateController(ISearchableRepositoryService<Course> courseService, IRepositoryService<User> userService)
         {
             this.courseService = courseService;
             this.userService = userService;

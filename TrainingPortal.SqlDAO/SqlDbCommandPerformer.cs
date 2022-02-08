@@ -19,7 +19,7 @@ namespace TrainingPortal.SqlDAL
             this.mapper = mapper;
         }
 
-        public List<T> PerformStoredProcedure<T>(string storedProcedureName, List<SqlParameter> parameters) where T : class
+        public List<T> PerformStoredProcedure<T>(string storedProcedureName, List<SqlParameter> parameters) where T : class, new()
         {
             connection = new SqlConnection(connectionStringProvider.ConnectionString);
 
@@ -37,7 +37,7 @@ namespace TrainingPortal.SqlDAL
             return items;
         }
 
-        public List<T> PerformQuery<T>(string query, List<SqlParameter> parameters) where T : class
+        public List<T> PerformQuery<T>(string query, List<SqlParameter> parameters) where T : class, new()
         {
             connection = new SqlConnection(connectionStringProvider.ConnectionString);
 
@@ -75,7 +75,7 @@ namespace TrainingPortal.SqlDAL
             return result;
         }
 
-        private List<T> GetModels<T>(List<SqlParameter> parameters, SqlCommand command) where T : class
+        private List<T> GetModels<T>(List<SqlParameter> parameters, SqlCommand command) where T : class, new()
         {
             List<T> items = new();
 

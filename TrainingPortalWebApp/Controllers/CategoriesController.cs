@@ -37,10 +37,14 @@ namespace TrainingPortal.WebPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(CategoryViewModel workingItem)
         {
-            if (ModelState.IsValid
-                && categoryService.Create(new Category { Id = categoryService.ReadAll().Count + 1, Name = workingItem.Name }) > 0)
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                int createdId = categoryService.Create(new Category { Id = categoryService.ReadAll().Count + 1, Name = workingItem.Name });
+
+                if (createdId > 0)
+                {
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             return View(workingItem);

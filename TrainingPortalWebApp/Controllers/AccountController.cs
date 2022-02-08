@@ -72,7 +72,7 @@ namespace TrainingPortal.WebPL.Controllers
 
                         return View(model);
                     }
-                    else if (md5Hash.GetHash(model.Password) != user.Password)
+                    else if (md5Hash.GetHash(model.Password) != user.PasswordHash)
                     {
                         ModelState.AddModelError(nameof(model.Password), "Invalid password");
                         logger.Warning($"Authorization failed: invalid password");
@@ -139,10 +139,11 @@ namespace TrainingPortal.WebPL.Controllers
                     }
 
                     User user = mapper.Map<User>(model);
-                    user.Password = md5Hash.GetHash(model.Password);
+                    user.PasswordHash = md5Hash.GetHash(model.Password);
                     user.Role = new Role { Id = 1, Name = "user" };
+                    int createdId = userService.Create(user);
 
-                    if (userService.Create(user) > 0)
+                    if (createdId > 0)
                     {
                         var absoluteExpiration = Request.Form["RememberMeCheck"];
                         await Authenticate(user, absoluteExpiration);
@@ -198,10 +199,12 @@ namespace TrainingPortal.WebPL.Controllers
                     }
 
                     User user = mapper.Map<User>(model);
-                    user.Password = md5Hash.GetHash(model.Password);
+                    user.PasswordHash = md5Hash.GetHash(model.Password);
                     user.Role = new Role { Id = 1, Name = "user" };
 
-                    if (userService.Create(user) > 0)
+                    int createdId = userService.Create(user);
+
+                    if (createdId > 0)
                     {
                         logger.Debug($"User was created successful: new user id = \"{user.Id}\"");
 
@@ -216,7 +219,7 @@ namespace TrainingPortal.WebPL.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AccessDenied", "Home");
         }
 
         // GET: Account/Profile
@@ -248,8 +251,10 @@ namespace TrainingPortal.WebPL.Controllers
                 if (ModelState.IsValid)
                 {
                     List<User> userList = userService.ReadAll();
+                    string currentUserName = User.FindFirst(ClaimTypes.Name)?.Value;
+                    string currentUserEmail = User.FindFirst(ClaimTypes.Email)?.Value;
 
-                    if (model.Login != User.FindFirst(ClaimTypes.Name)?.Value && userList.Any(x => x.Login == model.Login))
+                    if (model.Login != currentUserName && userList.Any(x => x.Login == model.Login))
                     {
                         ModelState.AddModelError(nameof(model.Login), "This login is already taken");
                         logger.Warning($"An attempt to update user login with an existing: \"{model.Login}\"");
@@ -257,7 +262,7 @@ namespace TrainingPortal.WebPL.Controllers
                         return View(model);
                     }
 
-                    if (model.Email != User.FindFirst(ClaimTypes.Email)?.Value && userList.Any(x => x.Email == model.Email))
+                    if (model.Email != currentUserEmail && userList.Any(x => x.Email == model.Email))
                     {
                         ModelState.AddModelError(nameof(model.Email), "This email is already taken");
                         logger.Warning($"An attempt to update user email with an existing: \"{model.Email}\"");
@@ -268,18 +273,19 @@ namespace TrainingPortal.WebPL.Controllers
                     User targetUser = userService.ReadAll().FirstOrDefault(x => x.Email == User.FindFirst(ClaimTypes.Email)?.Value);
                     User updatedUser = mapper.Map<User>(model);
 
-                    if (updatedUser.Password is null)
+                    if (updatedUser.PasswordHash is null)
                     {
-                        updatedUser.Password = targetUser.Password;
+                        updatedUser.PasswordHash = targetUser.PasswordHash;
                     }
                     else
                     {
-                        updatedUser.Password = md5Hash.GetHash(targetUser.Password);
+                        updatedUser.PasswordHash = md5Hash.GetHash(targetUser.PasswordHash);
                     }
 
                     updatedUser.Role = targetUser.Role;
+                    int updatedDbId = userService.Update(targetUser.Id, updatedUser);
 
-                    if (userService.Update(targetUser.Id, updatedUser) > 0)
+                    if (updatedDbId > 0)
                     {
                         var absoluteExpiration = new StringValues();
                         await Authenticate(updatedUser, absoluteExpiration);
@@ -296,7 +302,7 @@ namespace TrainingPortal.WebPL.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AccessDenied", "Home");
         }
 
         // GET: Account/Edit/5
@@ -323,10 +329,11 @@ namespace TrainingPortal.WebPL.Controllers
                 {
                     User targetUser = userService.Read(model.Id);
                     User updatedUser = mapper.Map<User>(model);
-                    updatedUser.Password = targetUser.Password;
+                    updatedUser.PasswordHash = targetUser.PasswordHash;
                     updatedUser.Role = roleService.Read(model.RoleId);
+                    int updatedDbId = userService.Update(targetUser.Id, updatedUser);
 
-                    if (userService.Update(targetUser.Id, updatedUser) > 0)
+                    if (updatedDbId > 0)
                     {
                         logger.Debug($"User was updated successful: user id = \"{targetUser.Id}\", initiator = \"{User.Identity.Name}\"");
                         ViewBag.Roles = roleService.ReadAll();
@@ -340,7 +347,7 @@ namespace TrainingPortal.WebPL.Controllers
                 return View(model);
             }
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("AccessDenied", "Home");
         }
 
         // GET: Account/Delete/5
@@ -357,13 +364,28 @@ namespace TrainingPortal.WebPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, RegisterUserViewModel model)
         {
-            if (User.Identity.IsAuthenticated && userService.Read(id) != null && userService.Delete(id) > 0)
+            if (User.Identity.IsAuthenticated)
             {
-                logger.Debug($"User was deleted: id = \"{id}\", initiator = \"{User.Identity.Name}\"");
-                return RedirectToAction(nameof(Index));
+                if (userService.Read(id) != null)
+                {
+                    int deletedId = userService.Delete(id);
+
+                    if (deletedId > 0)
+                    {
+                        logger.Debug($"User was deleted: id = \"{id}\", initiator = \"{User.Identity.Name}\"");
+
+                        return RedirectToAction(nameof(Index));
+                    }
+                    else
+                    {
+                        logger.Error($"User was not deleted: id = \"{id}\", initiator = \"{User.Identity.Name}\"");
+                    }
+                }
+
+                return View(model);
             }
 
-            return View(model);
+            return RedirectToAction("AccessDenied", "Home");
         }
 
         private async Task Authenticate(User user, StringValues absoluteExpiration)
@@ -387,16 +409,16 @@ namespace TrainingPortal.WebPL.Controllers
             }
 
             var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            var authProoerties = new AuthenticationProperties();
+            var authProperties = new AuthenticationProperties();
 
             if (absoluteExpiration.Any())
             {
-                authProoerties.IsPersistent = true;
-                authProoerties.ExpiresUtc = DateTime.UtcNow.AddYears(20);
+                authProperties.IsPersistent = true;
+                authProperties.ExpiresUtc = DateTime.UtcNow.AddYears(20);
                 logger.Information($"Cookie with absolute expiration requested: user id = \"{user.Id}\"");
             }
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProoerties);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
             logger.Information($"Authentication was successful: user id = \"{user.Id}\"");
         }
     }

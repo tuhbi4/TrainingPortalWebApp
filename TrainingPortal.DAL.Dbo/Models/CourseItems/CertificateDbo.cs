@@ -7,15 +7,5 @@
         public string CourseName { get; set; }
 
         public string ImageLink { get; set; }
-
-        public CertificateDbo()
-        { }
-
-        public CertificateDbo(int id, string courseName, string image)
-        {
-            Id = id;
-            CourseName = courseName;
-            ImageLink = image;
-        }
     }
 }

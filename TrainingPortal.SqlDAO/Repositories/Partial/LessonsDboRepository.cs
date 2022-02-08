@@ -10,49 +10,55 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<LessonDbo> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateLesson]";
+        private const string ReadStoredProcedureName = "[dbo].[GetLessonById]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Lessons]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateLessonById]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteLessonById]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public LessonsDboRepository(IDbCommandPerformer dBService)
         {
             Items = new List<LessonDbo>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(LessonDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateLesson]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Name", DbType.String) { Value = dataInstance.Name },
                 new("Material", DbType.String) { Value = dataInstance.Material }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public LessonDbo Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetLessonById]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<LessonDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<LessonDbo>(storedProcedureName, parameters);
 
             return Items[0];
         }
 
         public List<LessonDbo> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Lessons]";
-            Items = _dBService.PerformQuery<LessonDbo>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<LessonDbo>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, LessonDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateLessonById]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id },
@@ -60,12 +66,12 @@ namespace TrainingPortal.SqlDAL.Repositories
                 new("Material", DbType.String) { Value = dataInstance.Material }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteLessonById]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -73,7 +79,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

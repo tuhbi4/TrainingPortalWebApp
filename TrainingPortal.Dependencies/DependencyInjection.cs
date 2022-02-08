@@ -24,8 +24,8 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IHashService, MD5HashService>();
             services.AddSingleton<IDboModelMapper, SqlDboModelMapper>();
             services.AddSingleton<IDbCommandPerformer, SqlDbCommandPerformer>();
+            services.AddSingleton<ISearchableDboRepository<CourseDbo>, CoursesDboRepository>();
             services.AddSingleton<IDboRepository<CategoryDbo>, CategoriesDboRepository>();
-            services.AddSingleton<IDboRepository<CourseDbo>, CoursesDboRepository>();
             services.AddSingleton<IDboRepository<RoleDbo>, RolesDboRepository>();
             services.AddSingleton<IDboRepository<UserDbo>, UsersDboRepository>();
             services.AddSingleton<IDboRepository<CertificateDbo>, CertificatesDboRepository>();
@@ -39,8 +39,8 @@ namespace TrainingPortal.Dependencies
             services.AddSingleton<IDboRelationsRepository<CoursesTargetAudienciesDboRelation>, CoursesTargetAudienciesDboRelationsRepository>();
             services.AddSingleton<IDboRelationsRepository<UserPassedCourseDboRelation>, UserPassedCourseDboRelationRepository>();
 
+            services.AddSingleton<ISearchableRepositoryService<Course>, CourseService>();
             services.AddSingleton<IRepositoryService<Category>, CategoryService>();
-            services.AddSingleton<IRepositoryService<Course>, CourseService>();
             services.AddSingleton<IRepositoryService<User>, UserService>();
             services.AddSingleton<IRepositoryService<Role>, RoleService>();
             services.AddSingleton<IRepositoryService<TargetAudience>, TargetAudienceService>();

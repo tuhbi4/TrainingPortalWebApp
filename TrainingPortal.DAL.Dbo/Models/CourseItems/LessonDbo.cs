@@ -7,15 +7,5 @@
         public string Name { get; set; }
 
         public string Material { get; set; }
-
-        public LessonDbo()
-        { }
-
-        public LessonDbo(int id, string name, string material)
-        {
-            Id = id;
-            Name = name;
-            Material = material;
-        }
     }
 }

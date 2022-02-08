@@ -13,12 +13,12 @@ using TrainingPortal.DAL.Interfaces;
 
 namespace TrainingPortal.BLL.Services.Repositories
 {
-    public class CourseService : IRepositoryService<Course>, ISearchableRepositoryService<Course>
+    public class CourseService : ISearchableRepositoryService<Course>
     {
         private readonly IMapper mapper;
         private readonly IDboRepository<CategoryDbo> categoryDboRepository;
         private readonly IDboRepository<CertificateDbo> certificateDboRepository;
-        private readonly IDboRepository<CourseDbo> courseDboRepository;
+        private readonly ISearchableDboRepository<CourseDbo> courseDboRepository;
         private readonly IDboInnerRepository<AnswerDbo> answerDboInnerRepository;
         private readonly IDboInnerRepository<TestQuestionDbo> testQuestionDboInnerRepository;
         private readonly IDboRelationsRepository<CoursesLessonsDboRelation> coursesLessonsDboRelationsRepository;
@@ -28,7 +28,7 @@ namespace TrainingPortal.BLL.Services.Repositories
         private readonly IDboRepository<TestDbo> testDboRepository;
 
         public CourseService(IMapper mapper, IDboRepository<CategoryDbo> categoryDboRepository,
-            IDboRepository<CertificateDbo> certificateDboRepository, IDboRepository<CourseDbo> courseDboRepository,
+            IDboRepository<CertificateDbo> certificateDboRepository, ISearchableDboRepository<CourseDbo> courseDboRepository,
             IDboInnerRepository<AnswerDbo> answerDboInnerRepository, IDboInnerRepository<TestQuestionDbo> testQuestionDboInnerRepository,
             IDboRelationsRepository<CoursesLessonsDboRelation> coursesLessonsDboRelationsRepository,
             IDboRelationsRepository<CoursesTargetAudienciesDboRelation> coursesTargetAudienciesDboRelationsRepository,
@@ -61,7 +61,7 @@ namespace TrainingPortal.BLL.Services.Repositories
             {
                 LessonDbo lessonDbo = mapper.Map<LessonDbo>(lesson);
                 var newLessonId = lessonDboRepository.Create(lessonDbo);
-                coursesLessonsDboRelationsRepository.Create(new CoursesLessonsDboRelation(courseDbo.Id, newLessonId));
+                coursesLessonsDboRelationsRepository.Create(new CoursesLessonsDboRelation() { CourseId = courseDbo.Id, LessonId = newLessonId });
             }
 
             foreach (TestQuestion testQuestion in dataInstance.Test.QuestionsList)
@@ -80,7 +80,7 @@ namespace TrainingPortal.BLL.Services.Repositories
 
             foreach (TargetAudience targetAudience in dataInstance.TargetAudienciesList)
             {
-                coursesTargetAudienciesDboRelationsRepository.Create(new CoursesTargetAudienciesDboRelation(courseDbo.Id, targetAudience.Id));
+                coursesTargetAudienciesDboRelationsRepository.Create(new CoursesTargetAudienciesDboRelation() { CourseId = courseDbo.Id, TargetAudienceId = targetAudience.Id });
             }
 
             return courseDbo.Id;
@@ -230,7 +230,7 @@ namespace TrainingPortal.BLL.Services.Repositories
             foreach (Lesson lesson in dataInstance.LessonsList)
             {
                 var newLessonId = lessonDboRepository.Create(mapper.Map<LessonDbo>(lesson));
-                coursesLessonsDboRelationsRepository.Create(new CoursesLessonsDboRelation(id, newLessonId));
+                coursesLessonsDboRelationsRepository.Create(new CoursesLessonsDboRelation() { CourseId = id, LessonId = newLessonId });
             }
 
             Course targetCourse = Read(id);
@@ -263,7 +263,7 @@ namespace TrainingPortal.BLL.Services.Repositories
 
             foreach (TargetAudience targetAudience in dataInstance.TargetAudienciesList)
             {
-                coursesTargetAudienciesDboRelationsRepository.Create(new CoursesTargetAudienciesDboRelation(id, targetAudience.Id));
+                coursesTargetAudienciesDboRelationsRepository.Create(new CoursesTargetAudienciesDboRelation() { CourseId = id, TargetAudienceId = targetAudience.Id });
             }
 
             return courseDboRepository.Update(id, mapper.Map<CourseDbo>(dataInstance));
@@ -276,10 +276,9 @@ namespace TrainingPortal.BLL.Services.Repositories
 
         public List<Course> Search(string courseName, string categoryName, string targetAudiencyName)
         {
-            ISearchableDboRepository<CourseDbo> searchebleCourseDboRepository = courseDboRepository as ISearchableDboRepository<CourseDbo>;
             List<Course> resultList = new();
 
-            foreach (CourseDbo courseDbo in searchebleCourseDboRepository.Search(courseName, categoryName, targetAudiencyName))
+            foreach (CourseDbo courseDbo in courseDboRepository.Search(courseName, categoryName, targetAudiencyName))
             {
                 resultList.Add(Read(courseDbo.Id));
             }

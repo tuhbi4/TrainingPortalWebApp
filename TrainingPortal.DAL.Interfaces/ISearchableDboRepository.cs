@@ -2,7 +2,7 @@
 
 namespace TrainingPortal.DAL.Interfaces
 {
-    public interface ISearchableDboRepository<T> where T : class
+    public interface ISearchableDboRepository<T> : IDboRepository<T> where T : class
     {
         public List<T> Search(string courseName, string categoryName, string targetAudiencyName);
     }

@@ -11,24 +11,28 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<UserPassedCourseDboRelation> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateUserPassedCourse]";
+        private const string ReadStoredProcedureName = "[dbo].[GetUserPassedCoursesByUserId]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Users_PassedCourses]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public UserPassedCourseDboRelationRepository(IDbCommandPerformer dBService)
         {
             Items = new List<UserPassedCourseDboRelation>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(UserPassedCourseDboRelation dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateUserPassedCourse]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("UserId", DbType.Int32) { Value = dataInstance.UserId },
                 new("CourseId", DbType.Int32) { Value = dataInstance.CourseId }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         UserPassedCourseDboRelation IDboRepository<UserPassedCourseDboRelation>.Read(int id)
@@ -38,20 +42,20 @@ namespace TrainingPortal.SqlDAL.Repositories
 
         public List<UserPassedCourseDboRelation> Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetUserPassedCoursesByUserId]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("UserId", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<UserPassedCourseDboRelation>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<UserPassedCourseDboRelation>(storedProcedureName, parameters);
 
             return Items;
         }
 
         public List<UserPassedCourseDboRelation> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Users_PassedCourses]";
-            Items = _dBService.PerformQuery<UserPassedCourseDboRelation>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<UserPassedCourseDboRelation>(query, new List<SqlParameter>());
 
             return Items;
         }

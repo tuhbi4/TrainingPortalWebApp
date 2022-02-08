@@ -82,7 +82,7 @@ GO
 CREATE TABLE [dbo].[Answers](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[QuestionId] [int] NOT NULL,
-	[Answer] [nvarchar](1000) NOT NULL,
+	[Text] [nvarchar](1000) NOT NULL,
 	[IsRightAnswer] [bit] NOT NULL,
  CONSTRAINT [PK_Answers] PRIMARY KEY CLUSTERED 
 (
@@ -326,13 +326,13 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[CreateAnswer]
 	@QuestionId int,
-	@Answer nvarchar(1000),
+	@Text nvarchar(1000),
 	@IsRightAnswer bit
 AS
 BEGIN
-	INSERT INTO [dbo].[Answers] ([QuestionId], [Answer], [IsRightAnswer] )
+	INSERT INTO [dbo].[Answers] ([QuestionId], [Text], [IsRightAnswer] )
 	OUTPUT Inserted.Id
-	VALUES (@QuestionId, @Answer, @IsRightAnswer )
+	VALUES (@QuestionId, @Text, @IsRightAnswer )
 END
 GO
 /****** Object:  StoredProcedure [dbo].[CreateCategory]    Script Date: 04.02.2022 15:41:29 ******/
@@ -1066,12 +1066,12 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE PROCEDURE [dbo].[UpdateAnswerById]
 	@Id int,
-	@Answer nvarchar(1000),
+	@Text nvarchar(1000),
 	@IsRightAnswer bit
 AS
 BEGIN
 	UPDATE [dbo].[Answers]
-	SET [Answer] = @Answer,
+	SET [Text] = @Text,
 	[IsRightAnswer] = @IsRightAnswer
 	OUTPUT Inserted.Id
 	WHERE [Id] = @Id

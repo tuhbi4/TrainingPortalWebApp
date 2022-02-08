@@ -20,8 +20,5 @@ namespace TrainingPortal.BLL.Models
         public Certificate Certificate { get; set; }
 
         public List<TargetAudience> TargetAudienciesList { get; set; }
-
-        // UNDONE: Download certificate (in *.pdf) - add implementation
-        public void DownloadCertificate() => throw new System.NotSupportedException();
     }
 }

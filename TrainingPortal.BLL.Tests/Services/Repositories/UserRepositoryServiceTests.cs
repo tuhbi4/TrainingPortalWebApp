@@ -68,7 +68,7 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             // Arrange
             var service = CreateService();
-            UserDbo sourceInstance = new(id, null, null, null, 0, null, null, null);
+            UserDbo sourceInstance = new();
             User resultInstance = new();
             resultInstance.Id = id;
             resultInstance.Role = new Role { Id = 0, Name = string.Empty };
@@ -112,11 +112,11 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             var users = new List<User>
             {
-                new User { Id = 1, Login = "user1", Password = "password1", Email = "email1",
+                new User { Id = 1, Login = "user1", PasswordHash = "password1", Email = "email1",
                     Role = new Role { Id = 1, Name = "user" }, Lastname = "lastname1", Firstname = "firstname1", Patronymic = "patronymic1" },
-                new User { Id = 2, Login = "user2", Password = "password2", Email = "email2",
+                new User { Id = 2, Login = "user2", PasswordHash = "password2", Email = "email2",
                     Role = new Role { Id = 1, Name = "user" }, Lastname = "lastname2", Firstname = "firstname2", Patronymic = "patronymic2" },
-                new User { Id = 3, Login = "user3", Password = "password3", Email = "email3",
+                new User { Id = 3, Login = "user3", PasswordHash = "password3", Email = "email3",
                     Role = new Role { Id = 1, Name = "user" }, Lastname = "lastname3", Firstname = "firstname3", Patronymic = "patronymic3" },
             };
 
@@ -127,9 +127,12 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             var users = new List<UserDbo>
             {
-                new UserDbo(1, "user1", "password1", "email1", 1, "lastname1","firstname1","patronymic1"),
-                new UserDbo(2, "user2", "password2", "email2", 2, "lastname2","firstname2","patronymic2"),
-                new UserDbo(3, "user3", "password3", "email3", 3, "lastname3","firstname3","patronymic3"),
+                new UserDbo { Id = 1, Login = "user1", PasswordHash = "password1", Email = "email1", RoleId = 1,
+                    Lastname = "lastname1", Firstname = "firstname1", Patronymic = "patronymic1" },
+                new UserDbo { Id = 2, Login = "user2", PasswordHash = "password2", Email = "email2", RoleId = 2,
+                    Lastname = "lastname2", Firstname = "firstname2", Patronymic = "patronymic2" },
+                new UserDbo { Id = 3, Login = "user3", PasswordHash = "password3", Email = "email3", RoleId = 3,
+                    Lastname = "lastname3", Firstname = "firstname3", Patronymic = "patronymic3" },
             };
 
             return users;
@@ -139,9 +142,9 @@ namespace TrainingPortal.BLL.Tests.Services.Repositories
         {
             var roles = new List<RoleDbo>
             {
-                new RoleDbo(1, "user"),
-                new RoleDbo(2, "manager"),
-                new RoleDbo(3, "admin"),
+                new RoleDbo{ Id = 1, Name = "user" },
+                new RoleDbo{ Id = 2, Name = "manager" },
+                new RoleDbo{ Id = 3, Name = "admin" },
             };
 
             return roles;

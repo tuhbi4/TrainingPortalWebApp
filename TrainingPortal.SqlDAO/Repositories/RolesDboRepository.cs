@@ -10,60 +10,66 @@ namespace TrainingPortal.SqlDAL.Repositories
     {
         public List<RoleDbo> Items { get; set; }
 
-        private readonly IDbCommandPerformer _dBService;
+        private const string CreateStoredProcedureName = "[dbo].[CreateRole]";
+        private const string ReadStoredProcedureName = "[dbo].[GetRoleById]";
+        private const string ReadAllQuery = "SELECT* FROM[dbo].[Roles]";
+        private const string UpdateStoredProcedureName = "[dbo].[UpdateRoleById]";
+        private const string DeleteStoredProcedureName = "[dbo].[DeleteRoleById]";
+
+        private readonly IDbCommandPerformer dBService;
 
         public RolesDboRepository(IDbCommandPerformer dBService)
         {
             Items = new List<RoleDbo>();
-            _dBService = dBService;
+            this.dBService = dBService;
         }
 
         public int Create(RoleDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[CreateRole]";
+            var storedProcedureName = CreateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Name", DbType.String) { Value = dataInstance.Name }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public RoleDbo Read(int id)
         {
-            var storedProcedureName = "[dbo].[GetRoleById]";
+            var storedProcedureName = ReadStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
             };
-            Items = _dBService.PerformStoredProcedure<RoleDbo>(storedProcedureName, parameters);
+            Items = dBService.PerformStoredProcedure<RoleDbo>(storedProcedureName, parameters);
 
             return Items[0];
         }
 
         public List<RoleDbo> ReadAll()
         {
-            var query = $"SELECT * FROM [dbo].[Roles]";
-            Items = _dBService.PerformQuery<RoleDbo>(query, new List<SqlParameter>());
+            var query = ReadAllQuery;
+            Items = dBService.PerformQuery<RoleDbo>(query, new List<SqlParameter>());
 
             return Items;
         }
 
         public int Update(int id, RoleDbo dataInstance)
         {
-            var storedProcedureName = "[dbo].[UpdateRoleById]";
+            var storedProcedureName = UpdateStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id },
                 new("Name", DbType.String) { Value = dataInstance.Name }
             };
 
-            return _dBService.PerformScalar(storedProcedureName, parameters);
+            return dBService.PerformScalar(storedProcedureName, parameters);
         }
 
         public int Delete(int id)
         {
-            var storedProcedureName = "[dbo].[DeleteRoleById]";
+            var storedProcedureName = DeleteStoredProcedureName;
             var parameters = new List<SqlParameter>()
             {
                 new("Id", DbType.Int32) { Value = id }
@@ -71,7 +77,7 @@ namespace TrainingPortal.SqlDAL.Repositories
 
             try
             {
-                return _dBService.PerformScalar(storedProcedureName, parameters);
+                return dBService.PerformScalar(storedProcedureName, parameters);
             }
             catch
             {

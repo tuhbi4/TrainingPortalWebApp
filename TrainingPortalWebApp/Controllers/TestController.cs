@@ -12,10 +12,10 @@ namespace TrainingPortal.WebPL.Controllers
     [Authorize(Roles = "admin, editor, user")]
     public class TestController : Controller
     {
-        private readonly IRepositoryService<Course> courseService;
+        private readonly ISearchableRepositoryService<Course> courseService;
         private readonly IRepositoryService<UserPassedCourse> userPassedCourseService;
 
-        public TestController(IRepositoryService<Course> courseService, IRepositoryService<UserPassedCourse> userPassedCourseService)
+        public TestController(ISearchableRepositoryService<Course> courseService, IRepositoryService<UserPassedCourse> userPassedCourseService)
         {
             this.courseService = courseService;
             this.userPassedCourseService = userPassedCourseService;
@@ -40,7 +40,7 @@ namespace TrainingPortal.WebPL.Controllers
                 Test test = courseService.Read(courseId).Test;
                 collection.TryGetValue("answers", out var userAnswersStringValues);
                 int[] userAnswers = userAnswersStringValues.ToArray().Select(int.Parse).ToArray();
-                chancesLeft = CalculateMistakes(questionNumber, chancesLeft, test, userAnswers);
+                chancesLeft = CalculateChances(questionNumber, chancesLeft, test, userAnswers);
 
                 if (chancesLeft < 1 || questionNumber > test.QuestionsList.Count)
                 {
@@ -52,8 +52,9 @@ namespace TrainingPortal.WebPL.Controllers
                 ViewBag.CourseId = courseId;
                 ViewBag.QuestionNumber = questionNumber;
                 ViewBag.СhancesLeft = chancesLeft;
+                int rightAnswersNumber = test.QuestionsList[questionNumber - 1].Answers.FindAll(x => x.IsRightAnswer).Count;
 
-                if (test.QuestionsList[questionNumber - 1].Answers.FindAll(x => x.IsRightAnswer).Count > 1)
+                if (rightAnswersNumber > 1)
                 {
                     ViewBag.MultipleRightAnswers = "(multiple answer options)";
                 }
@@ -88,7 +89,7 @@ namespace TrainingPortal.WebPL.Controllers
         }
 
         [NonAction]
-        private int CalculateMistakes(int questionNumber, int chancesLeft, Test test, int[] userAnswers)
+        private int CalculateChances(int questionNumber, int chancesLeft, Test test, int[] userAnswers)
         {
             if (questionNumber != 1)
             {

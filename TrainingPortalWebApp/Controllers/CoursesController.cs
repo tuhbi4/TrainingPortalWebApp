@@ -16,16 +16,15 @@ using TrainingPortal.WebPL.Models.Course;
 
 namespace TrainingPortal.WebPL.Controllers
 {
-
     public class CoursesController : Controller
     {
-        private readonly IRepositoryService<Course> courseService;
+        private readonly ISearchableRepositoryService<Course> courseService;
         private readonly IRepositoryService<Category> categoryService;
         private readonly IRepositoryService<TargetAudience> targetAudienceService;
         private readonly IMapper mapper;
         private readonly ILogger logger;
 
-        public CoursesController(IRepositoryService<Course> courseService, IRepositoryService<Category> categoryService, IRepositoryService<TargetAudience> targetAudienceService,
+        public CoursesController(ISearchableRepositoryService<Course> courseService, IRepositoryService<Category> categoryService, IRepositoryService<TargetAudience> targetAudienceService,
             IMapper mapper, ILogger logger)
         {
             this.courseService = courseService;
@@ -48,8 +47,7 @@ namespace TrainingPortal.WebPL.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(string courseName, string categoryName, string targetAudiencyName)
         {
-            ISearchableRepositoryService<Course> searchebleCourseService = courseService as ISearchableRepositoryService<Course>;
-            List<Course> courses = searchebleCourseService.Search(courseName ?? string.Empty, categoryName ?? string.Empty, targetAudiencyName ?? string.Empty);
+            List<Course> courses = courseService.Search(courseName ?? string.Empty, categoryName ?? string.Empty, targetAudiencyName ?? string.Empty);
             ViewBag.CourseName = courseName;
             ViewBag.CategoryName = categoryName;
             ViewBag.TargetAudienceName = targetAudiencyName;
@@ -92,11 +90,11 @@ namespace TrainingPortal.WebPL.Controllers
                     SetTest(courseModel, collection);
                     ValidateCertificateImageLink(courseModel);
                     SetTargetAudienciesList(courseModel, collection);
-                    int createdCourseId = courseService.Create(courseModel);
+                    int createdDbId = courseService.Create(courseModel);
 
-                    if (createdCourseId > 0)
+                    if (createdDbId > 0)
                     {
-                        logger.Debug($"Course was created successful: id = \"{createdCourseId}\", name = \"{courseModel.Name}\", initiator = \"{User.Identity.Name}\"");
+                        logger.Debug($"Course was created successful: id = \"{createdDbId}\", name = \"{courseModel.Name}\", initiator = \"{User.Identity.Name}\"");
                     }
                     else
                     {
@@ -130,7 +128,7 @@ namespace TrainingPortal.WebPL.Controllers
             return View(model);
         }
 
-        // POST: Courses/Edit/5        
+        // POST: Courses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "admin, editor")]
@@ -156,14 +154,15 @@ namespace TrainingPortal.WebPL.Controllers
                     }
 
                     SetTargetAudienciesList(courseModel, collection);
+                    int updatedDbId = courseService.Update(id, courseModel);
 
-                    if (courseService.Update(id, courseModel) > 0)
+                    if (updatedDbId > 0)
                     {
-                        logger.Debug($"Course was updated successful: id = \"{id}\", initiator = \"{User.Identity.Name}\"");
+                        logger.Debug($"Course was updated successful: id = \"{updatedDbId}\", initiator = \"{User.Identity.Name}\"");
                     }
                     else
                     {
-                        logger.Error($"Course was not updated in the database: id = \"{id}\", initiator = \"{User.Identity.Name}\"");
+                        logger.Error($"Course was not updated in the database: id = \"{updatedDbId}\", initiator = \"{User.Identity.Name}\"");
                     }
                 }
 
@@ -188,7 +187,9 @@ namespace TrainingPortal.WebPL.Controllers
         {
             if (courseService.Read(id) != null)
             {
-                if (courseService.Delete(id) > 0)
+                int deletedDbId = courseService.Delete(id);
+
+                if (deletedDbId > 0)
                 {
                     return RedirectToAction(nameof(Index));
                 }
@@ -276,10 +277,11 @@ namespace TrainingPortal.WebPL.Controllers
         {
             courseModel.Certificate.CourseName = courseModel.Name;
             string[] imageFormats = new string[] { ".jpg", ".png", ".gif", ".jpeg" };
+            bool isNotSpecified = courseModel.Certificate.ImageLink is null;
+            bool isUrl = courseModel.Certificate.ImageLink.StartsWith("https://", StringComparison.OrdinalIgnoreCase);
+            bool isImageFormat = imageFormats.Any(item => courseModel.Certificate.ImageLink.EndsWith(item, StringComparison.OrdinalIgnoreCase));
 
-            if ((courseModel.Certificate.ImageLink is null)
-                || !(courseModel.Certificate.ImageLink.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
-                && imageFormats.Any(item => courseModel.Certificate.ImageLink.EndsWith(item, StringComparison.OrdinalIgnoreCase))))
+            if (isNotSpecified || !(isUrl && isImageFormat))
             {
                 courseModel.Certificate.ImageLink = string.Empty;
             }
