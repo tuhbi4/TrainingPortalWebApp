@@ -2,70 +2,224 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.image {
+    display: block;
+    position: relative;
+}
+
+    .image.is-28x28 {
+        height: 28px;
+        width: 28px;
+    }
+
+.is-rounded {
+    border-radius: 290486px;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
+
+.ml-3 {
+    margin-left: 1rem;
+}
+
+.table-rounded > :not(caption) > * > * {
+    border-radius: .5rem;
+}
+
+.floating-label {
+    opacity: .65;
+    font-size: 0.9rem;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: inherit;
+    box-shadow: none;
+}
+
+.accordion-button.collapsed ~ .btn-add {
+    display: none;
+}
+
+.btn-add {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    font-size: x-large;
+    padding: .25em .25em;
+    color: #000;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-plus-lg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z'/%3E%3C/svg%3E") center/1em auto no-repeat;
+    border: 0;
+    border-radius: .25rem;
+    opacity: .5
+}
+
+    .btn-add:hover {
+        color: #000;
+        text-decoration: none;
+        opacity: .75
+    }
+
+    .btn-add:focus {
+        outline: 0;
+        box-shadow: 0 0 0 .25rem rgba(13,110,253,.25);
+        opacity: 1
+    }
+
+.scrollspy {
+    position: relative;
+    height: 65vh;
+    margin-top: .5rem;
+    overflow: auto;
+}
+
+.align-items-start {
+    align-items: start;
+}
+
+.callout {
+    padding: 1.25rem;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #e9ecef;
+    border-left-width: .25rem;
+    border-radius: .25rem
+}
+
+.callout-success {
+    border-left-color: #198754;
+}
+
+.callout-warning {
+    border-left-color: #ffc107;
+}
+
+.callout-danger {
+    border-left-color: #dc3545;
+}
+
+.callout-info {
+    border-left-color: #0dcaf0;
+}
+
+.btn-search::after {
+    content: "\E721";
+}
+
+.align-text-end {
+    text-align: end;
+}
+
+.text-larger {
+    font-size: larger;
+}
+
+.list-group-item.accordion-button:not(.collapsed) {
+    color: black;
+    background-color: #dee2e6;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+}
+
+.list-group-item.accordion-button.collapsed {
+    color: #6c757d;
+}
+
+.btn-download {
+    box-sizing: content-box;
+    width: 1em;
+    height: 1em;
+    font-size: x-large;
+    padding: .25em .25em;
+    color: #000;
+    background: transparent url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-cloud-download' viewBox='0 0 16 16'%3E%3Cpath d='M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z'/%3E%3Cpath d='M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z'/%3E%3C/svg%3E") center /1em auto no-repeat;
+    border: 0;
+    border-radius: .25rem;
+    opacity: .5
+}
+
+@media (max-width: 575.98px) {
+    #profile-accordion {
+        flex-direction: column;
+    }
+
+        #profile-accordion > aside > .list-group {
+            border: none !important;
+            border-bottom: 1px solid #dee2e6 !important;
+        }
+
+            #profile-accordion > aside > .list-group > .list-group-item {
+                text-align: center;
+            }
 }

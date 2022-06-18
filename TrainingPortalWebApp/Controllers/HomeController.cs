@@ -1,21 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
+using Serilog;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using TrainingPortalWebApp.Models;
+using TrainingPortal.WebPL.Models;
 
-namespace TrainingPortalWebApp.Controllers
+namespace TrainingPortal.WebPL.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger logger)
         {
-            _logger = logger;
+            this.logger = logger;
         }
 
         public IActionResult Index()
@@ -25,6 +21,20 @@ namespace TrainingPortalWebApp.Controllers
 
         public IActionResult Privacy()
         {
+            return View();
+        }
+
+        public IActionResult AccessDenied()
+        {
+            logger.Warning($"Access denied: initiator = \"{User.Identity.Name}\"");
+
+            return View();
+        }
+
+        public IActionResult NotImplemented()
+        {
+            logger.Debug($"Requested page with not implemented feature: initiator = \"{User.Identity.Name}\"");
+
             return View();
         }
 

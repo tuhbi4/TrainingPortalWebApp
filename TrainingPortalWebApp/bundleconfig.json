@@ -1,0 +1,18 @@
+[
+  {
+    "outputFileName": "wwwroot/libs/vendor.min.css",
+    "inputFiles": [
+      "wwwroot/libs/bootstrap/css/bootstrap.min.css"
+    ],
+    "minify": { "enabled": false }
+  },
+  {
+    "outputFileName": "wwwroot/libs/vendor.min.js",
+    "inputFiles": [
+      "wwwroot/libs/jquery/jquery.min.js",
+      "wwwroot/libs/popper.js/umd/popper.min.js",
+      "wwwroot/libs/bootstrap/js/bootstrap.min.js"
+    ],
+    "minify": { "enabled": false }
+  }
+]

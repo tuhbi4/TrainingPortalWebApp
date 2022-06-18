@@ -1,0 +1,38 @@
+﻿@model RegisterUserViewModel
+
+@{
+    ViewData["Title"] = "Sign Up";
+}
+
+<h1>Sign Up</h1>
+<hr />
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <form asp-action="Register" asp-controller=Account method=post>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-4">
+                @{
+                    await Html.RenderPartialAsync("_RegisterUserViewModelPartial");
+                }
+                <div class="col-12">
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+                        <label class="form-check-label" for="invalidCheck">
+                            Agree to terms and conditions
+                        </label>
+                        <div class="invalid-feedback">
+                            You must agree before submitting.
+                        </div>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="value" name="RememberMeCheck" id="rememberMeCheck">
+                        <label class="form-check-label" for="rememberMeChek">Remember Me</label>
+                    </div>
+                </div>
+                <input type="submit" value="Sign Up" class="btn btn-primary" />
+                <div class="dropdown-divider"></div>
+                <a asp-action="Login" class="dropdown-item">Already have an account? Sign in!</a>
+            </div>
+        </form>
+    </div>
+</div>
